@@ -7,7 +7,7 @@ const fire = (element, data) => {
     composed: true,
     ...data
   };
-
+  console.log('fire');
   // the event name 'nintex-value-change' is required to tell the form engine to update the value
   const event = new CustomEvent('ntx-value-change', args);
   element.dispatchEvent(event);
@@ -53,6 +53,7 @@ let PINTextField = _decorate([e$1('pin-field')], function (_initialize, _LitElem
       kind: "method",
       key: "onChange",
       value: function onChange() {
+        console.log('onChange');
         const el = this.shadowRoot?.getElementById('pinInput');
         if (el) {
           fire(this, {
