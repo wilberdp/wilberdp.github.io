@@ -1,7 +1,6 @@
-import { _ as _decorate, s, i, y } from './lit-element-6d4b1918.js';
-import { property } from 'lit/decorators';
+import { _ as _decorate, s, i, e, y, a as e$1 } from './query-assigned-elements-5558b813.js';
 
-let PINTextField = _decorate(null, function (_initialize, _LitElement) {
+let PINTextField = _decorate([e$1('pin-field')], function (_initialize, _LitElement) {
   class PINTextField extends _LitElement {
     constructor(...args) {
       super(...args);
@@ -23,7 +22,7 @@ let PINTextField = _decorate(null, function (_initialize, _LitElement) {
       }
     }, {
       kind: "field",
-      decorators: [property()],
+      decorators: [e()],
       key: "pin",
       value() {
         return "1234";
