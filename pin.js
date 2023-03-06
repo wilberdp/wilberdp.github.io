@@ -13,7 +13,7 @@ const fire = (element, data) => {
   element.dispatchEvent(event);
   return event;
 };
-let PINTextField = _decorate([e$1('pin-field')], function (_initialize, _LitElement) {
+let PINTextField = _decorate([e$1('pin-field-2')], function (_initialize, _LitElement) {
   class PINTextField extends _LitElement {
     constructor(...args) {
       super(...args);
