@@ -47,13 +47,13 @@ let PINTextField = _decorate([e$1('pin-field')], function (_initialize, _LitElem
         console.log("PIN: ", {
           name: this.pin
         });
-        return y`<div><input class="pinInput form-control nx-input-control nx-theme-input-1" onchange="${() => this.onChange()}"></div><div>${this.pin}</div>`;
+        return y`<div><input class="pinInput form-control nx-input-control nx-theme-input-1" onchange="pinChange()"></div><div>${this.pin}</div>`;
       }
     }, {
       kind: "method",
-      key: "onChange",
-      value: function onChange() {
-        console.log('onChange');
+      key: "pinChange",
+      value: function pinChange() {
+        console.log('pinChange');
         const el = this.shadowRoot?.getElementById('pinInput');
         if (el) {
           fire(this, {
