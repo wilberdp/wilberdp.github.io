@@ -43,7 +43,7 @@ let PINTextField = _decorate(null, function (_initialize, _LitElement) {
       key: "getMetaConfig",
       value: function getMetaConfig() {
         return {
-          controlName: 'PIN Field',
+          controlName: 'PIN-Field',
           fallbackDisableSubmit: false,
           iconUrl: 'one-line-text',
           version: '1',
