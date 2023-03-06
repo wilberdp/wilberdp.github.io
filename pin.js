@@ -1,5 +1,18 @@
 import { _ as _decorate, s, i, e, y, a as e$1 } from './query-assigned-elements-5558b813.js';
 
+const fire = (element, data) => {
+  const args = {
+    bubbles: true,
+    cancelable: false,
+    composed: true,
+    ...data
+  };
+
+  // the event name 'nintex-value-change' is required to tell the form engine to update the value
+  const event = new CustomEvent('ntx-value-change', args);
+  element.dispatchEvent(event);
+  return event;
+};
 let PINTextField = _decorate([e$1('pin-field')], function (_initialize, _LitElement) {
   class PINTextField extends _LitElement {
     constructor(...args) {
@@ -38,11 +51,22 @@ let PINTextField = _decorate([e$1('pin-field')], function (_initialize, _LitElem
       }
     }, {
       kind: "method",
+      key: "onChange",
+      value: function onChange() {
+        const el = this.shadowRoot?.getElementById('pinInput');
+        if (el) {
+          fire(this, {
+            detail: el.value
+          });
+        }
+      }
+    }, {
+      kind: "method",
       static: true,
       key: "getMetaConfig",
       value: function getMetaConfig() {
         return {
-          controlName: 'PIN-Field',
+          controlName: 'pin-field',
           fallbackDisableSubmit: false,
           iconUrl: 'one-line-text',
           version: '1',
