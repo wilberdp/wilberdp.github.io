@@ -37,15 +37,8 @@ let PINTextField = _decorate([e$1('pin-field-2')], function (_initialize, _LitEl
       kind: "method",
       key: "render",
       value: function render() {
-        var eles = document.getElementsByClassName("mat-stepper-horizontal");
-        for (var i = 0; i < eles.length; i++) {
-          eles[i].style.display = 'none';
-        }
-        eles = document.getElementsByClassName("nx-action-panel");
-        for (var i = 0; i < eles.length; i++) {
-          eles[i].style.display = 'none';
-        }
-        return y`<input id="pinInput" class="form-control nx-input-control nx-theme-input-1" @keyup="${e => this.pinChange(e)}" @change="${e => this.pinChange(e)}"></input>`;
+        this.showHide('none', 'none');
+        return y`<input id="pinInput" class="form-control nx-input-control nx-theme-input-1" @keyup="${e => this.pinChange2(e)}" @change="${e => this.pinChange(e)}"></input>`;
       }
     }, {
       kind: "method",
@@ -57,30 +50,38 @@ let PINTextField = _decorate([e$1('pin-field-2')], function (_initialize, _LitEl
           fire(this, {
             detail: el.value
           });
-
-          if (el.value == this.pinToMatch) {
-            var eles = document.getElementsByClassName("mat-stepper-horizontal");
-            for (var i = 0; i < eles.length; i++) {
-              eles[i].style.display = 'block';
-            }
-            eles = document.getElementsByClassName("nx-action-panel");
-            for (var i = 0; i < eles.length; i++) {
-              eles[i].style.display = 'flex';
-            }
-          }
-          else {
-            var eles = document.getElementsByClassName("mat-stepper-horizontal");
-            for (var i = 0; i < eles.length; i++) {
-              eles[i].style.display = 'block';
-            }
-            eles = document.getElementsByClassName("nx-action-panel");
-            for (var i = 0; i < eles.length; i++) {
-              eles[i].style.display = 'none';
-            }
-          }
         }
       }
     }, {
+      kind: "method",
+      key: "pinChange2",
+      value: function pinChange2(e) {
+        console.log('pinChange2');
+        const el = this.shadowRoot?.getElementById('pinInput');
+        if (el) {
+          if (el.value == this.pinToMatch) {
+            this.showHide('block', 'flex');
+          }
+          else {
+            this.showHide('none', 'none');
+          }
+        }
+      }
+      }, {
+        kind: "method",
+        static: true,
+        key: "getMetaConfig",
+        value: function showHide(attr1, attr2) {
+          var eles = document.getElementsByClassName("mat-stepper-horizontal");
+          for (var i = 0; i < eles.length; i++) {
+            eles[i].style.display = attr1;
+          }
+          eles = document.getElementsByClassName("nx-action-panel");
+          for (var i = 0; i < eles.length; i++) {
+            eles[i].style.display = attr2;
+          }
+        }
+      }, {
       kind: "method",
       static: true,
       key: "getMetaConfig",
