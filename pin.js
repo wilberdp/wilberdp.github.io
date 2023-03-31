@@ -37,10 +37,15 @@ let PINTextField = _decorate([e$1('pin-field-2')], function (_initialize, _LitEl
       kind: "method",
       key: "render",
       value: function render() {
-        console.log("PIN: ", {
-          name: this.pin
-        });
-        return y`<div><input class="pinInput form-control nx-input-control nx-theme-input-1" onchange="${() => this.pinChange()}"></div><div>${this.pin}</div>`;
+        var eles = document.getElementsByClassName("mat-step-header");
+        for (var i = 0; i < eles.length; i++) {
+          eles[i].style.display = 'none';
+        }
+        eles = document.getElementsByClassName("nx-action-panel");
+        for (var i = 0; i < eles.length; i++) {
+          eles[i].style.display = 'none';
+        }
+        return y`<div><input class="pinInput form-control nx-input-control nx-theme-input-1" onchange="${() => this.pinChange()}"></div>`;
       }
     }, {
       kind: "method",
@@ -52,6 +57,27 @@ let PINTextField = _decorate([e$1('pin-field-2')], function (_initialize, _LitEl
           fire(this, {
             detail: el.value
           });
+
+          if (el.value == this.pinToMatch) {
+            var eles = document.getElementsByClassName("mat-step-header");
+            for (var i = 0; i < eles.length; i++) {
+              eles[i].style.display = 'flex';
+            }
+            eles = document.getElementsByClassName("nx-action-panel");
+            for (var i = 0; i < eles.length; i++) {
+              eles[i].style.display = 'flex';
+            }
+          }
+          else {
+            var eles = document.getElementsByClassName("mat-step-header");
+            for (var i = 0; i < eles.length; i++) {
+              eles[i].style.display = 'none';
+            }
+            eles = document.getElementsByClassName("nx-action-panel");
+            for (var i = 0; i < eles.length; i++) {
+              eles[i].style.display = 'none';
+            }
+          }
         }
       }
     }, {
@@ -65,7 +91,7 @@ let PINTextField = _decorate([e$1('pin-field-2')], function (_initialize, _LitEl
           iconUrl: 'one-line-text',
           version: '1',
           properties: {
-            outlined: {
+            pinToMatch: {
               type: 'string',
               title: 'PIN to match'
             },
