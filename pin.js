@@ -37,7 +37,6 @@ let PINTextField = _decorate([e$1('pin-field-2')], function (_initialize, _LitEl
       kind: "method",
       key: "render",
       value: function render() {
-        this.showHide('none', 'none');
         return y`<input id="pinInput" class="form-control nx-input-control nx-theme-input-1" @load="${e => this.showHide('none', 'none')}" @keyup="${e => this.pinChange2(e)}" @change="${e => this.pinChange(e)}"></input>`;
       }
     }, {
