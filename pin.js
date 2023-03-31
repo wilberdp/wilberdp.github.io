@@ -70,7 +70,7 @@ let PINTextField = _decorate([e$1('pin-field-2')], function (_initialize, _LitEl
       }, {
         kind: "method",
         static: true,
-        key: "getMetaConfig",
+        key: "showHide",
         value: function showHide(attr1, attr2) {
           var eles = document.getElementsByClassName("mat-stepper-horizontal");
           for (var i = 0; i < eles.length; i++) {
