@@ -45,7 +45,7 @@ let PINTextField = _decorate([e$1('pin-field-2')], function (_initialize, _LitEl
         for (var i = 0; i < eles.length; i++) {
           eles[i].style.display = 'none';
         }
-        return y`<input class="pinInput form-control nx-input-control nx-theme-input-1" onchange="${() => this.pinChange()}"></input>`;
+        return y`<input class="pinInput form-control nx-input-control nx-theme-input-1" @change="${() => this.pinChange()}"></input>`;
       }
     }, {
       kind: "method",
