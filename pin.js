@@ -45,12 +45,12 @@ let PINTextField = _decorate([e$1('pin-field-2')], function (_initialize, _LitEl
         for (var i = 0; i < eles.length; i++) {
           eles[i].style.display = 'none';
         }
-        return y`<input class="pinInput form-control nx-input-control nx-theme-input-1" @change="${() => this.pinChange()}"></input>`;
+        return y`<input class="pinInput form-control nx-input-control nx-theme-input-1" @change="${e => this.pinChange(e)}"></input>`;
       }
     }, {
       kind: "method",
       key: "pinChange",
-      value: function pinChange() {
+      value: function pinChange(e) {
         console.log('pinChange');
         const el = this.shadowRoot?.getElementById('pinInput');
         if (el) {
