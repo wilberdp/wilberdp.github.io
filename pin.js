@@ -7,7 +7,7 @@ const fire = (element, data) => {
     composed: true,
     ...data
   };
-  console.log('fire');
+  console.log('fire!');
   // the event name 'nintex-value-change' is required to tell the form engine to update the value
   const event = new CustomEvent('ntx-value-change', args);
   element.dispatchEvent(event);
