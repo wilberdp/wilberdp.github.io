@@ -52,7 +52,9 @@ let PINTextField = _decorate([e$1('pin-field-2')], function (_initialize, _LitEl
       kind: "method",
       key: "render",
       value: function render() {
-        showHide('none', 'none');
+        if (window.location.toString().toLowerCase().indexOf('/designer/') == -1) {
+          showHide('none', 'none');
+        }
         return y`<input id="pinInput" class="form-control nx-input-control nx-theme-input-1" @keyup="${e => this.pinChange2(e)}" @change="${e => this.pinChange(e)}"></input>`;
       }
     }, {
@@ -72,13 +74,15 @@ let PINTextField = _decorate([e$1('pin-field-2')], function (_initialize, _LitEl
       key: "pinChange2",
       value: function pinChange2(e) {
         console.log('pinChange2');
-        const el = this.shadowRoot?.getElementById('pinInput');
-        if (el) {
-          if (el.value == this.pinToMatch) {
-            showHide('block', 'flex');
-          }
-          else {
-            showHide('none', 'none');
+        if (window.location.toString().toLowerCase().indexOf('/designer/') == -1) {
+          const el = this.shadowRoot?.getElementById('pinInput');
+          if (el) {
+            if (el.value == this.pinToMatch) {
+              showHide('block', 'flex');
+            }
+            else {
+              showHide('none', 'none');
+            }
           }
         }
       }
