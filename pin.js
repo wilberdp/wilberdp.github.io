@@ -34,13 +34,6 @@ let PINTextField = _decorate([e$1('pin-field-2')], function (_initialize, _LitEl
     `;
       }
     }, {
-      kind: "field",
-      decorators: [e()],
-      key: "pin",
-      value() {
-        return "1234";
-      }
-    }, {
       kind: "method",
       key: "render",
       value: function render() {
@@ -73,8 +66,8 @@ let PINTextField = _decorate([e$1('pin-field-2')], function (_initialize, _LitEl
           version: '1',
           properties: {
             outlined: {
-              type: 'boolean',
-              title: 'Show Outline'
+              type: 'string',
+              title: 'PIN to match'
             },
             value: {
               type: 'string',
