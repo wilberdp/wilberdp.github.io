@@ -38,6 +38,7 @@ let PINTextField = _decorate([e$1('pin-field-2')], function (_initialize, _LitEl
           font-family: var(--ntx-form-theme-font-family);
           border: 1px solid var(--ntx-form-theme-color-border);
           border-radius: var(--ntx-form-theme-border-radius);
+          height: var(--ntx-form-theme-control-height);
         }
         .form-control:focus {
           outline: none;
