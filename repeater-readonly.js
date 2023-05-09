@@ -52,7 +52,7 @@ let RepeaterReadOnly = _decorate([e$1('repeater-readonly')], function (_initiali
             description: false,
             defaultValue: false,
               readOnly: false,
-            visible: true
+            visibility: true
           }
         };
       }
