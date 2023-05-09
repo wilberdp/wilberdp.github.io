@@ -27,6 +27,7 @@ let RepeaterReadOnly = _decorate([e$1('repeater-readonly')], function (_initiali
       static: true,
       key: "styles",
         value() {
+          console.log(this.readOnlyControlVariable);
             if (this.readOnlyControlVariable) {
                 return i`
                     ntx-repeating-section button.ntx-repeating-section-remove-button, ntx-repeating-section button.btn-repeating-section-new-row {
