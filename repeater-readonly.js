@@ -23,28 +23,14 @@ let RepeaterReadOnly = _decorate([e$1('repeater-readonly')], function (_initiali
   return {
     F: RepeaterReadOnly,
     d: [{
-      kind: "field",
-      static: true,
-      key: "styles",
-        value() {
-          console.log(this.readOnlyControlVariable);
-            if (this.readOnlyControlVariable) {
-                return i`
-                    ntx-repeating-section button.ntx-repeating-section-remove-button, ntx-repeating-section button.btn-repeating-section-new-row {
-                        display: none !important;           
-                    }
-                `
-            }
-            else {
-                return i``;
-            }
-        }
-    }, {
       kind: "method",
       key: "render",
-      value: function render() {
-        return y``;
-      }
+        value: function render() {
+            if (this.readOnlyControlVariable) {
+                showHide('none');
+            }
+            return y`<span>Repeater Read-Only Control</span>`;
+        }
     }, {
       kind: "method",
       static: true,
@@ -72,5 +58,12 @@ let RepeaterReadOnly = _decorate([e$1('repeater-readonly')], function (_initiali
     }]
   };
 }, s); 
+
+function showHide(attr1) {
+    var eles = document.querySelectorAll('ntx-repeating-section button.ntx-repeating-section-remove-button, ntx-repeating-section button.btn-repeating-section-new-row');
+    for (var i = 0; i < eles.length; i++) {
+        eles[i].style.display = attr1;
+    }
+}
 
 export { RepeaterReadOnly };
