@@ -17,6 +17,9 @@ export class RepeaterReadOnly extends LitElement {
                     type: 'boolean',
                     title: 'Read-Only Control Variable'
                 }
+            },
+            standardProperties: {
+                visibility: true
             }
         };
     }
