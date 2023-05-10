@@ -31,7 +31,7 @@ let RepeaterReadOnly = _decorate([e$1('repeater-readonly')], function (_initiali
                 showHide('none');
             }
             else {
-                
+                showHide('inline-block');
             }
             return y`<span>Repeater Read-Only Control</span>`;
         }
