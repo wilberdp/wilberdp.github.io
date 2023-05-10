@@ -26,15 +26,13 @@ let RepeaterReadOnly = _decorate([e$1('repeater-readonly')], function (_initiali
       kind: "method",
       key: "render",
         value: function render() {
-            setInterval(function () {
-                console.log('render');
-                if (this.readOnlyControlVariable) {
-                    showHide('none');
-                }
-                else {
-                    showHide('inline-block');
-                }
-            }, 100);
+            console.log('render');
+            if (this.readOnlyControlVariable) {
+                showHide('none');
+            }
+            else {
+                showHide('inline-block');
+            }
 
             return y`<span>Repeater Read-Only Control</span>`;
         }
