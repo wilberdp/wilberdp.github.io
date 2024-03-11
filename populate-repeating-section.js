@@ -33,8 +33,9 @@ export class PopulateRepeatingSection extends LitElement {
 
     render() {
         if (this.repeatingSectionClass != null && this.repeatingSectionClass != '' && this.values != null && this.values != '') {
-            var repeatingSection = document.getElementsByClassName(this.repeatingSectionClass)[0];
+            var repeatingSection = document.getElementsByClassName(this.repeatingSectionClass);
             if (repeatingSection != null && repeatingSection.length > 0) {
+                repeatingSection = repeatingSection[0];
                 var parsed = JSON.parse(this.values);
                 for (var i = 0; i < parsed.length; i++) {
                     var idx2 = 0;
