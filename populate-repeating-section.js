@@ -16,7 +16,7 @@ export class PopulateRepeatingSection extends LitElement {
             properties: {
                 repeatingSection: {
                     type: 'string',
-                    title: 'Repeating Section Name'
+                    title: 'Repeating Section Class'
                 },
                 values: {
                     type: 'string',
