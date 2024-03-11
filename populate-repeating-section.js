@@ -1,5 +1,5 @@
 import { html, LitElement } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit-all.min.js';
-import { jquery } from 'https://code.jquery.com/jquery-3.7.1.min.js';
+import 'https://code.jquery.com/jquery-3.7.1.min.js';
 
 // define the component
 export class PopulateRepeatingSection extends LitElement {
