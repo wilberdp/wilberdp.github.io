@@ -31,6 +31,17 @@ export class PopulateRepeatingSection extends LitElement {
     }
 
     render() {
+        if (this.repeatingSection != null && this.repeatingSection != '' && this.values != null && this.values != '') {
+            var parsed = JSON.parse(this.values);
+            for (var i = 0; i < parsed.length; i++) {
+                for (var key in parsed[i]) {
+                    if (parsed[i].hasOwnProperty(key)) {
+                        console.log(key + ': ' + parsed[i][key]);
+                    }
+                }
+            }
+        }
+
         return html`<p>Hello ${this.repeatingSection}<p/>`;
     }
 }
