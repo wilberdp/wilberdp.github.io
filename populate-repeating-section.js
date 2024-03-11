@@ -43,7 +43,7 @@ export class PopulateRepeatingSection extends LitElement {
                     for (var key in parsed[i]) {
                         if (parsed[i].hasOwnProperty(key)) {
                             console.log(key + ': ' + parsed[i][key]);
-                            fields[idx2].val(parsed[i][key]);
+                            fields[idx2].value = parsed[i][key];
                             idx2++;
                         }
                     }
