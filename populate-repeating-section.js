@@ -1,5 +1,4 @@
 import { html, LitElement } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit-all.min.js';
-import 'https://code.jquery.com/jquery-3.7.1.min.js';
 
 // define the component
 export class PopulateRepeatingSection extends LitElement {
@@ -39,7 +38,7 @@ export class PopulateRepeatingSection extends LitElement {
                 var parsed = JSON.parse(this.values);
                 for (var i = 0; i < parsed.length; i++) {
                     var idx2 = 0;
-                    var fields = jQuery('.' + this.repeatingSectionClass + ' input, .' + this.repeatingSectionClass + ' textarea');
+                    var fields = document.querySelectorAll('.' + this.repeatingSectionClass + ' input, .' + this.repeatingSectionClass + ' textarea');
                     for (var key in parsed[i]) {
                         if (parsed[i].hasOwnProperty(key)) {
                             console.log(key + ': ' + parsed[i][key]);
@@ -47,7 +46,7 @@ export class PopulateRepeatingSection extends LitElement {
                             idx2++;
                         }
                     }
-                    jQuery('.' + this.repeatingSectionClass).closest('div').find('button.btn-repeating-section-new-row');
+                    document.querySelector('.' + this.repeatingSectionClass).closest('div').querySelector('button.btn-repeating-section-new-row').click();
                 }
             }
         }
