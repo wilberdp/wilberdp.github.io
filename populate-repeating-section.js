@@ -47,7 +47,7 @@ export class PopulateRepeatingSection extends LitElement {
                             idx2++;
                         }
                     }
-                    document.querySelector('.' + this.repeatingSectionClass).parentElement().closest('div').querySelector('button.btn-repeating-section-new-row').click();
+                    document.querySelector('.' + this.repeatingSectionClass).parentElement.closest('div').querySelector('button.btn-repeating-section-new-row').click();
                 }
             }
         }
