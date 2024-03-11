@@ -1,9 +1,11 @@
-import { html,LitElement} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit-all.min.js';
+import { html, LitElement } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit-all.min.js';
+import { jquery } from 'https://code.jquery.com/jquery-3.7.1.min.js';
+
 // define the component
 export class PopulateRepeatingSection extends LitElement {
   
     static properties = {
-        repeatingSection: { type: String },
+        repeatingSectionClass: { type: String },
         values: { type: String }
     };
   
@@ -12,9 +14,9 @@ export class PopulateRepeatingSection extends LitElement {
         return {
             controlName: 'Populate Repeating Section',
             fallbackDisableSubmit: false,
-            version: '1.2',
+            version: '1.0',
             properties: {
-                repeatingSection: {
+                repeatingSectionClass: {
                     type: 'string',
                     title: 'Repeating Section Class'
                 },
@@ -31,18 +33,26 @@ export class PopulateRepeatingSection extends LitElement {
     }
 
     render() {
-        if (this.repeatingSection != null && this.repeatingSection != '' && this.values != null && this.values != '') {
-            var parsed = JSON.parse(this.values);
-            for (var i = 0; i < parsed.length; i++) {
-                for (var key in parsed[i]) {
-                    if (parsed[i].hasOwnProperty(key)) {
-                        console.log(key + ': ' + parsed[i][key]);
+        if (this.repeatingSectionClass != null && this.repeatingSectionClass != '' && this.values != null && this.values != '') {
+            var repeatingSection = document.getElementsByClassName(this.repeatingSectionClass)[0];
+            if (repeatingSection != null && repeatingSection.length > 0) {
+                var parsed = JSON.parse(this.values);
+                for (var i = 0; i < parsed.length; i++) {
+                    var idx2 = 0;
+                    var fields = jQuery('.' + this.repeatingSectionClass + ' input, .' + this.repeatingSectionClass + ' textarea');
+                    for (var key in parsed[i]) {
+                        if (parsed[i].hasOwnProperty(key)) {
+                            console.log(key + ': ' + parsed[i][key]);
+                            fields[idx2].val(parsed[i][key]);
+                            idx2++;
+                        }
                     }
+                    jQuery('.' + this.repeatingSectionClass).closest('div').find('button.btn-repeating-section-new-row');
                 }
             }
         }
 
-        return html`<p>Hello ${this.repeatingSection}<p/>`;
+        return html`<p>Hello ${this.repeatingSectionClass}<p/>`;
     }
 }
 
