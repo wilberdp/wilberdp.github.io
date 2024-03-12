@@ -63,7 +63,7 @@ export class PopulateRepeatingSection extends LitElement {
                 for (var i = 0; i < parsed.length; i++) {
                     var idx2 = 0;
                     var lastSection = repeatingSection.querySelector('.ntx-repeating-section-repeated-section:nth-child(' + (i + 1) + ')');
-                    var fields =  lastSection.querySelectorAll('.' + this.repeatingSectionClass + ' input:not([type="checkbox"]), .' + this.repeatingSectionClass + ' textarea, .nx-checkbox-group');
+                    var fields =  lastSection.querySelectorAll('.' + this.repeatingSectionClass + ' input:not([type="checkbox"]), .' + this.repeatingSectionClass + ' textarea, .nx-checkbox-group, .nx-radio-group');
                     for (var key in parsed[i]) {
                         if (parsed[i].hasOwnProperty(key)) {
                             console.log(key + ': ' + parsed[i][key]);
@@ -87,7 +87,18 @@ export class PopulateRepeatingSection extends LitElement {
                                     }
                                 }
                                 else {
-                                    fields[idx2].value = parsed[i][key];
+                                    if (fields[idx2].classList.contains('nx-radio-group')) {
+                                        var rads = fields[idx2].querySelectorAll('input[type="radio"]');
+                                        for (var o = 0; o < rads.length; o++) {
+                                            if (rads[o].value == parsed[i][key]) {
+                                                rads[o].checked = true;
+                                                rads[o].setAttribute('checked', 'true');
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        fields[idx2].value = parsed[i][key];
+                                    }
                                 }
                             }
                             idx2++;
