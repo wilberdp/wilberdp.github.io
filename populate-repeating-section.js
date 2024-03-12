@@ -63,7 +63,7 @@ export class PopulateRepeatingSection extends LitElement {
                 for (var i = 0; i < parsed.length; i++) {
                     var idx2 = 0;
                     var lastSection = repeatingSection.querySelector('.ntx-repeating-section-repeated-section:nth-child(' + (i + 1) + ')');
-                    var fields =  lastSection.querySelectorAll('.' + this.repeatingSectionClass + ' input:not([type="checkbox"]), .' + this.repeatingSectionClass + ' textarea, .nx-checkbox-group, .nx-radio-group');
+                    var fields =  lastSection.querySelectorAll('.' + this.repeatingSectionClass + ' input:not([type="checkbox"]):not([type="radio"]), .' + this.repeatingSectionClass + ' textarea, .nx-checkbox-group, .nx-radio-group');
                     for (var key in parsed[i]) {
                         if (parsed[i].hasOwnProperty(key)) {
                             console.log(key + ': ' + parsed[i][key]);
