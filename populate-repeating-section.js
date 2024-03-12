@@ -78,7 +78,7 @@ export class PopulateRepeatingSection extends LitElement {
                                     var cbs = fields[idx2].querySelectorAll('input[type="checkbox"]');
                                     var splitValue = parsed[i][key].split(';#');
                                     for (var o = 0; o < cbs.length; o++) {
-                                        for (var p = 0; p < splitValue; p++) {
+                                        for (var p = 0; p < splitValue.length; p++) {
                                             if (cbs[o].value == splitValue[p]) {
                                                 cbs[o].checked = true;
                                                 cbs[o].setAttribute('checked', 'true');
