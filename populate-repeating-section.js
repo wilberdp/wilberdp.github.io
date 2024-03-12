@@ -70,7 +70,7 @@ export class PopulateRepeatingSection extends LitElement {
                             if (fields[idx2].classList.contains('flatpickr-input')) {
                                 //await new Promise(r => setTimeout(r, 1000));
                                 setTimeout(function (sel, dt) {
-                                    flatpickr(sel, { allowInput: true, dateFormat: "M d, Y" }).setDate(new Date(dt), true);
+                                    flatpickr(sel, { allowInput: true, dateFormat: "M d, Y" })[0].setDate(new Date(dt), true);
                                 }, 1000, fields[idx2], parsed[i][key]);
                             }
                             else {
