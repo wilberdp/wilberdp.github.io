@@ -15,6 +15,7 @@ export class PopulateRepeatingSection extends LitElement {
             controlName: 'Populate Repeating Section',
             fallbackDisableSubmit: false,
             version: '1.0',
+            visibility: true,
             properties: {
                 repeatingSectionClass: {
                     type: 'string',
@@ -112,10 +113,11 @@ export class PopulateRepeatingSection extends LitElement {
                                         try {
                                             fields[idx2].dispatchEvent(new Event('input'));
                                         } catch { }
-                                        try {
-                                            setTimeout(function () {
-                                                fields[idx2].closest('ng-select').querySelectorAll('.nx-select__option')[0].dispatchEvent(new Event('click'));
-                                            }, 2000);
+                                        try {                                            
+                                            var clickInterval = setInterval(function () {
+                                                fields[idx2].closest('ng-select').querySelectorAll('.ng-option')[0].dispatchEvent(new Event('click'));
+                                                clearInterval(clickInterval);
+                                            }, 500);
                                         } catch { }
                                     }
                                 }
