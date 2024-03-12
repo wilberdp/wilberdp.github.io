@@ -97,19 +97,26 @@ export class PopulateRepeatingSection extends LitElement {
                                         }
                                     }
                                     else {
-                                        fields[idx2].value = parsed[i][key];
+                                        try {
+                                            fields[idx2].value = parsed[i][key];
+                                        } catch { }
                                         try {
                                             fields[idx2].closest('ng-select').value = parsed[i][key];
+                                        } catch { }
+                                        try {
                                             fields[idx2].closest('ng-select').querySelector('.ng-value .ng-star-inserted').setAttribute('title', parsed[i][key]);
+                                        } catch { }
+                                        try {
                                             fields[idx2].closest('ng-select').querySelector('.ng-value .ng-star-inserted').textContent = parsed[i][key];
+                                        } catch { }
+                                        try {
                                             fields[idx2].dispatchEvent(new Event('input'));
+                                        } catch { }
+                                        try {
                                             setTimeout(function () {
                                                 fields[idx2].closest('ng-select').querySelectorAll('.nx-select__option')[0].dispatchEvent(new Event('click'));
                                             }, 2000);
-                                        }
-                                        catch (exc) {
-                                            console.log(exc);
-                                        }
+                                        } catch { }
                                     }
                                 }
                             }
