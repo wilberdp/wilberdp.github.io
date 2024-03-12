@@ -57,12 +57,12 @@ export class PopulateRepeatingSection extends LitElement {
                             idx2++;
                         }
                     }
-                    var sectionCount = repeatingSection.querySelector('.ntx-repeating-section-repeated-section').length;
+                    var sectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
                     repeatingSection.parentElement.closest('div').querySelector('button.btn-repeating-section-new-row').click();
                     var exists = false;
                     while (!exists) {
                         await new Promise(r => setTimeout(r, 2000));
-                        var newSectionCount = repeatingSection.querySelector('.ntx-repeating-section-repeated-section').length;
+                        var newSectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
                         if (sectionCount != newSectionCount) {
                             exists = true;
                         }
