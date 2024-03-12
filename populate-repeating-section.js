@@ -69,8 +69,8 @@ export class PopulateRepeatingSection extends LitElement {
                             console.log(key + ': ' + parsed[i][key]);
                             if (fields[idx2].classList.contains('flatpickr-input')) {
                                 //await new Promise(r => setTimeout(r, 1000));
-                                setTimeout(function () {
-                                    flatpickr(fields[idx2], { allowInput: true, dateFormat: "M d, Y" }).setDate(new Date(parsed[i][key]), true);
+                                setTimeout(function (sel, dt) {
+                                    flatpickr(sel, { allowInput: true, dateFormat: "M d, Y" }).setDate(new Date(dt), true);
                                 }, 1000, fields[idx2], parsed[i][key]);
                             }
                             else {
