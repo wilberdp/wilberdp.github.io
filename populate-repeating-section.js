@@ -33,6 +33,14 @@ export class PopulateRepeatingSection extends LitElement {
     }
 
     render() {
+        this.render2().then(res => {
+            console.log(res);            
+        });   
+
+        return html`<p>Hello ${this.repeatingSectionClass}<p/>`;
+    }
+
+    async render2() {
         if (this.repeatingSectionClass != null && this.repeatingSectionClass != '' && this.values != null && this.values != '') {
             var repeatingSection = document.getElementsByClassName(this.repeatingSectionClass);
             if (repeatingSection != null && repeatingSection.length > 0) {
@@ -40,7 +48,8 @@ export class PopulateRepeatingSection extends LitElement {
                 var parsed = JSON.parse(this.values);
                 for (var i = 0; i < parsed.length; i++) {
                     var idx2 = 0;
-                    var fields = document.querySelectorAll('.' + this.repeatingSectionClass + ' input, .' + this.repeatingSectionClass + ' textarea');
+                    var lastSection = repeatingSection.querySelector('.ntx-repeating-section-repeated-section:last-child');
+                    var fields =  lastSection.querySelectorAll('.' + this.repeatingSectionClass + ' input, .' + this.repeatingSectionClass + ' textarea');
                     for (var key in parsed[i]) {
                         if (parsed[i].hasOwnProperty(key)) {
                             console.log(key + ': ' + parsed[i][key]);
@@ -48,12 +57,18 @@ export class PopulateRepeatingSection extends LitElement {
                             idx2++;
                         }
                     }
-                    document.querySelector('.' + this.repeatingSectionClass).parentElement.closest('div').querySelector('button.btn-repeating-section-new-row').click();
+                    var sectionCount = repeatingSection.querySelector('.ntx-repeating-section-repeated-section').length;
+                    repeatingSection.parentElement.closest('div').querySelector('button.btn-repeating-section-new-row').click();
+                    var exists = false;
+                    while (!exists) {
+                        var newSectionCount = repeatingSection.querySelector('.ntx-repeating-section-repeated-section').length;
+                        if (sectionCount != newSectionCount) {
+                            exists = true;
+                        }
+                    }
                 }
             }
         }
-
-        return html`<p>Hello ${this.repeatingSectionClass}<p/>`;
     }
 }
 
