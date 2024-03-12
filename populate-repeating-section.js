@@ -76,10 +76,13 @@ export class PopulateRepeatingSection extends LitElement {
                             else {
                                 if (fields[idx2].classList.contains('nx-checkbox-group')) {
                                     var cbs = fields[idx2].querySelectorAll('input[type="checkbox"]');
+                                    var splitValue = parsed[i][key].split(';#');
                                     for (var o = 0; o < cbs.length; o++) {
-                                        if (cbs[o].value == parsed[i][key]) {
-                                            cbs[o].checked = true;
-                                            cbs[o].setAttribute('checked', 'true');
+                                        for (var p = 0; p < splitValue; p++) {
+                                            if (cbs[o].value == splitValue[p]) {
+                                                cbs[o].checked = true;
+                                                cbs[o].setAttribute('checked', 'true');
+                                            }
                                         }
                                     }
                                 }
