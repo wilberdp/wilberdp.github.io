@@ -63,7 +63,7 @@ export class PopulateRepeatingSection extends LitElement {
                 for (var i = 0; i < parsed.length; i++) {
                     var idx2 = 0;
                     var lastSection = repeatingSection.querySelector('.ntx-repeating-section-repeated-section:nth-child(' + (i + 1) + ')');
-                    var fields =  lastSection.querySelectorAll('.' + this.repeatingSectionClass + ' input, .' + this.repeatingSectionClass + ' textarea');
+                    var fields =  lastSection.querySelectorAll('.' + this.repeatingSectionClass + ' input:not([type="checkbox"]), .' + this.repeatingSectionClass + ' textarea, .nx-checkbox-group');
                     for (var key in parsed[i]) {
                         if (parsed[i].hasOwnProperty(key)) {
                             console.log(key + ': ' + parsed[i][key]);
@@ -74,12 +74,22 @@ export class PopulateRepeatingSection extends LitElement {
                                 }, 2000, fields[idx2], parsed[i][key]);
                             }
                             else {
-                                fields[idx2].value = parsed[i][key];
+                                if (fields[idx2].classList.contains('nx-checkbox-group')) {
+                                    var cbs = fields[idx2].querySelectorAll('input[type="checkbox"]');
+                                    for (var o = 0; o < cbs.length; o++) {
+                                        if (cbs[o].value == parsed[i][key]) {
+                                            cbs[o].checked = true;
+                                            cbs[o].setAttribute('checked', 'true');
+                                        }
+                                    }
+                                }
+                                else {
+                                    fields[idx2].value = parsed[i][key];
+                                }
                             }
                             idx2++;
                         }
-                    }
-
+                    }        
                 }
             }
         }
