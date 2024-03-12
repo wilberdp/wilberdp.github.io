@@ -61,6 +61,7 @@ export class PopulateRepeatingSection extends LitElement {
                     repeatingSection.parentElement.closest('div').querySelector('button.btn-repeating-section-new-row').click();
                     var exists = false;
                     while (!exists) {
+                        await new Promise(r => setTimeout(r, 2000));
                         var newSectionCount = repeatingSection.querySelector('.ntx-repeating-section-repeated-section').length;
                         if (sectionCount != newSectionCount) {
                             exists = true;
