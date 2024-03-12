@@ -98,6 +98,14 @@ export class PopulateRepeatingSection extends LitElement {
                                     }
                                     else {
                                         fields[idx2].value = parsed[i][key];
+                                        try {
+                                            fields[idx2].closest('ng-select').value = parsed[i][key];
+                                            fields[idx2].closest('ng-select').querySelector('.ng-value .ng-star-inserted').setAttribute('title', parsed[i][key]);
+                                            fields[idx2].closest('ng-select').querySelector('.ng-value .ng-star-inserted').textContent = parsed[i][key];
+                                        }
+                                        catch (exc) {
+                                            console.log(exc);
+                                        }
                                     }
                                 }
                             }
