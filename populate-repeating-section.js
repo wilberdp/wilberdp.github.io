@@ -62,7 +62,7 @@ export class PopulateRepeatingSection extends LitElement {
 
                 for (var i = 0; i < parsed.length; i++) {
                     var idx2 = 0;
-                    var lastSection = repeatingSection.querySelector('.ntx-repeating-section-repeated-section:nth-child(' (i + 1) + ')');
+                    var lastSection = repeatingSection.querySelector('.ntx-repeating-section-repeated-section:nth-child(' + (i + 1) + ')');
                     var fields =  lastSection.querySelectorAll('.' + this.repeatingSectionClass + ' input, .' + this.repeatingSectionClass + ' textarea');
                     for (var key in parsed[i]) {
                         if (parsed[i].hasOwnProperty(key)) {
