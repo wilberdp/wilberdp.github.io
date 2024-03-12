@@ -1,6 +1,5 @@
 import { html, LitElement } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit-all.min.js';
 import 'https://cdn.jsdelivr.net/npm/flatpickr';
-import { Component, NgZone, ChangeDetectorRef } from '@angular/core';
 
 // define the component
 export class PopulateRepeatingSection extends LitElement {
