@@ -54,9 +54,7 @@ export class PopulateRepeatingSection extends LitElement {
                         if (parsed[i].hasOwnProperty(key)) {
                             console.log(key + ': ' + parsed[i][key]);
                             if (fields[idx2].classList.contains('flatpickr-input')) {
-                                flatpickr(fields[idx2], { allowInput: true }).setDate(new Date(parsed[i][key]), true);
-                                fields[idx2].value = (new Date(parsed[i][key])).toLocaleDateString('en-us', { year: "numeric", month: "short", day: "numeric" });
-
+                                flatpickr(fields[idx2], { allowInput: true, dateFormat: "M d, Y" }).setDate(new Date(parsed[i][key]), true);
                             }
                             else {
                                 fields[idx2].value = parsed[i][key];
@@ -68,7 +66,7 @@ export class PopulateRepeatingSection extends LitElement {
                     repeatingSection.parentElement.closest('div').querySelector('button.btn-repeating-section-new-row').click();
                     var exists = false;
                     while (!exists) {
-                        await new Promise(r => setTimeout(r, 1000));
+                        await new Promise(r => setTimeout(r, 100));
                         var newSectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
                         if (sectionCount != newSectionCount) {
                             exists = true;
