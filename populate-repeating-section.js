@@ -1,5 +1,6 @@
 import { html, LitElement } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit-all.min.js';
 import 'https://cdn.jsdelivr.net/npm/flatpickr';
+import { Component, NgZone, ChangeDetectorRef } from '@angular/core';
 
 // define the component
 export class PopulateRepeatingSection extends LitElement {
@@ -102,6 +103,10 @@ export class PopulateRepeatingSection extends LitElement {
                                             fields[idx2].closest('ng-select').value = parsed[i][key];
                                             fields[idx2].closest('ng-select').querySelector('.ng-value .ng-star-inserted').setAttribute('title', parsed[i][key]);
                                             fields[idx2].closest('ng-select').querySelector('.ng-value .ng-star-inserted').textContent = parsed[i][key];
+                                            fields[idx2].dispatchEvent(new Event('input'));
+                                            setTimeout(function () {
+                                                fields[idx2].closest('ng-select').querySelectorAll('.nx-select__option')[0].dispatchEvent(new Event('click'));
+                                            }, 2000);
                                         }
                                         catch (exc) {
                                             console.log(exc);
