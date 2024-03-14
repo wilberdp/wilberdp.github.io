@@ -69,10 +69,17 @@ export class PopulateRepeatingSection extends LitElement {
                         if (parsed[i].hasOwnProperty(key)) {
                             console.log(key + ': ' + parsed[i][key]);
                             if (fields[idx2].classList.contains('flatpickr-input')) {
-                                //await new Promise(r => setTimeout(r, 1000));
-                                setTimeout(function (sel, dt) {
+                                var runs = 0;
+                                var dtInterval = setInterval(function (sel, dt) {
                                     flatpickr(sel, { allowInput: true, dateFormat: "M d, Y" }).setDate(new Date(dt), true);
-                                }, 2000, fields[idx2], parsed[i][key]);
+                                    if (sel.value != "") {
+                                        clearInterval(dtInterval);
+                                    }
+                                    runs++;
+                                    if (runs > 20) {
+                                        clearInterval(dtInterval);
+                                    }
+                                }, 100, fields[idx2], parsed[i][key]);
                             }
                             else {
                                 if (fields[idx2].classList.contains('nx-checkbox-group')) {
