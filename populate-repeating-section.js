@@ -15,7 +15,9 @@ export class PopulateRepeatingSection extends LitElement {
             controlName: 'Populate Repeating Section',
             fallbackDisableSubmit: false,
             version: '1.0',
-            visibility: true,
+            standardProperties: {
+                visibility: true
+            },
             properties: {
                 repeatingSectionClass: {
                     type: 'string',
