@@ -111,14 +111,24 @@ export class PopulateRepeatingSection extends LitElement {
                                             fields[idx2].closest('ng-select').querySelector('.ng-value .ng-star-inserted').textContent = parsed[i][key];
                                         } catch { }
                                         try {
-                                            fields[idx2].dispatchEvent(new Event('input'));
-                                        } catch { }
-                                        try {                                            
-                                            var clickInterval = setInterval(function () {
-                                                fields[idx2].closest('ng-select').querySelectorAll('.ng-option')[0].dispatchEvent(new Event('click'));
-                                                clearInterval(clickInterval);
-                                            }, 500);
-                                        } catch { }
+                                            var peopleField = fields[idx2].closest('ntx-simple-people-picker');
+                                            if (peopleField != null && peopleField.length > 0) {
+                                                fields[idx2].dispatchEvent(new Event('input'));
+                                                var runs = 0;
+                                                var peopleInterval = setInterval(function (peopleField) {
+                                                    peopleField = peopleField[0].querySelectorAll('.ng-option');
+                                                    if (peopleField != null && peopleField.length > 0) {
+                                                        peopleField[0].dispatchEvent(new Event('click'));
+                                                        clearInterval(peopleInterval);
+                                                    }
+                                                    runs++;
+                                                    if (runs > 20) {
+                                                        clearInterval(peopleInterval);
+                                                    }
+                                                }, 500, peopleField);
+                                            }
+                                        }
+                                        catch {}
                                     }
                                 }
                             }
