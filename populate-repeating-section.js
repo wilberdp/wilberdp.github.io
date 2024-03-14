@@ -74,6 +74,7 @@ export class PopulateRepeatingSection extends LitElement {
                                     flatpickr(sel, { allowInput: true, dateFormat: "M d, Y" }).setDate(new Date(dt), true);
                                     if (sel.value == flatpickr.formatDate(new Date(dt), "M d, Y")) {
                                         clearInterval(clearIntVar.intId);
+                                        sel.classList.remove('nx-is-empty');
                                     }
                                     clearIntVar.counter++;
                                     if (clearIntVar.counter > 20) {
@@ -122,18 +123,19 @@ export class PopulateRepeatingSection extends LitElement {
                                             var peopleField = fields[idx2].closest('ntx-simple-people-picker');
                                             if (peopleField != null) {
                                                 fields[idx2].dispatchEvent(new Event('input'));
-                                                var runs = 0;
+                                                var clearIntVar2 = { id: idx2, counter: 0 };
                                                 var peopleInterval = setInterval(function (peopleField) {
                                                     peopleField = peopleField.querySelectorAll('.ng-option:not(.ng-option-disabled)');
                                                     if (peopleField != null && peopleField.length > 0) {
                                                         peopleField[0].dispatchEvent(new Event('click'));
-                                                        clearInterval(peopleInterval);
+                                                        clearInterval(clearIntVar2.intId);
                                                     }
-                                                    runs++;
-                                                    if (runs > 20) {
-                                                        clearInterval(peopleInterval);
+                                                    clearIntVar2.counter++;
+                                                    if (clearIntVar2.counter) {
+                                                        clearInterval(clearIntVar2.intId);
                                                     }
                                                 }, 500, peopleField);
+                                                clearIntVar2.intId = peopleInterval;
                                             }
                                         }
                                         catch {}
