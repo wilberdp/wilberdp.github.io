@@ -131,10 +131,10 @@ export class PopulateRepeatingSection extends LitElement {
                                                         clearInterval(clearIntVar2.intId);
                                                     }
                                                     clearIntVar2.counter++;
-                                                    if (clearIntVar2.counter) {
+                                                    if (clearIntVar2.counter > 40) {
                                                         clearInterval(clearIntVar2.intId);
                                                     }
-                                                }, 500, peopleField);
+                                                }, 100, peopleField);
                                                 clearIntVar2.intId = peopleInterval;
                                             }
                                         }
