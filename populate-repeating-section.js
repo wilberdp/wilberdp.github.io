@@ -116,7 +116,7 @@ export class PopulateRepeatingSection extends LitElement {
                                                 fields[idx2].dispatchEvent(new Event('input'));
                                                 var runs = 0;
                                                 var peopleInterval = setInterval(function (peopleField) {
-                                                    peopleField = peopleField.querySelectorAll('.ng-option');
+                                                    peopleField = peopleField.querySelectorAll('.ng-option:not(.ng-option-disabled)');
                                                     if (peopleField != null && peopleField.length > 0) {
                                                         peopleField[0].dispatchEvent(new Event('click'));
                                                         clearInterval(peopleInterval);
