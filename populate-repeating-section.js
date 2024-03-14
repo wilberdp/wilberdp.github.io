@@ -38,7 +38,7 @@ export class PopulateRepeatingSection extends LitElement {
             console.log(res);            
         });   
 
-        return html`<p>Hello ${this.repeatingSectionClass}<p/>`;
+        return html`<p>'Populate Repeating Section' for '${this.repeatingSectionClass}'<p/>`;
     }
 
     async render2() {
@@ -69,17 +69,18 @@ export class PopulateRepeatingSection extends LitElement {
                         if (parsed[i].hasOwnProperty(key)) {
                             console.log(key + ': ' + parsed[i][key]);
                             if (fields[idx2].classList.contains('flatpickr-input')) {
-                                var runs = 0;
-                                var dtInterval = setInterval(function (sel, dt) {
+                                var clearIntVar = { id: idx2, counter: 0 };
+                                var dtInterval = setInterval(function (sel, dt, clearIntVar) {
                                     flatpickr(sel, { allowInput: true, dateFormat: "M d, Y" }).setDate(new Date(dt), true);
                                     if (sel.value != "") {
-                                        clearInterval(dtInterval);
+                                        clearInterval(clearIntVar.intId);
                                     }
-                                    runs++;
-                                    if (runs > 20) {
-                                        clearInterval(dtInterval);
+                                    clearIntVar.counter++;
+                                    if (clearIntVar.counter > 20) {
+                                        clearInterval(clearIntVar.intId);
                                     }
-                                }, 100, fields[idx2], parsed[i][key]);
+                                }, 100, fields[idx2], parsed[i][key], clearIntVar);
+                                clearIntVar.intId = dtInterval;
                             }
                             else {
                                 if (fields[idx2].classList.contains('nx-checkbox-group')) {
