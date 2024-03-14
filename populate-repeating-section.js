@@ -112,12 +112,12 @@ export class PopulateRepeatingSection extends LitElement {
                                         } catch { }
                                         try {
                                             var peopleField = fields[idx2].closest('ntx-simple-people-picker');
-                                            if (peopleField != null && peopleField.length > 0) {
+                                            if (peopleField != null) {
                                                 fields[idx2].dispatchEvent(new Event('input'));
                                                 var runs = 0;
                                                 var peopleInterval = setInterval(function (peopleField) {
                                                     peopleField = peopleField[0].querySelectorAll('.ng-option');
-                                                    if (peopleField != null) {
+                                                    if (peopleField != null && peopleField.length > 0) {
                                                         peopleField[0].dispatchEvent(new Event('click'));
                                                         clearInterval(peopleInterval);
                                                     }
