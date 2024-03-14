@@ -72,7 +72,7 @@ export class PopulateRepeatingSection extends LitElement {
                                 var clearIntVar = { id: idx2, counter: 0 };
                                 var dtInterval = setInterval(function (sel, dt, clearIntVar) {
                                     flatpickr(sel, { allowInput: true, dateFormat: "M d, Y" }).setDate(new Date(dt), true);
-                                    if (sel.value != "") {
+                                    if (sel.value == flatpickr.formatDate(new Date(dt), "M d, Y")) {
                                         clearInterval(clearIntVar.intId);
                                     }
                                     clearIntVar.counter++;
