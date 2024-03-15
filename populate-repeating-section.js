@@ -170,7 +170,7 @@ function clickPeoplePickerSelection(field, counter) {
     }
     else {
         if (counter < 10) {
-            setTimeout(clickPeoplePickerSelection, 500, field, counter++);
+            setTimeout(clickPeoplePickerSelection, 500, field, counter + 1);
         }
     }
 }
