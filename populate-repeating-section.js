@@ -143,19 +143,7 @@ export class PopulateRepeatingSection extends LitElement {
                                                 var peopleField = fields[idx2].closest('ntx-simple-people-picker');
                                                 if (peopleField != null) {
                                                     fields[idx2].dispatchEvent(new Event('input'));
-                                                    var clearIntVar2 = { id: idx2, counter: 0 };
-                                                    var peopleInterval = setInterval(function (peopleField) {
-                                                        peopleField = peopleField.querySelectorAll('.ng-option:not(.ng-option-disabled)');
-                                                        if (peopleField != null && peopleField.length > 0) {
-                                                            peopleField[0].dispatchEvent(new Event('click'));
-                                                            clearInterval(clearIntVar2.intId);
-                                                        }
-                                                        clearIntVar2.counter++;
-                                                        if (clearIntVar2.counter > 40) {
-                                                            clearInterval(clearIntVar2.intId);
-                                                        }
-                                                    }, 100, peopleField);
-                                                    clearIntVar2.intId = peopleInterval;
+                                                    setTimeout(clickPeoplePickerSelection, 500, peopleField, 0);                                                    
                                                 }
                                             }
                                             catch (exc) { console.log(exc); }
@@ -173,7 +161,18 @@ export class PopulateRepeatingSection extends LitElement {
             console.log(exc);
         }
     }
+}
 
+function clickPeoplePickerSelection(field, counter) {
+    var field2 = field.querySelectorAll('.ng-option:not(.ng-option-disabled)');
+    if (field2 != null && field2.length > 0) {
+        field2[0].dispatchEvent(new Event('click'));
+    }
+    else {
+        if (counter < 10) {
+            setTimeout(clickPeoplePickerSelection, 500, field);
+        }
+    }
 }
 
 // registering the web component
