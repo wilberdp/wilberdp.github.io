@@ -72,7 +72,7 @@ export class PopulateRepeatingSection extends LitElement {
                         var fields = lastSection.querySelectorAll('.' + this.repeatingSectionClass + ' input:not([type="checkbox"]):not([type="radio"]), .' + this.repeatingSectionClass + ' textarea, .nx-checkbox-group, .nx-radio-group');
                         var fields2 = new Array();
                         for (var o = 0; o < fields.length; o++) {
-                            if (fields[o].closest('[hidden]') == null) {
+                            if (fields[o].closest('[hidden]') == null && fields[o].closest('.skipPopulate') == null) {
                                 fields2.push(fields[o]);
                             }
                         }
