@@ -50,6 +50,7 @@ export class PopulateRepeatingSection extends LitElement {
                 if (repeatingSection != null && repeatingSection.length > 0) {
                     repeatingSection = repeatingSection[0];
 
+                    // add rows
                     var parsed = JSON.parse(this.values);
                     for (var i = 0; i < parsed.length - 1; i++) {
                         var sectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
@@ -64,10 +65,19 @@ export class PopulateRepeatingSection extends LitElement {
                         }
                     }
 
+                    // write values
                     for (var i = 0; i < parsed.length; i++) {
                         var idx2 = 0;
                         var lastSection = repeatingSection.querySelector('.ntx-repeating-section-repeated-section:nth-child(' + (i + 1) + ')');
                         var fields = lastSection.querySelectorAll('.' + this.repeatingSectionClass + ' input:not([type="checkbox"]):not([type="radio"]), .' + this.repeatingSectionClass + ' textarea, .nx-checkbox-group, .nx-radio-group');
+                        var fields2 = new Array();
+                        for (var o = 0; o < fields.length; o++) {
+                            if (fields[o].closest('[hidden]') == null) {
+                                fields2.push(fields[o]);
+                            }
+                        }
+                        fields = fields2;
+
                         for (var key in parsed[i]) {
                             if (parsed[i].hasOwnProperty(key)) {
                                 console.log(key + ': ' + parsed[i][key]);
