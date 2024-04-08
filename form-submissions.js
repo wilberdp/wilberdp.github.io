@@ -56,9 +56,9 @@ function populateAttachmentJson() {
   document.querySelector('textarea.attachmentsJson').value = JSON.stringify(json);
 }
 
-function retrieveAttachments(classToFind) {
+function retrieveAttachments(selector) {
   var arr = [];
-    var fileUploads = document.querySelectorAll(classToFind + ' input[type="file"]');
+    var fileUploads = document.querySelectorAll(selector);
     for (var i = 0; i < fileUploads.length; i++) {
         var files = fileUploads[i].querySelectorAll('.nx-upload-filename');
         for (var o = 0; o < files.length; o++) {
