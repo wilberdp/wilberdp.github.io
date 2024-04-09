@@ -39,11 +39,9 @@ export class FormSubmissions extends LitElement {
 
             if (qs("isIframe") == "1") {
                 var css = `
-                    <style>
-                        header.nx-sp-form-runtime-header, [data-automation-id="captionElement"] {
-                            display: none !important;
-                        }
-                    </style>
+                    header.nx-sp-form-runtime-header, [data-automation-id="captionElement"] {
+                        display: none !important;
+                    }
                 `;
                 var style = document.createElement("style");
                 style.appendChild(document.createTextNode(css));
