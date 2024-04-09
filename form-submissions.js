@@ -86,64 +86,88 @@ function retrieveAttachments(selector) {
 function translateForm() {
     var hostweburl = decodeURIComponent(qs("SPHostUrl"));
     var appweburl = decodeURIComponent(qs("SPAppWebUrl"));
-    var scriptbase = hostweburl + "/_layouts/15/";
-    
-        //NWF$.getScript(scriptbase + "MicrosoftAjax.js").then(function (data) {
-        //    return NWF$.getScript(scriptbase + "SP.Runtime.js");
-        //}).then(function (data) {
-        //    return NWF$.getScript(scriptbase + "SP.js");
-        //}).then(function (data) {
-        //    return NWF$.getScript(scriptbase + "SP.RequestExecutor.js");
-        //}).then(function (data) {
-    var executor = new SP.RequestExecutor(appweburl);
-    var executor1 = new SP.RequestExecutor(appweburl);
 
-    var listname = "General Configuration";
-    var filters = "";
-    var url = appweburl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('" + listname + "')/items?@target='" + hostweburl + "'" + filters;
-    var url1 = appweburl + "/_api/SP.UserProfiles.PeopleManager/GetMyProperties";
+    var executor1 = new SP.RequestExecutor(appweburl);
+    var executor2 = new SP.RequestExecutor(appweburl);
+
+    var lang = "en";
+    var country = qs("Country");
+    
     executor1.executeAsync({
-        url: url1,
+        url: appweburl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('General Configuration')/items?@target='" + hostweburl + "'",
         method: "GET",
         headers: { "Accept": "application/json; odata=verbose" },
         success: function (data1) {
-            executor.executeAsync({
-                url: url,
+            data1 = JSON.parse(data1.body).d.results;
+            
+            executor2.executeAsync({
+                url: appweburl + "/_api/SP.UserProfiles.PeopleManager/GetMyProperties",
                 method: "GET",
                 headers: { "Accept": "application/json; odata=verbose" },
-                success: function (data) {
-                    data = JSON.parse(data.body).d.results;
-
-                    console.log(data);
-                    for (var i = 0; i < data.length; i++) {
-                        console.log(data[i]);
-                        var content = JSON.parse(data[i].Content);
-                        /*document.querySelectorAll('.nf-label-control,.ms-addnew,.ms-descriptiontext,.ms-formlabel').each(function () {
-                            if (NWF$(this).text().trim().toLowerCase() == data[i].Title.toLowerCase()) {
-                                NWF$(this).text(content[Object.keys(content).find(key => key.toLowerCase() === lang)]);
-                            }
-                            if (NWF$(this).text().trim().toLowerCase() == data[i].Title.toLowerCase() + " *") {
-                                NWF$(this).html(content[Object.keys(content).find(key => key.toLowerCase() === lang)] + " <span style='color: #c0504d;'>*</span>");
-                            }
-                        });
-                        NWF$('.nf-save-button').each(function () {
-                            if (NWF$(this).val().trim().toLowerCase() == data[i].Title.toLowerCase()) {
-                                NWF$(this).val(content[Object.keys(content).find(key => key.toLowerCase() === lang)]);
-                            }
-                        });*/
+                success: function (data2) {
+                    lang = JSON.parse(data2.body).d.UserProfileProperties.results.filter(function (itt) { return itt.Key == "SPS-MUILanguages" });
+                    if (lang != null && lang.length > 0) {
+                        lang = lang[0];
+                        if (lang.toLowerCase() != "en") {
+                            processContent(data1[i], lang);
+                        }
+                    }
+                    else {
+                        if (country != null && country != "") {
+                            executor2.executeAsync({
+                                url: appweburl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Countries')/items?$filter=Title eq '" + country + "'&@target='" + hostweburl + "'",
+                                method: "GET",
+                                headers: { "Accept": "application/json; odata=verbose" },
+                                success: function (data3) {
+                                    var countryData = JSON.parse(data3.body).d.results;
+                                    if (countryData != null && countryData.length > 0) {
+                                        lang = countryData[0].DefaultLanguage;
+                                        if (lang.toLowerCase() != "en") {
+                                            processContent(data1[i], lang);
+                                        }
+                                    }
+                                }
+                            });
+                        }
                     }
                 },
                 error: function (e) {
                 }
             });
         }
-    });    
+    });   
 }
 
 function qs(key) {
     key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&");
     var match = location.search.match(new RegExp("[?&]"+key+"=([^&]+)(&|$)"));
     return (match && decodeURIComponent(match[1].replace(/\+/g, " ")));
+}
+
+function processContent(content, lang) {
+    var elements = document.querySelectorAll('.nf-label-control,.ms-addnew,.ms-descriptiontext,.ms-formlabel');
+    for (var i = 0; i < elements.length; i++) {
+        for (var o = 0; o < elements[i].childNodes.length; o++) {
+            if (elements[i].childNodes[o].nodeType === Node.TEXT_NODE) {
+                for (var p = 0; p < content.length; p++) {
+                    if (elements[i].childNodes[o].textContent.trim().toLowerCase() == content[p].Title.toLowerCase().trim()) {
+                        elements[i].childNodes[o].textContent = JSON.parse(content[p]["Content"])[Object.keys(JSON.parse(content[p]["Content"])).find(key => key.toLowerCase() === lang)]
+                    }
+                    if (elements[i].childNodes[o].textContent.text().trim().toLowerCase() == content[p].Title.toLowerCase().trim() + " *") {
+                        elements[i].childNodes[o].innerHTML = JSON.parse(content[p]["Content"])[Object.keys(JSON.parse(content[p]["Content"])).find(key => key.toLowerCase() === lang)] + " <span style='color: #c0504d;'>*</span>";
+                    }
+                }
+            }
+        }
+    }
+    var elements = document.querySelectorAll('.nf-save-button');
+    for (var i = 0; i < elements.length; i++) {
+        for (var p = 0; p < content.length; p++) {
+            if (elements[i].value.trim().toLowerCase() == content[p].Title.toLowerCase().trim()) {
+                elements[i].value = JSON.parse(content[p]["Content"])[Object.keys(JSON.parse(content[p]["Content"])).find(key => key.toLowerCase() === lang)];
+            }
+        }
+    }
 }
 
 
