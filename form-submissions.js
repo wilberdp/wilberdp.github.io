@@ -32,8 +32,20 @@ export class FormSubmissions extends LitElement {
     async render2() {
         try {
             document.querySelector("ntx-list-lookup input").addEventListener("change", (event) => {
+                console.log(qs("country"));
+                console.log(qs("Country"));
+                
                 document.querySelector(".countryField").value = qs("country");
                 translateForm();
+                if (qs("isdlg") == 1) {
+                    var style = `
+                        <style>
+                            header.nx-sp-form-runtime-header, [data-automation-id="captionElement"] {
+                                display: none !important;
+                            }
+                        </style>
+                    `;
+                }
             });
 
             setInterval(function(){
