@@ -42,6 +42,10 @@ export class FormSubmissions extends LitElement {
                     header.nx-sp-form-runtime-header, [data-automation-id="captionElement"] {
                         display: none !important;
                     }
+                    .nx-form-runtime-content nx-theme-page {
+                        height: 604px;
+                        width: 932px;
+                    }
                 `;
                 var style = document.createElement("style");
                 style.appendChild(document.createTextNode(css));
