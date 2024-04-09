@@ -83,14 +83,15 @@ function retrieveAttachments(selector) {
   return arr;
 }
 
-function translateForm() {
-    // for nintex forms
-    var lang = qs('lang');
+function translateForm2() {
+    var hostweburl = decodeURIComponent(qs("SPHostUrl"));
+    var appweburl = decodeURIComponent(qs("SPAppWebUrl"));
+    var scriptbase = hostweburl + "/_layouts/15/";
+    
+    var executor1 = new SP.RequestExecutor(appweburl);
 
-    if (lang != null && lang != 'en') {
-        var hostweburl = decodeURIComponent(qs("SPHostUrl"));
-        var appweburl = decodeURIComponent(qs("SPAppWebUrl"));
-        var scriptbase = hostweburl + "/_layouts/15/";
+    
+
 
 
         //NWF$.getScript(scriptbase + "MicrosoftAjax.js").then(function (data) {
@@ -137,7 +138,7 @@ function translateForm() {
                 }
             });
         //});
-    }
+    
 }
 
 function qs(key) {
