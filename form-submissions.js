@@ -39,12 +39,15 @@ export class FormSubmissions extends LitElement {
 
             if (qs("isIframe") == "1") {
                 var css = `
-                    header.nx-sp-form-runtime-header, [data-automation-id="captionElement"] {
+                    header.nx-sp-form-runtime-header, [data-automation-id="captionElement"], .nx-action-panel > div:nth-child(1) {
                         display: none !important;
                     }
-                    .nx-form-runtime-content nx-theme-page {
+                    .nx-form-runtime-content.nx-theme-page {
                         height: 604px;
                         width: 932px;
+                    }
+                    [data-e2e="btn-submit"] {
+                        margin-left: 0px !important;
                     }
                 `;
                 var style = document.createElement("style");
