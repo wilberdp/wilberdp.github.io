@@ -92,6 +92,7 @@ function translateForm() {
 
     var lang = "en";
     var country = qs("Country");
+    var langOverride = qs("Language");
     
     executor1.executeAsync({
         url: appweburl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('General Configuration')/items?@target='" + hostweburl + "'",
@@ -108,8 +109,13 @@ function translateForm() {
                     lang = JSON.parse(data2.body).d.UserProfileProperties.results.filter(function (itt) { return itt.Key == "SPS-MUILanguages" });
                     if (lang != null && lang.length > 0) {
                         lang = lang[0].value.split('-')[0];
-                        if (lang.toLowerCase() != "en") {
-                            processContent(data1[i], lang);
+                        if (langOverride != null && langOverride != "") {
+                            processContent(data1[i], langOverride);
+                        }
+                        else {
+                            if (lang != null && lang != "" && lang.toLowerCase() != "en") {
+                                processContent(data1[i], lang);
+                            }
                         }
                     }
                     else {
@@ -122,8 +128,13 @@ function translateForm() {
                                     var countryData = JSON.parse(data3.body).d.results;
                                     if (countryData != null && countryData.length > 0) {
                                         lang = countryData[0].DefaultLanguage;
-                                        if (lang.toLowerCase() != "en") {
-                                            processContent(data1[i], lang);
+                                        if (langOverride != null && langOverride != "") {
+                                            processContent(data1[i], langOverride);
+                                        }
+                                        else {
+                                            if (lang != null && lang != "" && lang.toLowerCase() != "en") {
+                                                processContent(data1[i], lang);
+                                            }
                                         }
                                     }
                                 }
@@ -135,7 +146,7 @@ function translateForm() {
                 }
             });
         }
-    });   
+    });
 }
 
 function qs(key) {
