@@ -88,12 +88,6 @@ function translateForm() {
     var appweburl = decodeURIComponent(qs("SPAppWebUrl"));
     var scriptbase = hostweburl + "/_layouts/15/";
     
-    var executor1 = new SP.RequestExecutor(appweburl);
-
-    
-
-
-
         //NWF$.getScript(scriptbase + "MicrosoftAjax.js").then(function (data) {
         //    return NWF$.getScript(scriptbase + "SP.Runtime.js");
         //}).then(function (data) {
@@ -101,13 +95,18 @@ function translateForm() {
         //}).then(function (data) {
         //    return NWF$.getScript(scriptbase + "SP.RequestExecutor.js");
         //}).then(function (data) {
-            var executor = new SP.RequestExecutor(appweburl);
+    var executor = new SP.RequestExecutor(appweburl);
+    var executor1 = new SP.RequestExecutor(appweburl);
 
-            var listname = "General Configuration";
-            var filters = "";
-            var url = appweburl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('" + listname + "')/items?@target='" + hostweburl + "'" + filters;
-            var url2 = appweburl + "/_api/SP.AppContextSite(@target)";
-
+    var listname = "General Configuration";
+    var filters = "";
+    var url = appweburl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('" + listname + "')/items?@target='" + hostweburl + "'" + filters;
+    var url1 = appweburl + "/_api/SP.UserProfiles.PeopleManager/GetMyProperties";
+    executor1.executeAsync({
+        url: url1,
+        method: "GET",
+        headers: { "Accept": "application/json; odata=verbose" },
+        success: function (data1) {
             executor.executeAsync({
                 url: url,
                 method: "GET",
@@ -137,8 +136,8 @@ function translateForm() {
                 error: function (e) {
                 }
             });
-        //});
-    
+        }
+    });    
 }
 
 function qs(key) {
