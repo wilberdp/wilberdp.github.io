@@ -31,7 +31,7 @@ export class FormSubmissions extends LitElement {
 
     async render2() {
         try {
-                document.querySelector(".countryField").value = qs("Country");
+                document.querySelector(".countryField input").value = qs("Country");
                 translateForm();
                         
 
