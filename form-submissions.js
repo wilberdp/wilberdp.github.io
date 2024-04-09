@@ -31,10 +31,8 @@ export class FormSubmissions extends LitElement {
 
     async render2() {
         try {
-            document.querySelector("ntx-list-lookup input").addEventListener("change", (event) => {              
                 document.querySelector(".countryField").value = qs("Country");
                 translateForm();
-            });
                         
 
             if (qs("isIframe") == "1") {
