@@ -31,10 +31,9 @@ export class FormSubmissions extends LitElement {
 
     async render2() {
         try {
-                document.querySelector(".countryField input").value = qs("Country");
-                translateForm();
+            document.querySelector(".countryField input").value = qs("Country");
+            translateForm();
                         
-
             if (qs("isIframe") == "1") {
                 var css = `
                     header.nx-sp-form-runtime-header, [data-automation-id="captionElement"], .nx-action-panel > div:nth-child(1) {
@@ -88,7 +87,6 @@ function translateForm() {
     // for nintex forms
     var lang = qs('lang');
 
-
     if (lang != null && lang != 'en') {
         var hostweburl = decodeURIComponent(qs("SPHostUrl"));
         var appweburl = decodeURIComponent(qs("SPAppWebUrl"));
@@ -116,11 +114,11 @@ function translateForm() {
                 success: function (data) {
                     data = JSON.parse(data.body).d.results;
 
-
+                    console.log(data);
                     for (var i = 0; i < data.length; i++) {
                         console.log(data[i]);
                         var content = JSON.parse(data[i].Content);
-                        /*NWF$('.nf-label-control,.ms-addnew,.ms-descriptiontext,.ms-formlabel').each(function () {
+                        /*document.querySelectorAll('.nf-label-control,.ms-addnew,.ms-descriptiontext,.ms-formlabel').each(function () {
                             if (NWF$(this).text().trim().toLowerCase() == data[i].Title.toLowerCase()) {
                                 NWF$(this).text(content[Object.keys(content).find(key => key.toLowerCase() === lang)]);
                             }
