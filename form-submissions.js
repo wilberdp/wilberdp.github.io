@@ -42,12 +42,11 @@ export class FormSubmissions extends LitElement {
                     header.nx-sp-form-runtime-header, [data-automation-id="captionElement"], .nx-action-panel > div:nth-child(1) {
                         display: none !important;
                     }
-                    .nx-form-runtime-content.nx-theme-page {
-                        height: 604px;
-                        width: 932px;
-                    }
                     [data-e2e="btn-submit"] {
                         margin-left: 0px !important;
+                    }
+                    body {
+                        zoom: 86%;
                     }
                 `;
                 var style = document.createElement("style");
