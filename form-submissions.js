@@ -83,7 +83,7 @@ function retrieveAttachments(selector) {
   return arr;
 }
 
-function translateForm2() {
+function translateForm() {
     var hostweburl = decodeURIComponent(qs("SPHostUrl"));
     var appweburl = decodeURIComponent(qs("SPAppWebUrl"));
     var scriptbase = hostweburl + "/_layouts/15/";
