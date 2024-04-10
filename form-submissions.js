@@ -100,51 +100,45 @@ function translateForm() {
         headers: { "Accept": "application/json; odata=verbose" },
         success: function (data1) {
             data1 = JSON.parse(data1.body).d.results;
-            
-            executor2.executeAsync({
-                url: appweburl + "/_api/SP.UserProfiles.PeopleManager/GetMyProperties",
-                method: "GET",
-                headers: { "Accept": "application/json; odata=verbose" },
-                success: function (data2) {
-                    lang = JSON.parse(data2.body).d.UserProfileProperties.results.filter(function (itt) { return itt.Key == "SPS-MUILanguages" });
-                    if (lang != null && lang.length > 0) {
-                        lang = lang[0].value.split('-')[0];
-                        if (langOverride != null && langOverride != "") {
-                            processContent(data1[i], langOverride);
-                        }
-                        else {
+            if (langOverride != null && langOverride != "") {
+                processContent(data1[i], langOverride);
+            }
+            else {
+                executor2.executeAsync({
+                    url: appweburl + "/_api/SP.UserProfiles.PeopleManager/GetMyProperties",
+                    method: "GET",
+                    headers: { "Accept": "application/json; odata=verbose" },
+                    success: function (data2) {
+                        lang = JSON.parse(data2.body).d.UserProfileProperties.results.filter(function (itt) { return itt.Key == "SPS-MUILanguages" });
+                        if (lang != null && lang.length > 0) {
+                            lang = lang[0].value.split('-')[0];
                             if (lang != null && lang != "" && lang.toLowerCase() != "en") {
                                 processContent(data1[i], lang);
                             }
                         }
-                    }
-                    else {
-                        if (country != null && country != "") {
-                            executor2.executeAsync({
-                                url: appweburl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Countries')/items?$filter=Title eq '" + country + "'&@target='" + hostweburl + "'",
-                                method: "GET",
-                                headers: { "Accept": "application/json; odata=verbose" },
-                                success: function (data3) {
-                                    var countryData = JSON.parse(data3.body).d.results;
-                                    if (countryData != null && countryData.length > 0) {
-                                        lang = countryData[0].DefaultLanguage;
-                                        if (langOverride != null && langOverride != "") {
-                                            processContent(data1[i], langOverride);
-                                        }
-                                        else {
+                        else {
+                            if (country != null && country != "") {
+                                executor2.executeAsync({
+                                    url: appweburl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('Countries')/items?$filter=Title eq '" + country + "'&@target='" + hostweburl + "'",
+                                    method: "GET",
+                                    headers: { "Accept": "application/json; odata=verbose" },
+                                    success: function (data3) {
+                                        var countryData = JSON.parse(data3.body).d.results;
+                                        if (countryData != null && countryData.length > 0) {
+                                            lang = countryData[0].DefaultLanguage;                                            
                                             if (lang != null && lang != "" && lang.toLowerCase() != "en") {
                                                 processContent(data1[i], lang);
-                                            }
+                                            }                                            
                                         }
                                     }
-                                }
-                            });
+                                });
+                            }
                         }
+                    },
+                    error: function (e) {
                     }
-                },
-                error: function (e) {
-                }
-            });
+                });
+            }
         }
     });
 }
