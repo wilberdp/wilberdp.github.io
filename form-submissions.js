@@ -150,7 +150,8 @@ function qs(key) {
 }
 
 function processContent(data, lang) {
-    setInterval(function (data, lang) {
+    console.log(data);
+    console.log(lang);
         let elements = document.querySelectorAll('p, strong, span, .nx-theme-richtext, .nx-title, .drag-file-label, .nx-upload-button, .nx-action-message');
         elements.forEach(function (element, idx) {
             console.log(idx);
@@ -176,7 +177,7 @@ function processContent(data, lang) {
                 }
             });
         });
-    }, 500, data, lang);
+    
 }
 
 
