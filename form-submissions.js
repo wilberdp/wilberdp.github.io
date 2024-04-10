@@ -166,10 +166,10 @@ function processContent(data, lang) {
                     this["data"].forEach(function (dataa, idx3) {
                         try {
                             if (childNode.textContent.trim().toLowerCase() == dataa.Title.toLowerCase().trim()) {
-                                childNode.textContent = childNode.textContent.replace(new RegExp(childNode.textContent.trim()), new RegExp(JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === this.toLowerCase())]));
+                                childNode.textContent = childNode.textContent.replace(new RegExp(childNode.textContent.trim()), JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === this.toLowerCase())]);
                             }
                             if (childNode.textContent.trim().toLowerCase() == dataa.Title.toLowerCase().trim() + " *") {
-                                childNode.innerHTML = childNode.innerHTML.replace(new RegExp(childNode.textContent.trim().split(" *")[0]), new RegExp(JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === this.toLowerCase())])) + " <span style='color: #c0504d;'>*</span>";
+                                childNode.innerHTML = childNode.innerHTML.replace(new RegExp(childNode.textContent.trim().split(" *")[0]), JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === this.toLowerCase())]) + " <span style='color: #c0504d;'>*</span>";
                             }
                         }
                         catch (exc2) {
