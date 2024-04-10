@@ -151,13 +151,13 @@ function qs(key) {
 
 function processContent(data, lang) {
     setInterval(function (data, lang) {
-        var elements = document.querySelectorAll('p, strong, span, .nx-theme-richtext, .nx-title, .drag-file-label, .nx-upload-button, .nx-action-message');
-        for (var i = 0; i < elements.length; i++) {
+        let elements = document.querySelectorAll('p, strong, span, .nx-theme-richtext, .nx-title, .drag-file-label, .nx-upload-button, .nx-action-message');
+        for (let i = 0; i < elements.length; i++) {
             console.log(i);
             console.log(elements[i]);
-            for (var o = 0; o < elements[i].childNodes.length; o++) {
+            for (let o = 0; o < elements[i].childNodes.length; o++) {
                 if (elements[i].childNodes[o].nodeType === Node.TEXT_NODE) {
-                    for (var p = 0; p < data.length; p++) {
+                    for (let p = 0; p < data.length; p++) {
                         if (elements[i].childNodes[o].textContent.trim().toLowerCase() == data[p].Title.toLowerCase().trim()) {
                             elements[i].childNodes[o].textContent = JSON.parse(data[p]["Content"])[Object.keys(JSON.parse(data[p]["Content"])).find(key => key.toLowerCase() === lang)]
                         }
@@ -168,9 +168,10 @@ function processContent(data, lang) {
                 }
             }
         }
-        var elements = document.querySelectorAll('.btn');
-        for (var i = 0; i < elements.length; i++) {
-            for (var p = 0; p < data.length; p++) {
+        
+        elements = document.querySelectorAll('.btn');
+        for (let i = 0; i < elements.length; i++) {
+            for (let p = 0; p < data.length; p++) {
                 if (elements[i].value.trim().toLowerCase() == data[p].Title.toLowerCase().trim()) {
                     elements[i].value = JSON.parse(data[p]["Content"])[Object.keys(JSON.parse(data[p]["Content"])).find(key => key.toLowerCase() === lang)];
                 }
