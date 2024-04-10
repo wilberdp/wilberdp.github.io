@@ -156,6 +156,7 @@ function processContent(data, lang) {
             for (var o = 0; o < elements[i].childNodes.length; o++) {
                 if (elements[i].childNodes[o].nodeType === Node.TEXT_NODE) {
                     for (var p = 0; p < data.length; p++) {
+                        console.log(elements[i].childNodes[o].textContent.trim().toLowerCase());
                         if (elements[i].childNodes[o].textContent.trim().toLowerCase() == data[p].Title.toLowerCase().trim()) {
                             elements[i].childNodes[o].textContent = JSON.parse(data[p]["Content"])[Object.keys(JSON.parse(data[p]["Content"])).find(key => key.toLowerCase() === lang)]
                         }
