@@ -150,29 +150,31 @@ function qs(key) {
 }
 
 function processContent(data, lang) {
-    var elements = document.querySelectorAll('.nf-label-control,.ms-addnew,.ms-descriptiontext,.ms-formlabel');
-    for (var i = 0; i < elements.length; i++) {
-        for (var o = 0; o < elements[i].childNodes.length; o++) {
-            if (elements[i].childNodes[o].nodeType === Node.TEXT_NODE) {
-                for (var p = 0; p < data.length; p++) {
-                    if (elements[i].childNodes[o].textContent.trim().toLowerCase() == data[p].Title.toLowerCase().trim()) {
-                        elements[i].childNodes[o].textContent = JSON.parse(data[p]["Content"])[Object.keys(JSON.parse(data[p]["Content"])).find(key => key.toLowerCase() === lang)]
-                    }
-                    if (elements[i].childNodes[o].textContent.text().trim().toLowerCase() == content[p].Title.toLowerCase().trim() + " *") {
-                        elements[i].childNodes[o].innerHTML = JSON.parse(data[p]["Content"])[Object.keys(JSON.parse(data[p]["Content"])).find(key => key.toLowerCase() === lang)] + " <span style='color: #c0504d;'>*</span>";
+    setInterval(function (data, lang) {
+        var elements = document.querySelectorAll('p, strong, span, .nx-theme-richtext, .nx-title, .drag-file-label, .nx-upload-button, .nx-action-message');
+        for (var i = 0; i < elements.length; i++) {
+            for (var o = 0; o < elements[i].childNodes.length; o++) {
+                if (elements[i].childNodes[o].nodeType === Node.TEXT_NODE) {
+                    for (var p = 0; p < data.length; p++) {
+                        if (elements[i].childNodes[o].textContent.trim().toLowerCase() == data[p].Title.toLowerCase().trim()) {
+                            elements[i].childNodes[o].textContent = JSON.parse(data[p]["Content"])[Object.keys(JSON.parse(data[p]["Content"])).find(key => key.toLowerCase() === lang)]
+                        }
+                        if (elements[i].childNodes[o].textContent.text().trim().toLowerCase() == content[p].Title.toLowerCase().trim() + " *") {
+                            elements[i].childNodes[o].innerHTML = JSON.parse(data[p]["Content"])[Object.keys(JSON.parse(data[p]["Content"])).find(key => key.toLowerCase() === lang)] + " <span style='color: #c0504d;'>*</span>";
+                        }
                     }
                 }
             }
         }
-    }
-    var elements = document.querySelectorAll('.nf-save-button');
-    for (var i = 0; i < elements.length; i++) {
-        for (var p = 0; p < data.length; p++) {
-            if (elements[i].value.trim().toLowerCase() == data[p].Title.toLowerCase().trim()) {
-                elements[i].value = JSON.parse(data[p]["Content"])[Object.keys(JSON.parse(data[p]["Content"])).find(key => key.toLowerCase() === lang)];
+        var elements = document.querySelectorAll('.btn');
+        for (var i = 0; i < elements.length; i++) {
+            for (var p = 0; p < data.length; p++) {
+                if (elements[i].value.trim().toLowerCase() == data[p].Title.toLowerCase().trim()) {
+                    elements[i].value = JSON.parse(data[p]["Content"])[Object.keys(JSON.parse(data[p]["Content"])).find(key => key.toLowerCase() === lang)];
+                }
             }
         }
-    }
+    }, 500, data, lang);
 }
 
 
