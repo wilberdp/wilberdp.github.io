@@ -152,31 +152,30 @@ function qs(key) {
 function processContent(data, lang) {
     setInterval(function (data, lang) {
         let elements = document.querySelectorAll('p, strong, span, .nx-theme-richtext, .nx-title, .drag-file-label, .nx-upload-button, .nx-action-message');
-        for (let i = 0; i < elements.length; i++) {
-            console.log(i);
-            console.log(elements[i]);
-            for (let o = 0; o < elements[i].childNodes.length; o++) {
-                if (elements[i].childNodes[o].nodeType === Node.TEXT_NODE) {
-                    for (let p = 0; p < data.length; p++) {
-                        if (elements[i].childNodes[o].textContent.trim().toLowerCase() == data[p].Title.toLowerCase().trim()) {
-                            elements[i].childNodes[o].textContent = JSON.parse(data[p]["Content"])[Object.keys(JSON.parse(data[p]["Content"])).find(key => key.toLowerCase() === lang)]
+        elements.forEach(function (element, idx) {
+            console.log(idx);
+            element.childNodes.forEach(function (childNode, idx2) {
+                if (childNode.nodeType === Node.TEXT_NODE) {
+                    data.forEach(function (dataa, idx3) {
+                        if (childNode.textContent.trim().toLowerCase() == dataa.Title.toLowerCase().trim()) {
+                            childNode.textContent = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === lang)]
                         }
-                        if (elements[i].childNodes[o].textContent.text().trim().toLowerCase() == content[p].Title.toLowerCase().trim() + " *") {
-                            elements[i].childNodes[o].innerHTML = JSON.parse(data[p]["Content"])[Object.keys(JSON.parse(data[p]["Content"])).find(key => key.toLowerCase() === lang)] + " <span style='color: #c0504d;'>*</span>";
+                        if (childNode.textContent.text().trim().toLowerCase() == dataa.Title.toLowerCase().trim() + " *") {
+                            childNode.innerHTML = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === lang)] + " <span style='color: #c0504d;'>*</span>";
                         }
-                    }
+                    });
                 }
-            }
-        }
+            });
+        });
         
         elements = document.querySelectorAll('.btn');
-        for (let i = 0; i < elements.length; i++) {
-            for (let p = 0; p < data.length; p++) {
-                if (elements[i].value.trim().toLowerCase() == data[p].Title.toLowerCase().trim()) {
-                    elements[i].value = JSON.parse(data[p]["Content"])[Object.keys(JSON.parse(data[p]["Content"])).find(key => key.toLowerCase() === lang)];
+        elements.forEach(function (element, idx) {
+            data.forEach(function (dataa, idx2) {
+                if (element.value.trim().toLowerCase() == dataa.Title.toLowerCase().trim()) {
+                    element.value = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === lang)];
                 }
-            }
-        }
+            });
+        });
     }, 500, data, lang);
 }
 
