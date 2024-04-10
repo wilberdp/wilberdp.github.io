@@ -161,23 +161,37 @@ function processContent(data, lang) {
         let elements = document.querySelectorAll('p, strong, span, .nx-theme-richtext, .nx-title, .drag-file-label, .nx-upload-button, .nx-action-message');
         elements.forEach(function (element, idx) {
             console.log(idx);
-            if (element.nodeType === Node.TEXT_NODE) {
-                this["data"].forEach(function (dataa, idx3) {
-                    if (element.textContent.trim().toLowerCase() == dataa.Title.toLowerCase().trim()) {
-                        element.textContent = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === this.toLowerCase())]
-                    }
-                    if (element.textContent.trim().toLowerCase() == dataa.Title.toLowerCase().trim() + " *") {
-                        element.innerHTML = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === this.toLowerCase())] + " <span style='color: #c0504d;'>*</span>";
-                    }
-                }, this["lang"]);
-            }
+            element.childNodes.forEach(function (childNode, idx2) {
+                if (childNode.nodeType === Node.TEXT_NODE) {
+                    this["data"].forEach(function (dataa, idx3) {
+                        try {
+                            if (childNode.textContent.trim().toLowerCase() == dataa.Title.toLowerCase().trim()) {
+                                childNode.textContent = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === this.toLowerCase())]
+                            }
+                            if (childNode.textContent.trim().toLowerCase() == dataa.Title.toLowerCase().trim() + " *") {
+                                childNode.innerHTML = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === this.toLowerCase())] + " <span style='color: #c0504d;'>*</span>";
+                            }
+                        }
+                        catch (exc2) {
+                            console.log(exc2);
+                            console.log(childNode);
+                        }
+                    }, this["lang"]);
+                }
+            }, this);
         }, dataObj);
         
         elements = document.querySelectorAll('.btn');
         elements.forEach(function (element, idx) {
             this["data"].forEach(function (dataa, idx2) {
-                if (element.value.trim().toLowerCase() == dataa.Title.toLowerCase().trim()) {
-                    element.value = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === this.toLowerCase())];
+                try {
+                    if (element.value.trim().toLowerCase() == dataa.Title.toLowerCase().trim()) {
+                        element.value = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === this.toLowerCase())];
+                    }
+                }
+                catch (exc2) {
+                    console.log(exc2);
+                    console.log(element);
                 }
             }, this["lang"]);
         }, dataObj);
