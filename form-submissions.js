@@ -161,16 +161,16 @@ function processContent(data, lang) {
         let elements = document.querySelectorAll('p, strong, span, .nx-theme-richtext, .nx-title, .drag-file-label, .nx-upload-button, .nx-action-message');
         elements.forEach(function (element, idx) {
             console.log(idx);
-            //if (element.nodeType === Node.TEXT_NODE) {
-            this["data"].forEach(function (dataa, idx3) {
-                if (element.textContent.trim().toLowerCase() == dataa.Title.toLowerCase().trim()) {
-                    element.textContent = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === this.toLowerCase())]
-                }
-                if (element.textContent.text().trim().toLowerCase() == dataa.Title.toLowerCase().trim() + " *") {
-                    element.innerHTML = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === this.toLowerCase())] + " <span style='color: #c0504d;'>*</span>";
-                }
-            }, this["lang"]);
-            //}
+            if (element.nodeType === Node.TEXT_NODE) {
+                this["data"].forEach(function (dataa, idx3) {
+                    if (element.textContent.trim().toLowerCase() == dataa.Title.toLowerCase().trim()) {
+                        element.textContent = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === this.toLowerCase())]
+                    }
+                    if (element.textContent.trim().toLowerCase() == dataa.Title.toLowerCase().trim() + " *") {
+                        element.innerHTML = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === this.toLowerCase())] + " <span style='color: #c0504d;'>*</span>";
+                    }
+                }, this["lang"]);
+            }
         }, dataObj);
         
         elements = document.querySelectorAll('.btn');
