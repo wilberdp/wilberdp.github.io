@@ -101,7 +101,7 @@ function translateForm() {
         success: function (data1) {
             data1 = JSON.parse(data1.body).d.results;
             if (langOverride != null && langOverride != "") {
-                processContent(data1[i], langOverride);
+                processContent(data1, langOverride);
             }
             else {
                 executor2.executeAsync({
@@ -113,7 +113,7 @@ function translateForm() {
                         if (lang != null && lang.length > 0) {
                             lang = lang[0].value.split('-')[0];
                             if (lang != null && lang != "" && lang.toLowerCase() != "en") {
-                                processContent(data1[i], lang);
+                                processContent(data1, lang);
                             }
                         }
                         else {
@@ -127,7 +127,7 @@ function translateForm() {
                                         if (countryData != null && countryData.length > 0) {
                                             lang = countryData[0].DefaultLanguage;                                            
                                             if (lang != null && lang != "" && lang.toLowerCase() != "en") {
-                                                processContent(data1[i], lang);
+                                                processContent(data1, lang);
                                             }                                            
                                         }
                                     }
@@ -149,17 +149,17 @@ function qs(key) {
     return (match && decodeURIComponent(match[1].replace(/\+/g, " ")));
 }
 
-function processContent(content, lang) {
+function processContent(data, lang) {
     var elements = document.querySelectorAll('.nf-label-control,.ms-addnew,.ms-descriptiontext,.ms-formlabel');
     for (var i = 0; i < elements.length; i++) {
         for (var o = 0; o < elements[i].childNodes.length; o++) {
             if (elements[i].childNodes[o].nodeType === Node.TEXT_NODE) {
-                for (var p = 0; p < content.length; p++) {
-                    if (elements[i].childNodes[o].textContent.trim().toLowerCase() == content[p].Title.toLowerCase().trim()) {
-                        elements[i].childNodes[o].textContent = JSON.parse(content[p]["Content"])[Object.keys(JSON.parse(content[p]["Content"])).find(key => key.toLowerCase() === lang)]
+                for (var p = 0; p < data.length; p++) {
+                    if (elements[i].childNodes[o].textContent.trim().toLowerCase() == data[p].Title.toLowerCase().trim()) {
+                        elements[i].childNodes[o].textContent = JSON.parse(data[p]["Content"])[Object.keys(JSON.parse(data[p]["Content"])).find(key => key.toLowerCase() === lang)]
                     }
                     if (elements[i].childNodes[o].textContent.text().trim().toLowerCase() == content[p].Title.toLowerCase().trim() + " *") {
-                        elements[i].childNodes[o].innerHTML = JSON.parse(content[p]["Content"])[Object.keys(JSON.parse(content[p]["Content"])).find(key => key.toLowerCase() === lang)] + " <span style='color: #c0504d;'>*</span>";
+                        elements[i].childNodes[o].innerHTML = JSON.parse(data[p]["Content"])[Object.keys(JSON.parse(data[p]["Content"])).find(key => key.toLowerCase() === lang)] + " <span style='color: #c0504d;'>*</span>";
                     }
                 }
             }
@@ -167,9 +167,9 @@ function processContent(content, lang) {
     }
     var elements = document.querySelectorAll('.nf-save-button');
     for (var i = 0; i < elements.length; i++) {
-        for (var p = 0; p < content.length; p++) {
-            if (elements[i].value.trim().toLowerCase() == content[p].Title.toLowerCase().trim()) {
-                elements[i].value = JSON.parse(content[p]["Content"])[Object.keys(JSON.parse(content[p]["Content"])).find(key => key.toLowerCase() === lang)];
+        for (var p = 0; p < data.length; p++) {
+            if (elements[i].value.trim().toLowerCase() == data[p].Title.toLowerCase().trim()) {
+                elements[i].value = JSON.parse(data[p]["Content"])[Object.keys(JSON.parse(data[p]["Content"])).find(key => key.toLowerCase() === lang)];
             }
         }
     }
