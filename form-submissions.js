@@ -152,32 +152,31 @@ function qs(key) {
 function processContent(data, lang) {
     console.log(data);
     console.log(lang);
-        let elements = document.querySelectorAll('p, strong, span, .nx-theme-richtext, .nx-title, .drag-file-label, .nx-upload-button, .nx-action-message');
-        elements.forEach(function (element, idx) {
-            console.log(idx);
-            element.childNodes.forEach(function (childNode, idx2) {
-                if (childNode.nodeType === Node.TEXT_NODE) {
-                    data.forEach(function (dataa, idx3) {
-                        if (childNode.textContent.trim().toLowerCase() == dataa.Title.toLowerCase().trim()) {
-                            childNode.textContent = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === lang)]
-                        }
-                        if (childNode.textContent.text().trim().toLowerCase() == dataa.Title.toLowerCase().trim() + " *") {
-                            childNode.innerHTML = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === lang)] + " <span style='color: #c0504d;'>*</span>";
-                        }
-                    });
-                }
-            });
-        });
+    let elements = document.querySelectorAll('p, strong, span, .nx-theme-richtext, .nx-title, .drag-file-label, .nx-upload-button, .nx-action-message');
+    elements.forEach(function (element, idx, data, lang) {
+        console.log(idx);
+        element.childNodes.forEach(function (childNode, idx2, data, lang) {
+            if (childNode.nodeType === Node.TEXT_NODE) {
+                data.forEach(function (dataa, idx3, data, lang) {
+                    if (childNode.textContent.trim().toLowerCase() == dataa.Title.toLowerCase().trim()) {
+                        childNode.textContent = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === lang)]
+                    }
+                    if (childNode.textContent.text().trim().toLowerCase() == dataa.Title.toLowerCase().trim() + " *") {
+                        childNode.innerHTML = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === lang)] + " <span style='color: #c0504d;'>*</span>";
+                    }
+                }, data, lang);
+            }
+        }, data, lang);
+    }, data, lang);
         
-        elements = document.querySelectorAll('.btn');
-        elements.forEach(function (element, idx) {
-            data.forEach(function (dataa, idx2) {
-                if (element.value.trim().toLowerCase() == dataa.Title.toLowerCase().trim()) {
-                    element.value = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === lang)];
-                }
-            });
-        });
-    
+    elements = document.querySelectorAll('.btn');
+    elements.forEach(function (element, idx, data, lang) {
+        data.forEach(function (dataa, idx2, data, lang) {
+            if (element.value.trim().toLowerCase() == dataa.Title.toLowerCase().trim()) {
+                element.value = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === lang)];
+            }
+        }, data, lang);
+    }, data, lang);   
 }
 
 
