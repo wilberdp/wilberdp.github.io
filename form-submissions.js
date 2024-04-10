@@ -95,7 +95,7 @@ function translateForm() {
     var langOverride = qs("Language");
     
     executor1.executeAsync({
-        url: appweburl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('General Configuration')/items?@target='" + hostweburl + "'",
+        url: appweburl + "/_api/SP.AppContextSite(@target)/web/lists/getbytitle('General Configuration')/items?$top=5000&@target='" + hostweburl + "'",
         method: "GET",
         headers: { "Accept": "application/json; odata=verbose" },
         success: function (data1) {
