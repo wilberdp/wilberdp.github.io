@@ -101,7 +101,9 @@ function translateForm() {
         success: function (data1) {
             data1 = JSON.parse(data1.body).d.results;
             if (langOverride != null && langOverride != "") {
-                startProcessing(data1, langOverride);
+                if (langOverride.toLowerCase() != "en") {
+                    startProcessing(data1, langOverride);
+                }
             }
             else {
                 executor2.executeAsync({
