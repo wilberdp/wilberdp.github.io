@@ -101,7 +101,7 @@ function translateForm() {
         success: function (data1) {
             data1 = JSON.parse(data1.body).d.results;
             if (langOverride != null && langOverride != "") {
-                startProcessing(data, lang);
+                startProcessing(data1, lang);
             }
             else {
                 executor2.executeAsync({
@@ -113,7 +113,7 @@ function translateForm() {
                         if (lang != null && lang.length > 0) {
                             lang = lang[0].Value.split('-')[0];
                             if (lang != null && lang != "" && lang.toLowerCase() != "en") {
-                                startProcessing(data, lang);
+                                startProcessing(data1, lang);
                             }
                         }
                         else {
@@ -127,7 +127,7 @@ function translateForm() {
                                         if (countryData != null && countryData.length > 0) {
                                             lang = countryData[0].DefaultLanguage;
                                             if (lang != null && lang != "" && lang.toLowerCase() != "en") {
-                                                startProcessing(data, lang);
+                                                startProcessing(data1, lang);
                                             }
                                         }
                                     }
