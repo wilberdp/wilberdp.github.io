@@ -159,7 +159,7 @@ function processContent(data, lang) {
     //setInterval(function (data, lang) {
         try { 
             var dataObj = { "data": data, "lang": lang };
-            let elements = document.querySelectorAll('p, strong, span, .nx-theme-richtext, .nx-title, .drag-file-label, .nx-upload-button, .nx-action-message');
+            let elements = document.querySelectorAll('p, strong, span, .nx-theme-richtext, .nx-title, .drag-file-label, .nx-upload-button, .nx-action-message, .btn');
             elements.forEach(function (element, idx) {
                 element.childNodes.forEach(function (childNode, idx2) {
                     if (childNode.nodeType === Node.TEXT_NODE) {
@@ -179,21 +179,6 @@ function processContent(data, lang) {
                         }, this["lang"]);
                     }
                 }, this);
-            }, dataObj);
-        
-            elements = document.querySelectorAll('.btn');
-            elements.forEach(function (element, idx) {
-                this["data"].forEach(function (dataa, idx2) {
-                    try {
-                        if (element.value.trim().toLowerCase() == dataa.Title.toLowerCase().trim()) {
-                            element.value = JSON.parse(dataa["Content"])[Object.keys(JSON.parse(dataa["Content"])).find(key => key.toLowerCase() === this.toLowerCase())];
-                        }
-                    }
-                    catch (exc2) {
-                        console.log(exc2);
-                        console.log(element);
-                    }
-                }, this["lang"]);
             }, dataObj);
         }
         catch (exc) {
