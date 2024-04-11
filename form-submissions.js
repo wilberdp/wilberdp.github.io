@@ -90,7 +90,7 @@ function translateForm() {
     var executor1 = new SP.RequestExecutor(appweburl);
     var executor2 = new SP.RequestExecutor(appweburl);
 
-    var lang = "en";
+    var lang = "";
     var country = qs("Country");
     var langOverride = qs("Language");
     
@@ -101,7 +101,7 @@ function translateForm() {
         success: function (data1) {
             data1 = JSON.parse(data1.body).d.results;
             if (langOverride != null && langOverride != "") {
-                startProcessing(data1, lang);
+                startProcessing(data1, langOverride);
             }
             else {
                 executor2.executeAsync({
