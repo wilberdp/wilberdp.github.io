@@ -102,6 +102,8 @@ function translateForm() {
             data1 = JSON.parse(data1.body).d.results;
             if (langOverride != null && langOverride != "") {
                 processContent(data1, langOverride);
+                setTimeout(processContent, 2000, data1, lang);
+                setTimeout(processContent, 5000, data1, lang);
             }
             else {
                 executor2.executeAsync({
@@ -114,6 +116,8 @@ function translateForm() {
                             lang = lang[0].value.split('-')[0];
                             if (lang != null && lang != "" && lang.toLowerCase() != "en") {
                                 processContent(data1, lang);
+                                setTimeout(processContent, 2000, data1, lang);
+                                setTimeout(processContent, 5000, data1, lang);
                             }
                         }
                         else {
@@ -125,10 +129,12 @@ function translateForm() {
                                     success: function (data3) {
                                         var countryData = JSON.parse(data3.body).d.results;
                                         if (countryData != null && countryData.length > 0) {
-                                            lang = countryData[0].DefaultLanguage;                                            
+                                            lang = countryData[0].DefaultLanguage;
                                             if (lang != null && lang != "" && lang.toLowerCase() != "en") {
                                                 processContent(data1, lang);
-                                            }                                            
+                                                setTimeout(processContent, 2000, data1, lang);
+                                                setTimeout(processContent, 5000, data1, lang);
+                                            }
                                         }
                                     }
                                 });
@@ -150,7 +156,7 @@ function qs(key) {
 }
 
 function processContent(data, lang) {
-    setInterval(function (data, lang) {
+    //setInterval(function (data, lang) {
         try { 
             var dataObj = { "data": data, "lang": lang };
             let elements = document.querySelectorAll('p, strong, span, .nx-theme-richtext, .nx-title, .drag-file-label, .nx-upload-button, .nx-action-message');
@@ -193,7 +199,7 @@ function processContent(data, lang) {
         catch (exc) {
             console.log(exc);
         }
-    }, 500, data, lang);     
+    //}, 500, data, lang);     
 }
 
 
