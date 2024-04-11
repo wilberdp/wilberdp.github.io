@@ -111,7 +111,7 @@ function translateForm() {
                     success: function (data2) {
                         lang = JSON.parse(data2.body).d.UserProfileProperties.results.filter(function (itt) { return itt.Key == "SPS-MUILanguages" });
                         if (lang != null && lang.length > 0) {
-                            lang = lang[0].value.split('-')[0];
+                            lang = lang[0].Value.split('-')[0];
                             if (lang != null && lang != "" && lang.toLowerCase() != "en") {
                                 startProcessing(data, lang);
                             }
