@@ -41,6 +41,9 @@ export class FormSubmissions extends LitElement {
                     [data-e2e="btn-submit"] {
                         margin-left: 0px !important;
                     }
+                    [dir] .nx-theme-styles .nx-theme-page {
+                        background-color: white !important;
+                    }
                     body {
                         zoom: 86%;
                     }
