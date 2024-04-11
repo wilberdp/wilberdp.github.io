@@ -90,7 +90,7 @@ function translateForm() {
     var executor1 = new SP.RequestExecutor(appweburl);
     var executor2 = new SP.RequestExecutor(appweburl);
 
-    var lang = "";
+    var lang = "es";
     var country = qs("Country");
     var langOverride = qs("Language");
     
