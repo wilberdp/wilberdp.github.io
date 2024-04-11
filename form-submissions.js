@@ -145,7 +145,7 @@ function translateForm() {
 
 function qs(key) {
     key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&");
-    var match = location.search.match(new RegExp("[?&]"+key+"=([^&]+)(&|$)"));
+    var match = location.search.match(new RegExp("[?&]"+key+"=([^&]+)(&|$)", "i"));
     return (match && decodeURIComponent(match[1].replace(/\+/g, " ")));
 }
 
