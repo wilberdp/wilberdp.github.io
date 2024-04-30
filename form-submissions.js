@@ -69,17 +69,18 @@ export class FormSubmissions extends LitElement {
 }
 
 function populateAttachmentJson() {
-  var json = {};
-  json['mainReport-attachments'] = retrieveAttachments('.mainReport-attachments');
-  json['annexes-attachments'] = retrieveAttachments('.annexes-attachments');
-  json['letterMinistry-attachments'] = retrieveAttachments('.letterMinistry-attachments');
-  json['letterCommittee-attachments'] = retrieveAttachments('.letterCommittee-attachments');
-  json['other-attachments'] = retrieveAttachments('.other-attachments');
-  document.querySelector('.attachmentsJson textarea').value = JSON.stringify(json);
+    var json = {};
+    json['mainReport-attachments'] = retrieveAttachments('.mainReport-attachments');
+    json['annexes-attachments'] = retrieveAttachments('.annexes-attachments');
+    json['letterMinistry-attachments'] = retrieveAttachments('.letterMinistry-attachments');
+    json['letterCommittee-attachments'] = retrieveAttachments('.letterCommittee-attachments');
+    json['other-attachments'] = retrieveAttachments('.other-attachments');
+    document.querySelector('.attachmentsJson textarea').value = JSON.stringify(json);
+    document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('focusout'));
 }
 
 function retrieveAttachments(selector) {
-  var arr = [];
+    var arr = [];
     var fileUploads = document.querySelectorAll(selector);
     for (var i = 0; i < fileUploads.length; i++) {
         var files = fileUploads[i].querySelectorAll('.nx-upload-filename');
@@ -87,7 +88,7 @@ function retrieveAttachments(selector) {
             arr.push(files[o].textContent.trim());
         }
     }
-  return arr;
+    return arr;
 }
 
 function translateForm() {
