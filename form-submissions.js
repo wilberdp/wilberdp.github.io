@@ -51,7 +51,12 @@ export class FormSubmissions extends LitElement {
                 var style = document.createElement("style");
                 style.appendChild(document.createTextNode(css));
                 document.querySelector('head').appendChild(style);
-
+                try {
+                    document.querySelector('[data-e2e="btn-save-and-continue"]').addEventListener('click', function () {
+                        console.log('clicked');
+                    }, false);
+                }
+                catch { }
             }
             setInterval(function(){
                 populateAttachmentJson();
