@@ -38,7 +38,7 @@ export class FormSubmissions extends LitElement {
                     header.nx-sp-form-runtime-header, [data-automation-id="captionElement"], .nx-action-panel > div:nth-child(1) {
                         display: none !important;
                     }
-                    [data-e2e="btn-save-and-continue"] {
+                    [data-e2e="btn-submit"], [data-e2e="btn-save-and-continue"] {
                         margin-left: 0px !important;
                     }
                     [dir] .nx-theme-styles .nx-theme-page {
