@@ -76,7 +76,7 @@ function populateAttachmentJson() {
     json['letterCommittee-attachments'] = retrieveAttachments('.letterCommittee-attachments');
     json['other-attachments'] = retrieveAttachments('.other-attachments');
     document.querySelector('.attachmentsJson textarea').value = JSON.stringify(json);
-    document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('focusout'));
+    document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
 }
 
 function retrieveAttachments(selector) {
