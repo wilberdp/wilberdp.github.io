@@ -79,7 +79,7 @@ function retrieveAttachments(selector) {
     for (var i = 0; i < fileUploads.length; i++) {
         var files = fileUploads[i].querySelectorAll('.nx-upload-filename');
         for (var o = 0; o < files.length; o++) {
-            arr.push(files[o].innerText);
+            arr.push(files[o].textContent.trim());
         }
     }
   return arr;
