@@ -61,7 +61,6 @@ export class FormSubmissions extends LitElement {
                                 if (spinner == null || spinner.length == 0) {
                                     clearInterval(dtInterval);
                                     parent.location.reload();
-                                    location.reload();
                                 }
                             }, 100, clearIntVar);
                         }, 500);
