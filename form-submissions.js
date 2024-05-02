@@ -60,7 +60,7 @@ export class FormSubmissions extends LitElement {
                                 var spinner = document.querySelector('ntx-bar-spinner *');
                                 if (spinner == null || spinner.length == 0) {
                                     clearInterval(dtInterval);
-                                    parent.location.reload();
+                                    window.location.reload();
                                 }
                             }, 100, clearIntVar);
                         }, 500);
