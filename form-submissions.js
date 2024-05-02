@@ -59,6 +59,7 @@ export class FormSubmissions extends LitElement {
                             var dtInterval = setInterval(function (clearIntVar) {
                                 var spinner = document.querySelector('ntx-bar-spinner *');
                                 if (spinner == null || spinner.length == 0) {
+                                    clearInterval(dtInterval);
                                     parent.location.reload();
                                 }
                             }, 100, clearIntVar);
