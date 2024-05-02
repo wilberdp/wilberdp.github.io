@@ -54,6 +54,16 @@ export class FormSubmissions extends LitElement {
                 try {
                     document.querySelector('[data-e2e="btn-save-and-continue"]').addEventListener('click', function () {
                         console.log('clicked');
+                        // setinterval, wait for this to be empty
+                        setTimeout(function () {
+                            var dtInterval = setInterval(function (clearIntVar) {
+                                var spinner = document.querySelector('ntx-bar-spinner *');
+                                if (spinner == null || spinner.length == 0) {
+                                    clearInterval(dtInterval);
+                                }
+                            }, 100, clearIntVar);
+                        }, 500);
+                        var clearIntVar = { id: "1", counter: 0 };
                     }, false);
                 }
                 catch { }
