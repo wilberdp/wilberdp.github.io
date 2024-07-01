@@ -2,8 +2,7 @@ import { html, LitElement } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit
 import 'https://cdn.jsdelivr.net/npm/flatpickr';
 
 // define the component
-export class MultipleChoiceClass extends LitElement {
-  
+export class MultipleChoiceClass extends LitElement {  
     static properties = {
         multipleChoiceClass: { type: String },
         values: { type: String }
@@ -48,8 +47,8 @@ export class MultipleChoiceClass extends LitElement {
             if (this.multipleChoiceClass != null && this.multipleChoiceClass != '' && this.values != null && this.values != '') {
                 var multipleChoice = document.getElementsByClassName(this.multipleChoiceClass);
                 if (multipleChoice != null && multipleChoice.length > 0) {
-                    multipleChoice.click();    
                     multipleChoice = multipleChoice[0];
+                    multipleChoice.click();    
                     var checkboxes = multipleChoice.querySelectorAll('.nx-ng-option')
                     var parsed = this.values.split(';#');
 
