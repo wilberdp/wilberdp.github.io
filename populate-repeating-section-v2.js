@@ -229,7 +229,7 @@ function writeXMLValuesToRepeater(parsed, repeatingSection, repeatingSectionClas
 function writeJSONValuesToRepeater(parsed, repeatingSection, repeatingSectionClass) {
     for (var i = 0; i < parsed.length; i++) {
         var idx2 = 0;
-        var fields = getRowFields(repeatingSection, idx, repeatingSectionClass);
+        var fields = getRowFields(repeatingSection, idx2, repeatingSectionClass);
 
         for (var key in parsed[i]) {
             if (parsed[i].hasOwnProperty(key)) {
