@@ -171,27 +171,37 @@ function writeValueToRepeaterField(valueToWrite, destinationField) {
                         valToSet = valueToWrite[0]['mail'];
                     }
                 }
-                catch (exc) { console.log(exc); }
+                catch (exc) {
+                    //console.log(exc);
+                }
 
                 try {
                     destinationField.value = valToSet;
                 }
-                catch (exc) { console.log(exc); }
+                catch (exc) {
+                    //console.log(exc);
+                }
 
                 try {
                     destinationField.closest('ng-select').value = valToSet;
                 }
-                catch (exc) { console.log(exc); }
+                catch (exc) {
+                    //console.log(exc);
+                }
 
                 try {
                     destinationField.closest('ng-select').querySelector('.ng-value .ng-star-inserted').setAttribute('title', valToSet);
                 }
-                catch (exc) { console.log(exc); }
+                catch (exc) {
+                    //console.log(exc);
+                }
 
                 try {
                     destinationField.closest('ng-select').querySelector('.ng-value .ng-star-inserted').textContent = valToSet;
                 }
-                catch (exc) { console.log(exc); }
+                catch (exc) {
+                    //console.log(exc);
+                }
  
                 try {
                     var peopleField = destinationField.closest('ntx-simple-people-picker');
@@ -200,7 +210,9 @@ function writeValueToRepeaterField(valueToWrite, destinationField) {
                         setTimeout(clickPeoplePickerSelection, 500, peopleField, 0);
                     }
                 }
-                catch (exc) { console.log(exc); }
+                catch (exc) {
+                    //console.log(exc);
+                }
             }
         }
     }
@@ -224,7 +236,7 @@ function writeXMLValuesToRepeater(parsed, repeatingSection, repeatingSectionClas
             catch (exc) {
                 console.log(exc);
             }
-        }       
+        }         
     }
 }
 
