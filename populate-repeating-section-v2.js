@@ -36,6 +36,7 @@ export class PopulateRepeatingSection extends LitElement {
     }
 
     render() {
+        console.log('Populate Repeating Section: render()');
         this.render2().then(res => {
             console.log(res);            
         });   
