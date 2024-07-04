@@ -221,7 +221,7 @@ function writeValueToRepeaterField(valueToWrite, destinationField) {
 function writeXMLValuesToRepeater(parsed, repeatingSection, repeatingSectionClass) {
     for (var i = 0; i < parsed.length; i++) {
         var idx2 = 0;
-        var fields = getRowFields(repeatingSection, idx2, repeatingSectionClass);
+        var fields = getRowFields(repeatingSection, i, repeatingSectionClass);
         console.log(fields);
         var controlValues = parsed[i].querySelectorAll("*");
         var list = [].slice.call(controlValues);
@@ -243,7 +243,7 @@ function writeXMLValuesToRepeater(parsed, repeatingSection, repeatingSectionClas
 function writeJSONValuesToRepeater(parsed, repeatingSection, repeatingSectionClass) {
     for (var i = 0; i < parsed.length; i++) {
         var idx2 = 0;
-        var fields = getRowFields(repeatingSection, idx2, repeatingSectionClass);
+        var fields = getRowFields(repeatingSection, i, repeatingSectionClass);
         console.log(fields);
         for (var key in parsed[i]) {
             if (parsed[i].hasOwnProperty(key)) {
