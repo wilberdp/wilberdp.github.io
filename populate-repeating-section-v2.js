@@ -222,7 +222,7 @@ function writeXMLValuesToRepeater(parsed, repeatingSection, repeatingSectionClas
     for (var i = 0; i < parsed.length; i++) {
         var idx2 = 0;
         var fields = getRowFields(repeatingSection, idx2, repeatingSectionClass);
-
+        console.log(fields);
         var controlValues = parsed[i].querySelectorAll("*");
         var list = [].slice.call(controlValues);
         var texts = list.map(function (itt) { return itt.innerHTML; });
@@ -244,7 +244,7 @@ function writeJSONValuesToRepeater(parsed, repeatingSection, repeatingSectionCla
     for (var i = 0; i < parsed.length; i++) {
         var idx2 = 0;
         var fields = getRowFields(repeatingSection, idx2, repeatingSectionClass);
-
+        console.log(fields);
         for (var key in parsed[i]) {
             if (parsed[i].hasOwnProperty(key)) {
                 try {
