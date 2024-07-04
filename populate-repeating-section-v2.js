@@ -80,6 +80,7 @@ export class PopulateRepeatingSection extends LitElement {
                     if (isJSON) {
                         try {
                             var parsed = JSON.parse(this.values);
+                            console.log(parsed);
                             await addRows(parsed, repeatingSection);
                             writeJSONValuesToRepeater(parsed, repeatingSection, this.repeatingSectionClass);
                         }
@@ -91,6 +92,7 @@ export class PopulateRepeatingSection extends LitElement {
                         try {
                             var parser = new DOMParser();
                             var parsed = parser.parseFromString(this.values, "application/xml").querySelectorAll("Items Item");
+                            console.log(parsed);
                             await addRows(parsed, repeatingSection);
                             writeXMLValuesToRepeater(parsed, repeatingSection, this.repeatingSectionClass);
                         }
