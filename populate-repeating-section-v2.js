@@ -207,7 +207,7 @@ function writeValueToRepeaterField(valueToWrite, destinationField) {
 function writeXMLValuesToRepeater(parsed, repeatingSection, repeatingSectionClass) {
     for (var i = 0; i < parsed.length; i++) {
         var idx2 = 0;
-        var fields = getRowFields(repeatingSection, idx, repeatingSectionClass);
+        var fields = getRowFields(repeatingSection, idx2, repeatingSectionClass);
 
         var controlValues = parsed[i].querySelectorAll("*");
         var list = [].slice.call(controlValues);
