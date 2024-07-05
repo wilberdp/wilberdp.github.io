@@ -125,6 +125,8 @@ function getRowFields(repeatingSection, idx, repeatingSectionClass) {
 }
 
 function writeValueToRepeaterField(valueToWrite, destinationField) {
+    valueToWrite = valueToWrite.replaceAll("&amp;", "&");
+    
     if (destinationField.classList.contains('flatpickr-input')) {
         var clearIntVar = { id: idx2, counter: 0 };
         var dtInterval = setInterval(function (sel, dt, clearIntVar) {
