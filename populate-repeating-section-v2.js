@@ -224,16 +224,16 @@ function writeXMLValuesToRepeater(parsed, repeatingSection, repeatingSectionClas
     for (var i = 0; i < parsed.length; i++) {
         var idx2 = 0;
         var fields = getRowFields(repeatingSection, i, repeatingSectionClass);
-        console.log(fields);
         var controlValues = parsed[i].querySelectorAll("*");
         var list = [].slice.call(controlValues);
         var ids = list.map(function (itt) { return itt.tagName; });
         var texts = list.map(function (itt) { return itt.innerHTML; });
-        var foundFields = new Array();
+        var valuesWritten = new Array();
+        var fieldsWritten = new Array();
 
+        // populate by id
         for (var o = 0; o < texts.length; o++) {
-            if (foundFields.indexOf(o) > -1) {
-                console.log("already found: " + o);
+            if (valuesWritten.indexOf(o) > -1) {
                 continue;
             }
 
@@ -242,27 +242,32 @@ function writeXMLValuesToRepeater(parsed, repeatingSection, repeatingSectionClas
     
             try {
                 if (fieldToFind.length > 0) {
-                    console.log("id: " + idToFind);
-                    console.log("index: " + o);
-                    console.log(fields.indexOf(fieldToFind[0]));
-                    console.log(texts[o]);
+                    valuesWritten.push(o);
+                    fieldsWritten.push(fields.indexOf(fieldToFind[0]));
 
-                    foundFields.push(fields.indexOf(fieldToFind[0]));
                     writeValueToRepeaterField(texts[o], fieldToFind[0]);
-                }
-                else {
-                    while (foundFields.indexOf(idx2) > -1) {
-                        idx2++;
-                    }
-                    console.log(texts[o]);
-                    foundFields.push(o);
-                    writeValueToRepeaterField(texts[o], fields[idx2]);
                 }
             }
             catch (exc) {
                 console.log(exc);
             }
-        }   
+        } 
+
+        // fill in the blanks
+        for (var o = 0; o < texts.length; o++) {
+            if (valuesWritten.indexOf(o) > -1) {
+                continue;
+            }
+
+            while (fieldsWritten.indexOf(idx2) > -1) {
+                idx2++;
+            }
+
+            valuesWritten.push(o);
+            fieldsWritten.push(idx2);
+
+            writeValueToRepeaterField(texts[o], fields[idx2]);
+        }
     }
 }
 
