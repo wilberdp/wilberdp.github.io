@@ -25,7 +25,7 @@ export class PopulateRepeatingSection extends LitElement {
                 },
                 values: {
                     type: 'string',
-                    title: 'Data to populate - JSON or XML'
+                    title: 'JSON or XML Data to populate'
                 }
             }
         };
