@@ -251,9 +251,12 @@ function writeXMLValuesToRepeater(parsed, repeatingSection, repeatingSectionClas
                     writeValueToRepeaterField(texts[o], fieldToFind[0]);
                 }
                 else {
+                    while (foundFields.indexOf(idx2) < 0) {
+                        idx2++;
+                    }
                     console.log(texts[o]);
+                    foundFields.push(o);
                     writeValueToRepeaterField(texts[o], fields[idx2]);
-                    idx2++;
                 }
             }
             catch (exc) {
