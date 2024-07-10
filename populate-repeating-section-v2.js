@@ -150,14 +150,14 @@ function writeValueToRepeaterField(valueToWrite, destinationField) {
             for (var o = 0; o < cbs.length; o++) {
                 cbs[o].checked = false;
                 cbs[o].setAttribute('checked', 'false');
-                cbs[o].dispatchEvent(new Event('click', { bubbles: true }));
+                angularize(cbs[o]);
             }
             for (var o = 0; o < cbs.length; o++) {
                 for (var p = 0; p < splitValue.length; p++) {
                     if (cbs[o].value == splitValue[p]) {
                         cbs[o].checked = true;
                         cbs[o].setAttribute('checked', 'true');
-                        cbs[o].dispatchEvent(new Event('click', { bubbles: true }));
+                        angularize(cbs[o]);
                     }
                 }
             }
@@ -169,7 +169,7 @@ function writeValueToRepeaterField(valueToWrite, destinationField) {
                     if (rads[o].value == valueToWrite) {
                         rads[o].checked = true;
                         rads[o].setAttribute('checked', 'true');
-                        rads[o].dispatchEvent(new Event('click', { bubbles: true }));
+                        angularize(rads[o]);
                     }
                 }
             }
@@ -216,7 +216,7 @@ function writeValueToRepeaterField(valueToWrite, destinationField) {
                 try {
                     var peopleField = destinationField.closest('ntx-simple-people-picker');
                     if (peopleField != null) {
-                        destinationField.dispatchEvent(new Event('input'));
+                        angularize(destinationField);
                         setTimeout(clickPeoplePickerSelection, 500, peopleField, 0);
                     }
                 }
@@ -335,13 +335,18 @@ async function matchRowCountToData(parsed, repeatingSection) {
 function clickPeoplePickerSelection(field, counter) {
     var field2 = field.querySelectorAll('.ng-option:not(.ng-option-disabled)');
     if (field2 != null && field2.length > 0) {
-        field2[0].dispatchEvent(new Event('click'));
+        angularize(field2[0]);
     }
     else {
         if (counter < 10) {
             setTimeout(clickPeoplePickerSelection, 500, field, counter + 1);
         }
     }
+}
+
+function angularize(field) {
+    field.dispatchEvent(new Event('input', { bubbles: true }));
+    field.dispatchEvent(new Event('click', { bubbles: true }));
 }
 
 function uuidv4() {
