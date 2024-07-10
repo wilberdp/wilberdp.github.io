@@ -232,8 +232,10 @@ function writeXMLValuesToRepeater(parsed, repeatingSection, repeatingSectionClas
         var foundFields = new Array();
 
         for (var o = 0; o < texts.length; o++) {
-            if (foundFields.indexOf(o) > -1)
+            if (foundFields.indexOf(o) > -1) {
+                console.log("already found: " + o);
                 continue;
+            }
 
             var idToFind = ids[o];
             var fieldToFind = fields.filter(function (itt) { return itt.id.toLowerCase() == idToFind.toLowerCase(); });
