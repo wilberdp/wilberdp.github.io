@@ -126,7 +126,7 @@ function getRowFields(repeatingSection, idx, repeatingSectionClass) {
 
 function writeValueToRepeaterField(valueToWrite, destinationField) {
     valueToWrite = valueToWrite.replaceAll("&amp;", "&");
-    
+
     if (destinationField.classList.contains('flatpickr-input')) {
         var clearIntVar = { id: idx2, counter: 0 };
         var dtInterval = setInterval(function (sel, dt, clearIntVar) {
@@ -227,13 +227,27 @@ function writeXMLValuesToRepeater(parsed, repeatingSection, repeatingSectionClas
         console.log(fields);
         var controlValues = parsed[i].querySelectorAll("*");
         var list = [].slice.call(controlValues);
+        var ids = list.map(function (itt) { return itt.tagName; });
         var texts = list.map(function (itt) { return itt.innerHTML; });
+        var foundFields = new Array();
 
         for (var o = 0; o < texts.length; o++) {
+            if (foundFields.indexOf(o) > -1)
+                continue;
+
+            var idToFind = ids[o];
+            var fieldToFind = fields.filter(function (itt) { return itt.id.toLowerCase() == idToFind.toLowerCase(); });
+    
             try {
-                console.log(texts[o]);
-                writeValueToRepeaterField(texts[o], fields[idx2]);
-                idx2++;
+                if (fieldToFind.length > 0) {
+                    foundFields.push(fields.indexOf(fieldToFind[0]));
+                    writeValueToRepeaterField(texts[o], fieldToFind[0]);
+                }
+                else {
+                    console.log(texts[o]);
+                    writeValueToRepeaterField(texts[o], fields[idx2]);
+                    idx2++;
+                }
             }
             catch (exc) {
                 console.log(exc);
