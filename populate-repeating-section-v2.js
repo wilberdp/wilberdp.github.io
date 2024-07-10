@@ -245,6 +245,7 @@ function writeXMLValuesToRepeater(parsed, repeatingSection, repeatingSectionClas
                     console.log("id: " + idToFind);
                     console.log("index: " + o);
                     console.log(fields.indexOf(fieldToFind[0]));
+                    console.log(text[o]);
 
                     foundFields.push(fields.indexOf(fieldToFind[0]));
                     writeValueToRepeaterField(texts[o], fieldToFind[0]);
