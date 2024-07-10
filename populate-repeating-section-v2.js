@@ -148,21 +148,28 @@ function writeValueToRepeaterField(valueToWrite, destinationField) {
             var cbs = destinationField.querySelectorAll('input[type="checkbox"]');
             var splitValue = valueToWrite.split(';#');
             for (var o = 0; o < cbs.length; o++) {
+                cbs[o].checked = false;
+                cbs[o].setAttribute('checked', 'false');
+                cbs[o].dispatchEvent(new Event('click', { bubbles: true }));
+            }
+            for (var o = 0; o < cbs.length; o++) {
                 for (var p = 0; p < splitValue.length; p++) {
                     if (cbs[o].value == splitValue[p]) {
                         cbs[o].checked = true;
                         cbs[o].setAttribute('checked', 'true');
+                        cbs[o].dispatchEvent(new Event('click', { bubbles: true }));
                     }
                 }
             }
         }
         else {
             if (destinationField.classList.contains('nx-radio-group')) {
-                var rads = fields[idx2].querySelectorAll('input[type="radio"]');
+                var rads = destinationField.querySelectorAll('input[type="radio"]');
                 for (var o = 0; o < rads.length; o++) {
                     if (rads[o].value == valueToWrite) {
                         rads[o].checked = true;
                         rads[o].setAttribute('checked', 'true');
+                        rads[o].dispatchEvent(new Event('click', { bubbles: true }));
                     }
                 }
             }
