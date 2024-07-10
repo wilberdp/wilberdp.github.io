@@ -344,11 +344,22 @@ function clickPeoplePickerSelection(field, counter) {
     }
 }
 
-function angularize(field) {
+function angularize(field, value) {
     field.dispatchEvent(new Event('input', { bubbles: true }));
     field.dispatchEvent(new Event('click', { bubbles: true }));
     field.dispatchEvent(new Event('change', { bubbles: true }));
     field.dispatchEvent(new Event('blur', { bubbles: true }));
+
+    var argss = {
+        bubbles: true,
+        cancelable: false,
+        composed: true,
+        detail: value
+    };
+
+    var event = new CustomEvent('ntx-value-change', argss);
+    field.dispatchEvent(event);
+    return event;
 }
 
 function uuidv4() {
