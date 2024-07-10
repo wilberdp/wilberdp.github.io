@@ -129,7 +129,7 @@ function writeValueToRepeaterField(valueToWrite, destinationField) {
     valueToWrite = valueToWrite.replaceAll("&amp;", "&");
 
     if (destinationField.classList.contains('flatpickr-input')) {
-        var clearIntVar = { id: idx2, counter: 0 };
+        var clearIntVar = { id: uuidv4(), counter: 0 };
         var dtInterval = setInterval(function (sel, dt, clearIntVar) {
             flatpickr(sel, { allowInput: true, dateFormat: "M d, Y" }).setDate(new Date(dt), true);
             if (sel.value == flatpickr.formatDate(new Date(dt), "M d, Y")) {
@@ -342,6 +342,12 @@ function clickPeoplePickerSelection(field, counter) {
             setTimeout(clickPeoplePickerSelection, 500, field, counter + 1);
         }
     }
+}
+
+function uuidv4() {
+  return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+    (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
+  );
 }
 
 // registering the web component
