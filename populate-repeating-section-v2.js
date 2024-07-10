@@ -251,7 +251,7 @@ function writeXMLValuesToRepeater(parsed, repeatingSection, repeatingSectionClas
                     writeValueToRepeaterField(texts[o], fieldToFind[0]);
                 }
                 else {
-                    while (foundFields.indexOf(idx2) < 0) {
+                    while (foundFields.indexOf(idx2) > -1) {
                         idx2++;
                     }
                     console.log(texts[o]);
@@ -262,7 +262,7 @@ function writeXMLValuesToRepeater(parsed, repeatingSection, repeatingSectionClas
             catch (exc) {
                 console.log(exc);
             }
-        }         
+        }   
     }
 }
 
