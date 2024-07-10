@@ -303,7 +303,7 @@ async function matchRowCountToData(parsed, repeatingSection) {
     var originalSectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
     if (originalSectionCount < parsed.length) {
         // add rows
-        for (var i = 0; i < parsed.length - originalSectionCount - 1; i++) {
+        for (var i = 0; i < parsed.length - originalSectionCount; i++) {
             var sectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
             repeatingSection.parentElement.closest('div').querySelector('button.btn-repeating-section-new-row').click();
             var exists = false;
