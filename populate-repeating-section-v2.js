@@ -90,16 +90,16 @@ export class PopulateRepeatingSection extends LitElement {
                         }
                     }
                     else if (isXML) {
-                        try {
+                        //try {
                             var parser = new DOMParser();
                             var parsed = parser.parseFromString(this.values, "application/xml").querySelectorAll("Items Item");
                             console.log(parsed);
                             await matchRowCountToData(parsed, repeatingSection);
                             writeXMLValuesToRepeater(parsed, repeatingSection, this.repeatingSectionClass);
-                        }
-                        catch (exc2) {
-                            console.log(exc2);
-                        }
+                        //}
+                        //catch (exc2) {
+                        //    console.log(exc2);
+                        //}
                     }
                     else {
                         console.log("invalid repeating section data");
@@ -146,7 +146,7 @@ function writeValueToRepeaterField(valueToWrite, destinationField) {
     else {
         if (destinationField.classList.contains('nx-checkbox-group')) {
             var cbs = destinationField.querySelectorAll('input[type="checkbox"]');
-            var splitValue = valueToWrite;
+            var splitValue = valueToWrite.split(';#');
             for (var o = 0; o < cbs.length; o++) {
                 for (var p = 0; p < splitValue.length; p++) {
                     if (cbs[o].value == splitValue[p]) {
@@ -296,7 +296,7 @@ async function matchRowCountToData(parsed, repeatingSection) {
     var originalSectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
     if (originalSectionCount < parsed.length) {
         // add rows
-        for (var i = 0; i < parsed.length - originalSectionCount- 1; i++) {
+        for (var i = 0; i < parsed.length - originalSectionCount - 1; i++) {
             var sectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
             repeatingSection.parentElement.closest('div').querySelector('button.btn-repeating-section-new-row').click();
             var exists = false;
