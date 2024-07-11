@@ -99,24 +99,21 @@ export class PopulateRepeatingSection extends LitElement {
                         try {
                             var parsed = JSON.parse(this.values);
                             console.log(parsed);
-                            await matchRowCountToData(parsed, repeatingSection);
-                            writeJSONValuesToRepeater(this, parsed, repeatingSection);
+                            matchRowCountToData(parsed, repeatingSection).then((e) => {
+                                writeJSONValuesToRepeater(this, parsed, repeatingSection);
+                            });
                         }
                         catch (exc2) {
                             console.log(exc2);
                         }
                     }
                     else if (isXML) {
-                        //try {
-                            var parser = new DOMParser();
-                            var parsed = parser.parseFromString(this.values, "application/xml").querySelectorAll("Items Item");
-                            console.log(parsed);
-                            await matchRowCountToData(parsed, repeatingSection);
+                        var parser = new DOMParser();
+                        var parsed = parser.parseFromString(this.values, "application/xml").querySelectorAll("Items Item");
+                        console.log(parsed);
+                        matchRowCountToData(parsed, repeatingSection).then((e) => {
                             writeXMLValuesToRepeater(this, parsed, repeatingSection);
-                        //}
-                        //catch (exc2) {
-                        //    console.log(exc2);
-                        //}
+                        });
                     }
                     else {
                         console.log("invalid repeating section data");
@@ -376,7 +373,7 @@ function angularize(parentElement) {
                     if (clearIntVar.counter > 20) {
                         removeFromSetIntervals(parentElement, clearIntVar.intId);
                         clearInterval(clearIntVar.intId);
-                        scrollToTop();
+                        scrollToTop(1);
                     }
                     if (optionToSelect != null) {
                         if (o.tagName.toLowerCase() == 'ng-select')
@@ -386,7 +383,7 @@ function angularize(parentElement) {
 
                         removeFromSetIntervals(parentElement, clearIntVar.intId);
                         clearInterval(clearIntVar.intId);
-                        scrollToTop();
+                        scrollToTop(2);
                     }
                     else {
                         clearIntVar.counter++;
@@ -403,7 +400,7 @@ function angularize(parentElement) {
                 if (fc2.closest('ntx-datetime-picker') != null) {
                     fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
                 }
-                scrollToTop();
+                scrollToTop(3);
             }
         });
     });
@@ -416,7 +413,8 @@ function removeFromSetIntervals(parentElement, value) {
     }
 }
 
-function scrollToTop() {
+function scrollToTop(data) {
+    console.log(data);
     document.querySelector('.nx-form-runtime-content.nx-theme-page').scroll({ top: 0, left: 0 });
 }
 
