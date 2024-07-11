@@ -140,7 +140,7 @@ function writeValueToRepeaterField(valueToWrite, destinationField) {
     if (destinationField.classList.contains('flatpickr-input')) {
         var clearIntVar = { id: uuidv4(), counter: 0 };
         var dtInterval = setInterval(function (sel, dt, clearIntVar) {
-            flatpickr(sel, { allowInput: true, dateFormat: "M d, Y" }).setDate(new Date(dt), true);
+            flatpickr(sel, { altInput: true, allowInput: true, dateFormat: "M d, Y" }).setDate(new Date(dt), true);
             if (sel.value == flatpickr.formatDate(new Date(dt), "M d, Y")) {
                 clearInterval(clearIntVar.intId);
                 sel.classList.remove('nx-is-empty');
