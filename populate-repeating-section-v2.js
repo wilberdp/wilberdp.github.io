@@ -359,27 +359,32 @@ function clickPeoplePickerSelection(field, counter) {
 function angularize(parentElement) {
     document.querySelectorAll('.' + parentElement.repeatingSectionClass + ' ntx-form-control').forEach(function(fc) {
         fc.querySelectorAll('input, ng-select, ntx-simple-choice').forEach(function(fc2) {
-            if (fc2.tagName.toLowerCase() == 'ng-select' || fc2.tagName.toLowerCase() == 'ntx-simple-choice') {
-                fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true })); 
+            if (fc2.tagName.toLowerCase() == 'ng-select' || fc2.tagName.toLowerCase() == 'ntx-simple-choice') { 
                 var clearIntVar = { id: uuidv4(), counter: 0 };
                 var selInterval = setInterval(function (o) {
                     var optionToSelect = null;
 
-                    if (o.tagName.toLowerCase() == 'ng-select')
-                        optionToSelect = o.querySelector('ntx-simple-select-single ng-dropdown-panel .nx-ng-option[value="' + o.value + '"]');
-                    else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
-                        optionToSelect = o.querySelector('ntx-simple-choice .nx-radio input[type="radio"][checked="true"]');
+                    if (o.value != null && o.value != '') {
+                        if (o.tagName.toLowerCase() == 'ng-select')
+                            optionToSelect = o.querySelector('ntx-simple-select-single ng-dropdown-panel .nx-ng-option[value="' + o.value + '"]');
+                        else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
+                            optionToSelect = o.querySelector('ntx-simple-choice .nx-radio input[type="radio"][checked="true"]');
+                    }
 
                     if (clearIntVar.counter > 20) {
                         removeFromSetIntervals(parentElement, clearIntVar.intId);
                         clearInterval(clearIntVar.intId);
-                        scrollToTop(1);
                     }
+
                     if (optionToSelect != null) {
+                        fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true })); 
+
                         if (o.tagName.toLowerCase() == 'ng-select')
                             optionToSelect.closest('.ng-option').click();
                         else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
                             optionToSelect.click();
+                        
+                        fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true })); 
 
                         removeFromSetIntervals(parentElement, clearIntVar.intId);
                         clearInterval(clearIntVar.intId);
