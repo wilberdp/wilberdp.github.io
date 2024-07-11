@@ -383,8 +383,6 @@ function angularize(parentElement) {
                             optionToSelect.closest('.ng-option').click();
                         else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
                             optionToSelect.click();
-                        
-                        fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true })); 
 
                         removeFromSetIntervals(parentElement, clearIntVar.intId);
                         clearInterval(clearIntVar.intId);
