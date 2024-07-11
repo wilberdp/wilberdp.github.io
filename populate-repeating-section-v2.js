@@ -41,14 +41,7 @@ export class PopulateRepeatingSection extends LitElement {
         console.log('Populate Repeating Section: render()');
         this.render2().then(res => {
             console.log(res);  
-            var args = {
-                bubbles: true,
-                cancelable: false,
-                composed: true,
-                detail: this.properties.values
-            };
-            var event = new CustomEvent('ntx-value-change', args);
-            this.dispatchEvent(event);
+            angularize();
         });   
 
         return html`<p>'Populate Repeating Section' for '${this.repeatingSectionClass}'<p/>`;
@@ -159,14 +152,12 @@ function writeValueToRepeaterField(valueToWrite, destinationField) {
             for (var o = 0; o < cbs.length; o++) {
                 cbs[o].checked = false;
                 cbs[o].setAttribute('checked', 'false');
-                angularize(cbs[o]);
             }
             for (var o = 0; o < cbs.length; o++) {
                 for (var p = 0; p < splitValue.length; p++) {
                     if (cbs[o].value == splitValue[p]) {
                         cbs[o].checked = true;
                         cbs[o].setAttribute('checked', 'true');
-                        angularize(cbs[o]);
                     }
                 }
             }
@@ -178,7 +169,6 @@ function writeValueToRepeaterField(valueToWrite, destinationField) {
                     if (rads[o].value == valueToWrite) {
                         rads[o].checked = true;
                         rads[o].setAttribute('checked', 'true');
-                        angularize(rads[o]);
                     }
                 }
             }
@@ -217,17 +207,6 @@ function writeValueToRepeaterField(valueToWrite, destinationField) {
 
                 try {
                     destinationField.closest('ng-select').querySelector('.ng-value .ng-star-inserted').textContent = valToSet;
-                }
-                catch (exc) {
-                    //console.log(exc);
-                }
- 
-                try {
-                    var peopleField = destinationField.closest('ntx-simple-people-picker');
-                    if (peopleField != null) {
-                        angularize(destinationField);
-                        setTimeout(clickPeoplePickerSelection, 500, peopleField, 0);
-                    }
                 }
                 catch (exc) {
                     //console.log(exc);
@@ -341,40 +320,50 @@ async function matchRowCountToData(parsed, repeatingSection) {
     }
 }
 
-function clickPeoplePickerSelection(field, counter) {
-    var field2 = field.querySelectorAll('.ng-option:not(.ng-option-disabled)');
-    if (field2 != null && field2.length > 0) {
-        angularize(field2[0]);
-    }
-    else {
-        if (counter < 10) {
-            setTimeout(clickPeoplePickerSelection, 500, field, counter + 1);
-        }
-    }
-}
+function angularize() {
+    document.querySelectorAll('.' + this.properties.repeatingSectionClass + ' ntx-form-control').forEach(function(fc) {
+        fc.querySelectorAll('input, ng-select, ntx-simple-choice').forEach(function(fc2) {
+            if (fc2.tagName.toLowerCase() == 'ng-select' || fc2.tagName.toLowerCase() == 'ntx-simple-choice') {
+                fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true })); 
+                var clearIntVar = { id: uuidv4(), counter: 0 };
+                var selInterval = setInterval(function (o) {
+                    var optionToSelect = null;
 
-function angularize(field, value) {
-//    field.dispatchEvent(new Event('click', { bubbles: true }));
-    field.dispatchEvent(new Event('input', { bubbles: true }));
-    field.dispatchEvent(new Event('change', { bubbles: true }));
-    field.dispatchEvent(new Event('blur', { bubbles: true }));
+                    if (o.tagName.toLowerCase() == 'ng-select')
+                        optionToSelect = o.querySelector('ntx-simple-select-single ng-dropdown-panel .nx-ng-option[value="' + o.value + '"]');
+                    else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
+                        optionToSelect = o.querySelector('ntx-simple-choice .nx-radio input[type="radio"][checked="true"]');
 
-    var argss = {
-        bubbles: true,
-        cancelable: false,
-        composed: true,
-        detail: value
-    };
+                    if (clearIntVar.counter > 20) {
+                        clearInterval(clearIntVar.intId);
+                    }
+                    if (optionToSelect != null) {
+                        if (o.tagName.toLowerCase() == 'ng-select')
+                            optionToSelect.closest('.ng-option').click();
+                        else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
+                            optionToSelect.click();
 
-        field.dispatchEvent(new Event('input', { bubbles: true }));
-    field.dispatchEvent(new Event('change', { bubbles: true }));
-    field.dispatchEvent(new Event('blur', { bubbles: true }));
-    var event = new CustomEvent('ntx-value-change', argss);
-    field.dispatchEvent(event);
-        field.dispatchEvent(new Event('input', { bubbles: true }));
-    field.dispatchEvent(new Event('change', { bubbles: true }));
-    field.dispatchEvent(new Event('blur', { bubbles: true }));
-    return event;
+                        clearInterval(clearIntVar.intId);
+                    }
+                    else {
+                        clearIntVar.counter++;
+                    }
+                }, 100, fc2);
+                clearIntVar.intId = selInterval;
+                
+            }
+            else {
+                fc2.dispatchEvent(new Event('change', { bubbles: true }));
+                fc2.dispatchEvent(new Event('input', {bubbles: true}));
+                fc2.dispatchEvent(new Event('blur', { bubbles: true }));
+                if (fc2.tagName.toLowerCase() == 'ntx-datetime-picker') {
+                    fc2.querySelectorAll('input').forEach(function(fc3) {
+                        fc3.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
+                    });
+                }
+            }
+        });
+    });
 }
 
 function uuidv4() {
