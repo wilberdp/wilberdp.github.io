@@ -360,6 +360,7 @@ function angularize(parentElement) {
     document.querySelectorAll('.' + parentElement.repeatingSectionClass + ' ntx-form-control').forEach(function(fc) {
         fc.querySelectorAll('input, ng-select, ntx-simple-choice').forEach(function(fc2) {
             if (fc2.tagName.toLowerCase() == 'ng-select' || fc2.tagName.toLowerCase() == 'ntx-simple-choice') { 
+                fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true })); 
                 var clearIntVar = { id: uuidv4(), counter: 0 };
                 var selInterval = setInterval(function (o) {
                     var optionToSelect = null;
@@ -377,7 +378,6 @@ function angularize(parentElement) {
                     }
 
                     if (optionToSelect != null) {
-                        fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true })); 
 
                         if (o.tagName.toLowerCase() == 'ng-select')
                             optionToSelect.closest('.ng-option').click();
