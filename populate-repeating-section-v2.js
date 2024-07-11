@@ -135,9 +135,9 @@ function getRowFields(repeatingSection, idx, repeatingSectionClass) {
     var fields = lastSection.querySelectorAll('.' + repeatingSectionClass + ' input:not([type="checkbox"]):not([type="radio"]), .' + repeatingSectionClass + ' textarea, .nx-checkbox-group, .nx-radio-group');
     var fields2 = new Array();
     for (var o = 0; o < fields.length; o++) {
-        if (fields[o].closest('[hidden]') == null) {
+        //if (fields[o].closest('[hidden]') == null) {
             fields2.push(fields[o]);
-        }
+        //}
     }
     return fields2;
 }
