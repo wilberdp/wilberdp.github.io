@@ -52,7 +52,6 @@ export class PopulateRepeatingSection extends LitElement {
                     if ($this.setIntervals.length == 0) {
                         angularize($this);
                         clearInterval(clearIntVar.intId);
-                        render();
                     }
                     clearIntVar.counter++;
                 }, 100);
