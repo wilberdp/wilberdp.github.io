@@ -4,7 +4,6 @@ import 'https://cdn.jsdelivr.net/npm/angular@1.8.3/angular.min.js';
 
 // define the component
 export class PopulateRepeatingSection extends LitElement {
-  
     static properties = {
         repeatingSectionClass: { type: String },
         values: { type: String }
@@ -29,7 +28,8 @@ export class PopulateRepeatingSection extends LitElement {
                     title: 'Data to populate',
                     description: "JSON or XML"
                 }
-            }
+            },
+            events: ["ntx-value-change"]
         };
     }
   
@@ -40,7 +40,15 @@ export class PopulateRepeatingSection extends LitElement {
     render() {
         console.log('Populate Repeating Section: render()');
         this.render2().then(res => {
-            console.log(res);            
+            console.log(res);  
+            var args = {
+                bubbles: true,
+                cancelable: false,
+                composed: true,
+                detail: this.properties.values
+            };
+            var event = new CustomEvent('ntx-value-change', args);
+            this.dispatchEvent(event);
         });   
 
         return html`<p>'Populate Repeating Section' for '${this.repeatingSectionClass}'<p/>`;
@@ -346,7 +354,7 @@ function clickPeoplePickerSelection(field, counter) {
 }
 
 function angularize(field, value) {
-    field.dispatchEvent(new Event('click', { bubbles: true }));
+//    field.dispatchEvent(new Event('click', { bubbles: true }));
     field.dispatchEvent(new Event('input', { bubbles: true }));
     field.dispatchEvent(new Event('change', { bubbles: true }));
     field.dispatchEvent(new Event('blur', { bubbles: true }));
@@ -358,8 +366,14 @@ function angularize(field, value) {
         detail: value
     };
 
+        field.dispatchEvent(new Event('input', { bubbles: true }));
+    field.dispatchEvent(new Event('change', { bubbles: true }));
+    field.dispatchEvent(new Event('blur', { bubbles: true }));
     var event = new CustomEvent('ntx-value-change', argss);
     field.dispatchEvent(event);
+        field.dispatchEvent(new Event('input', { bubbles: true }));
+    field.dispatchEvent(new Event('change', { bubbles: true }));
+    field.dispatchEvent(new Event('blur', { bubbles: true }));
     return event;
 }
 
