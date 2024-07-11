@@ -1,5 +1,6 @@
 import { html, LitElement } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit-all.min.js';
 import 'https://cdn.jsdelivr.net/npm/flatpickr';
+import 'https://cdn.jsdelivr.net/npm/angular@1.8.3/angular.min.js';
 
 // define the component
 export class PopulateRepeatingSection extends LitElement {
