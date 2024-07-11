@@ -332,7 +332,7 @@ async function matchRowCountToData(parsed, repeatingSection) {
         // delete rows
         for (var i = 0; i < originalSectionCount - parsed.length; i++) {
             var sectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
-            repeatingSection.parentElement.querySelector('ntx-repeating-section-remove-button').click();
+            repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section')[sectionCount - 1].querySelector('.ntx-repeating-section-remove-button').click();
             var exists = false;
             while (!exists) {
                 var newSectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
