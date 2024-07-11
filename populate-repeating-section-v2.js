@@ -387,7 +387,7 @@ function angularize(parentElement) {
 function removeFromSetIntervals(parentElement, value) {
     var idx = parentElement.setIntervals.indexOf(value);
     if (idx > -1) {
-        setIntervals.splice(idx, 1);
+        parentElement.setIntervals.splice(idx, 1);
     }
 }
 
