@@ -4,11 +4,10 @@ import 'https://cdn.jsdelivr.net/npm/angular@1.8.3/angular.min.js';
 
 // define the component
 export class PopulateRepeatingSection extends LitElement {
-    static setIntervals = [];
-
     static properties = {
         repeatingSectionClass: { type: String },
-        values: { type: String }
+        values: { type: String },
+        setIntervals: { type: Array }
     };
   
     // return a promise for contract changes.
@@ -43,8 +42,6 @@ export class PopulateRepeatingSection extends LitElement {
         console.log('Populate Repeating Section: render()');
         var $this = this;
         this.render2().then(res => {
-            console.log(res);
-            $this.setIntervals = setIntervals;
             var clearIntVar = { id: uuidv4(), counter: 0 };
             var angInterval = setInterval(function () {
                 if (clearIntVar.counter > 20) {
@@ -100,7 +97,7 @@ export class PopulateRepeatingSection extends LitElement {
                             var parsed = JSON.parse(this.values);
                             console.log(parsed);
                             await matchRowCountToData(parsed, repeatingSection);
-                            writeJSONValuesToRepeater(parsed, repeatingSection, this.repeatingSectionClass);
+                            writeJSONValuesToRepeater(this, parsed, repeatingSection);
                         }
                         catch (exc2) {
                             console.log(exc2);
@@ -112,7 +109,7 @@ export class PopulateRepeatingSection extends LitElement {
                             var parsed = parser.parseFromString(this.values, "application/xml").querySelectorAll("Items Item");
                             console.log(parsed);
                             await matchRowCountToData(parsed, repeatingSection);
-                            writeXMLValuesToRepeater(parsed, repeatingSection, this.repeatingSectionClass);
+                            writeXMLValuesToRepeater(this, parsed, repeatingSection);
                         //}
                         //catch (exc2) {
                         //    console.log(exc2);
@@ -142,7 +139,7 @@ function getRowFields(repeatingSection, idx, repeatingSectionClass) {
     return fields2;
 }
 
-function writeValueToRepeaterField(valueToWrite, destinationField) {
+function writeValueToRepeaterField(parentElement, valueToWrite, destinationField) {
     valueToWrite = valueToWrite.replaceAll("&amp;", "&");
 
     if (destinationField.classList.contains('flatpickr-input')) {
@@ -161,7 +158,7 @@ function writeValueToRepeaterField(valueToWrite, destinationField) {
             }
         }, 100, destinationField, valueToWrite, clearIntVar);
         clearIntVar.intId = dtInterval;
-        setIntervals.push(dtInterval);
+        parentElement.setIntervals.push(dtInterval);
     }
     else {
         if (destinationField.classList.contains('nx-checkbox-group')) {
@@ -234,10 +231,10 @@ function writeValueToRepeaterField(valueToWrite, destinationField) {
     }
 }
 
-function writeXMLValuesToRepeater(parsed, repeatingSection, repeatingSectionClass) {
+function writeXMLValuesToRepeater(parentElement, parsed, repeatingSection) {
     for (var i = 0; i < parsed.length; i++) {
         var idx2 = 0;
-        var fields = getRowFields(repeatingSection, i, repeatingSectionClass);
+        var fields = getRowFields(repeatingSection, i, parentElement.repeatingSectionClass);
         var controlValues = parsed[i].querySelectorAll("*");
         var list = [].slice.call(controlValues);
         var ids = list.map(function (itt) { return itt.tagName; });
@@ -259,7 +256,7 @@ function writeXMLValuesToRepeater(parsed, repeatingSection, repeatingSectionClas
                     valuesWritten.push(o);
                     fieldsWritten.push(fields.indexOf(fieldToFind[0]));
 
-                    writeValueToRepeaterField(texts[o], fieldToFind[0]);
+                    writeValueToRepeaterField(parentElement, texts[o], fieldToFind[0]);
                 }
             }
             catch (exc) {
@@ -280,21 +277,21 @@ function writeXMLValuesToRepeater(parsed, repeatingSection, repeatingSectionClas
             valuesWritten.push(o);
             fieldsWritten.push(idx2);
 
-            writeValueToRepeaterField(texts[o], fields[idx2]);
+            writeValueToRepeaterField(parentElement, texts[o], fields[idx2]);
         }
     }
 }
 
-function writeJSONValuesToRepeater(parsed, repeatingSection, repeatingSectionClass) {
+function writeJSONValuesToRepeater(parentElement, parsed, repeatingSection) {
     for (var i = 0; i < parsed.length; i++) {
         var idx2 = 0;
-        var fields = getRowFields(repeatingSection, i, repeatingSectionClass);
+        var fields = getRowFields(repeatingSection, i, parentElement.repeatingSectionClass);
         console.log(fields);
         for (var key in parsed[i]) {
             if (parsed[i].hasOwnProperty(key)) {
                 try {
                     console.log(key + ': ' + parsed[i][key]);
-                    writeValueToRepeaterField(parsed[i][key], fields[idx2]);
+                    writeValueToRepeaterField(parentElement, parsed[i][key], fields[idx2]);
                     idx2++;
                 }
                 catch (exc) {
@@ -338,8 +335,8 @@ async function matchRowCountToData(parsed, repeatingSection) {
     }
 }
 
-function angularize(repeaterClass) {
-    document.querySelectorAll('.' + repeaterClass + ' ntx-form-control').forEach(function(fc) {
+function angularize(parentElement) {
+    document.querySelectorAll('.' + parentElement.repeatingSectionClass + ' ntx-form-control').forEach(function(fc) {
         fc.querySelectorAll('input, ng-select, ntx-simple-choice').forEach(function(fc2) {
             if (fc2.tagName.toLowerCase() == 'ng-select' || fc2.tagName.toLowerCase() == 'ntx-simple-choice') {
                 fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true })); 
@@ -370,7 +367,7 @@ function angularize(repeaterClass) {
                     }
                 }, 100, fc2);
                 clearIntVar.intId = selInterval;
-                setIntervals.push(selInterval);
+                parentElement.setIntervals.push(selInterval);
             }
             else {
                 fc2.dispatchEvent(new Event('change', { bubbles: true }));
