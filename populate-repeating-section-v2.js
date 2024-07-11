@@ -149,12 +149,12 @@ function writeValueToRepeaterField(parentElement, valueToWrite, destinationField
             flatpickr(sel, { altInput: true, altFormat: "M d, Y", allowInput: true, dateFormat: "M d, Y" }).setDate(new Date(dt), true);
             if (sel.value == flatpickr.formatDate(new Date(dt), "M d, Y")) {
                 sel.classList.remove('nx-is-empty');
-                removeFromSetIntervals(clearIntVar.intId);
+                removeFromSetIntervals(parentElement, clearIntVar.intId);
                 clearInterval(clearIntVar.intId);
             }
             clearIntVar.counter++;
             if (clearIntVar.counter > 20) {
-                removeFromSetIntervals(clearIntVar.intId);
+                removeFromSetIntervals(parentElement, clearIntVar.intId);
                 clearInterval(clearIntVar.intId);
             }
         }, 100, destinationField, valueToWrite, clearIntVar);
@@ -351,7 +351,7 @@ function angularize(parentElement) {
                         optionToSelect = o.querySelector('ntx-simple-choice .nx-radio input[type="radio"][checked="true"]');
 
                     if (clearIntVar.counter > 20) {
-                        removeFromSetIntervals(clearIntVar.intId);
+                        removeFromSetIntervals(parentElement, clearIntVar.intId);
                         clearInterval(clearIntVar.intId);
                     }
                     if (optionToSelect != null) {
@@ -360,7 +360,7 @@ function angularize(parentElement) {
                         else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
                             optionToSelect.click();
 
-                        removeFromSetIntervals(clearIntVar.intId);
+                        removeFromSetIntervals(parentElement, clearIntVar.intId);
                         clearInterval(clearIntVar.intId);
                     }
                     else {
@@ -384,8 +384,8 @@ function angularize(parentElement) {
     });
 }
 
-function removeFromSetIntervals(value) {
-    var idx = setIntervals.indexOf(value);
+function removeFromSetIntervals(parentElement, value) {
+    var idx = parentElement.setIntervals.indexOf(value);
     if (idx > -1) {
         setIntervals.splice(idx, 1);
     }
