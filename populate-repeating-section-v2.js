@@ -4,6 +4,7 @@ import 'https://cdn.jsdelivr.net/npm/angular@1.8.3/angular.min.js';
 
 // define the component
 export class PopulateRepeatingSection extends LitElement {
+    static $this = this;
     static properties = {
         repeatingSectionClass: { type: String },
         values: { type: String }
@@ -41,7 +42,7 @@ export class PopulateRepeatingSection extends LitElement {
         console.log('Populate Repeating Section: render()');
         this.render2().then(res => {
             console.log(res);  
-            angularize();
+            angularize($this.repeatingSectionClass);
         });   
 
         return html`<p>'Populate Repeating Section' for '${this.repeatingSectionClass}'<p/>`;
@@ -321,7 +322,7 @@ async function matchRowCountToData(parsed, repeatingSection) {
 }
 
 function angularize() {
-    document.querySelectorAll('.' + this.properties.repeatingSectionClass + ' ntx-form-control').forEach(function(fc) {
+    document.querySelectorAll('.' + $this.repeatingSectionClass + ' ntx-form-control').forEach(function(fc) {
         fc.querySelectorAll('input, ng-select, ntx-simple-choice').forEach(function(fc2) {
             if (fc2.tagName.toLowerCase() == 'ng-select' || fc2.tagName.toLowerCase() == 'ntx-simple-choice') {
                 fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true })); 
