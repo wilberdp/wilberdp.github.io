@@ -44,17 +44,18 @@ export class PopulateRepeatingSection extends LitElement {
         var $this = this;
         this.render2().then(res => {
             console.log(res);
+            $this.setIntervals = setIntervals;
             var clearIntVar = { id: uuidv4(), counter: 0 };
-            var angInterval = setInterval(function (repeatingSectionClass) {
+            var angInterval = setInterval(function () {
                 if (clearIntVar.counter > 20) {
                     clearInterval(clearIntVar.intId);
                 }
-                if (setIntervals.length == 0) {
+                if ($this.setIntervals.length == 0) {
                     angularize($this.repeatingSectionClass);
                     clearInterval(clearIntVar.intId);
                 }
                 clearIntVar.counter++;
-            }, 100, $this.repeatingSectionClass);
+            }, 100);
             clearIntVar.intId = angInterval;
         });   
 
