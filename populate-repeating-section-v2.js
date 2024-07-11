@@ -48,7 +48,7 @@ export class PopulateRepeatingSection extends LitElement {
                     clearInterval(clearIntVar.intId);
                 }
                 if ($this.setIntervals.length == 0) {
-                    angularize($this.repeatingSectionClass);
+                    angularize($this);
                     clearInterval(clearIntVar.intId);
                 }
                 clearIntVar.counter++;
