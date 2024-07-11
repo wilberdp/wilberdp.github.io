@@ -330,7 +330,7 @@ async function matchRowCountToData(parsed, repeatingSection) {
     }
     else if (originalSectionCount > parsed.length) {
         // delete rows
-        for (var i = 0; i < originalSectionCount - parsed.length - 1; i++) {
+        for (var i = 0; i < originalSectionCount - parsed.length; i++) {
             var sectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
             repeatingSection.parentElement.querySelector('ntx-repeating-section-remove-button').click();
             var exists = false;
