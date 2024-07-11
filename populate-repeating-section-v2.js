@@ -41,21 +41,23 @@ export class PopulateRepeatingSection extends LitElement {
 
     render() {
         console.log('Populate Repeating Section: render()');
-        var $this = this;
-        this.render2().then(res => {
-            var clearIntVar = { id: uuidv4(), counter: 0 };
-            var angInterval = setInterval(function () {
-                if (clearIntVar.counter > 20) {
-                    clearInterval(clearIntVar.intId);
-                }
-                if ($this.setIntervals.length == 0) {
-                    angularize($this);
-                    clearInterval(clearIntVar.intId);
-                }
-                clearIntVar.counter++;
-            }, 100);
-            clearIntVar.intId = angInterval;
-        });   
+        if (this.values != null && this.values != "") {
+            var $this = this;
+            this.render2().then(res => {
+                var clearIntVar = { id: uuidv4(), counter: 0 };
+                var angInterval = setInterval(function () {
+                    if (clearIntVar.counter > 20) {
+                        clearInterval(clearIntVar.intId);
+                    }
+                    if ($this.setIntervals.length == 0) {
+                        angularize($this);
+                        clearInterval(clearIntVar.intId);
+                    }
+                    clearIntVar.counter++;
+                }, 100);
+                clearIntVar.intId = angInterval;
+            });
+        }
 
         return html`<p>'Populate Repeating Section' for '${this.repeatingSectionClass}'<p/>`;
     }
