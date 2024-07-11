@@ -376,6 +376,7 @@ function angularize(parentElement) {
                     if (clearIntVar.counter > 20) {
                         removeFromSetIntervals(parentElement, clearIntVar.intId);
                         clearInterval(clearIntVar.intId);
+                        scrollToTop();
                     }
                     if (optionToSelect != null) {
                         if (o.tagName.toLowerCase() == 'ng-select')
@@ -385,6 +386,7 @@ function angularize(parentElement) {
 
                         removeFromSetIntervals(parentElement, clearIntVar.intId);
                         clearInterval(clearIntVar.intId);
+                        scrollToTop();
                     }
                     else {
                         clearIntVar.counter++;
@@ -401,6 +403,7 @@ function angularize(parentElement) {
                 if (fc2.closest('ntx-datetime-picker') != null) {
                     fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
                 }
+                scrollToTop();
             }
         });
     });
@@ -411,6 +414,10 @@ function removeFromSetIntervals(parentElement, value) {
     if (idx > -1) {
         parentElement.setIntervals.splice(idx, 1);
     }
+}
+
+function scrollToTop() {
+    document.querySelector('.nx-form-runtime-content.nx-theme-page').scroll({ top: 0, left: 0 });
 }
 
 function uuidv4() {
