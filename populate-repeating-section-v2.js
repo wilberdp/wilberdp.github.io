@@ -227,6 +227,15 @@ function writeValueToRepeaterField(parentElement, valueToWrite, destinationField
                 catch (exc) {
                     //console.log(exc);
                 }
+
+                try {
+                    var peopleField = destinationField.closest('ntx-simple-people-picker');
+                    if (peopleField != null) {
+                        destinationField.dispatchEvent(new Event('input'));
+                        setTimeout(clickPeoplePickerSelection, 500, peopleField, 0);
+                    }
+                }
+                catch (exc) { console.log(exc); }
             }
         }
     }
@@ -332,6 +341,18 @@ async function matchRowCountToData(parsed, repeatingSection) {
                     exists = true;
                 }
             }
+        }
+    }
+}
+
+function clickPeoplePickerSelection(field, counter) {
+    var field2 = field.querySelectorAll('.ng-option:not(.ng-option-disabled)');
+    if (field2 != null && field2.length > 0) {
+        field2[0].dispatchEvent(new Event('click'));
+    }
+    else {
+        if (counter < 10) {
+            setTimeout(clickPeoplePickerSelection, 500, field, counter + 1);
         }
     }
 }
