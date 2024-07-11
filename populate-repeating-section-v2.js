@@ -4,6 +4,8 @@ import 'https://cdn.jsdelivr.net/npm/angular@1.8.3/angular.min.js';
 
 // define the component
 export class PopulateRepeatingSection extends LitElement {
+    static setIntervals = [];
+
     static properties = {
         repeatingSectionClass: { type: String },
         values: { type: String }
@@ -41,8 +43,19 @@ export class PopulateRepeatingSection extends LitElement {
         console.log('Populate Repeating Section: render()');
         var $this = this;
         this.render2().then(res => {
-            console.log(res);  
-            angularize($this.repeatingSectionClass);
+            console.log(res);
+            var clearIntVar = { id: uuidv4(), counter: 0 };
+            var angInterval = setInterval(function (repeatingSectionClass) {
+                if (clearIntVar.counter > 20) {
+                    clearInterval(clearIntVar.intId);
+                }
+                if (setIntervals.length == 0) {
+                    angularize($this.repeatingSectionClass);
+                    clearInterval(clearIntVar.intId);
+                }
+                clearIntVar.counter++;
+            }, 100, $this.repeatingSectionClass);
+            clearIntVar.intId = angInterval;
         });   
 
         return html`<p>'Populate Repeating Section' for '${this.repeatingSectionClass}'<p/>`;
@@ -136,15 +149,18 @@ function writeValueToRepeaterField(valueToWrite, destinationField) {
         var dtInterval = setInterval(function (sel, dt, clearIntVar) {
             flatpickr(sel, { altInput: true, altFormat: "M d, Y", allowInput: true, dateFormat: "M d, Y" }).setDate(new Date(dt), true);
             if (sel.value == flatpickr.formatDate(new Date(dt), "M d, Y")) {
-                clearInterval(clearIntVar.intId);
                 sel.classList.remove('nx-is-empty');
+                removeFromSetIntervals(clearIntVar.intId);
+                clearInterval(clearIntVar.intId);
             }
             clearIntVar.counter++;
             if (clearIntVar.counter > 20) {
+                removeFromSetIntervals(clearIntVar.intId);
                 clearInterval(clearIntVar.intId);
             }
         }, 100, destinationField, valueToWrite, clearIntVar);
         clearIntVar.intId = dtInterval;
+        setIntervals.push(dtInterval);
     }
     else {
         if (destinationField.classList.contains('nx-checkbox-group')) {
@@ -336,6 +352,7 @@ function angularize(repeaterClass) {
                         optionToSelect = o.querySelector('ntx-simple-choice .nx-radio input[type="radio"][checked="true"]');
 
                     if (clearIntVar.counter > 20) {
+                        removeFromSetIntervals(clearIntVar.intId);
                         clearInterval(clearIntVar.intId);
                     }
                     if (optionToSelect != null) {
@@ -344,6 +361,7 @@ function angularize(repeaterClass) {
                         else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
                             optionToSelect.click();
 
+                        removeFromSetIntervals(clearIntVar.intId);
                         clearInterval(clearIntVar.intId);
                     }
                     else {
@@ -351,7 +369,7 @@ function angularize(repeaterClass) {
                     }
                 }, 100, fc2);
                 clearIntVar.intId = selInterval;
-                
+                setIntervals.push(selInterval);
             }
             else {
                 fc2.dispatchEvent(new Event('change', { bubbles: true }));
@@ -365,6 +383,13 @@ function angularize(repeaterClass) {
             }
         });
     });
+}
+
+function removeFromSetIntervals(value) {
+    var idx = setIntervals.indexOf(value);
+    if (idx > -1) {
+        setIntervals.splice(idx, 1);
+    }
 }
 
 function uuidv4() {
