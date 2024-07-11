@@ -36,6 +36,7 @@ export class PopulateRepeatingSection extends LitElement {
   
     constructor() {
         super();
+        this.setIntervals = new Array();
     }
 
     render() {
