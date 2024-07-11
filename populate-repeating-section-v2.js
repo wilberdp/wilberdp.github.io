@@ -395,11 +395,13 @@ function angularize(parentElement) {
                 fc2.dispatchEvent(new Event('change', { bubbles: true }));
                 fc2.dispatchEvent(new Event('input', {bubbles: true}));
                 fc2.dispatchEvent(new Event('blur', { bubbles: true }));
-                if (fc2.tagName.toLowerCase() == 'ntx-datetime-picker') {
-                    fc2.querySelectorAll('input').forEach(function(fc3) {
-                        fc3.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
-                    });
-                }
+                setTimeout(function (fc2) { 
+                    if (fc2.tagName.toLowerCase() == 'ntx-datetime-picker') {
+                        SelectorAll('input').forEach(function(fc3) {
+                            fc3.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
+                        });
+                    }
+                }, 1000, fc2);
             }
         });
     });
