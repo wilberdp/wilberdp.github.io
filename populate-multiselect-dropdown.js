@@ -65,7 +65,7 @@ export class PopulateMultiselectDropdown extends LitElement {
                         splitVals = this.values.split(',');
                     }
                     
-                    var container = multiselect.closest('ntx-simple-select-multi').querySelector('.ng-value-container');
+                    var container = multiselect.closest('ntx-form-control').querySelector('.ng-value-container');
                     for (var i = 0; i < splitVals.length; i++) {
                         var containerElement = document.createElement('div');
                         containerElement.classList.add('ng-value');
