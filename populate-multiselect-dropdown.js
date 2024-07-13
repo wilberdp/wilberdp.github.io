@@ -59,10 +59,10 @@ export class PopulateMultiselectDropdown extends LitElement {
                     multiselect = multiselect[0];
                 
                     // try ;# split
-                    var splitVals = values.split(';#');
+                    var splitVals = this.values.split(';#');
                     if (splitVals == null || splitVals.length == 1) {
                         // try , split
-                        splitVals = values.split(',');
+                        splitVals = this.values.split(',');
                     }
                     
                     var container = multiselect.closest('ntx-simple-select-multi').querySelector('.ng-value-container');
@@ -91,7 +91,7 @@ export class PopulateMultiselectDropdown extends LitElement {
                         </div>*/
                     }
 
-                    
+
                 }
             }
         }
