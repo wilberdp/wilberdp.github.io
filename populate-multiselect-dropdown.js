@@ -47,11 +47,13 @@ export class PopulateMultiselectDropdown extends LitElement {
 
     render() {
         console.log('Populate Multiselect Dropdown: render()');
-        if (this.values != null && this.values != "") {
-            var $this = this;
-            this.render2().then(res => {
+        if (this.mode == true) {
+            if (this.values != null && this.values != "") {
+                var $this = this;
+                this.render2().then(res => {
                 
-            });
+                });
+            }
         }
 
         return html`<p>'Populate Multiselect Dropdown' for '${this.multiClass}'<p/>`;

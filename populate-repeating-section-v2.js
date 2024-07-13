@@ -47,38 +47,39 @@ export class PopulateRepeatingSection extends LitElement {
 
     render() {
         console.log('Populate Repeating Section: render()');
-        if (this.values != null && this.values != "") {
-            var $this = this;
-            this.render2().then(res => {
-                var clearIntVar = { id: uuidv4(), counter: 0 };
-                var angInterval = setInterval(function () {
-                    if (clearIntVar.counter > 20) {
-                        closeDropdowns($this);
-                        clearInterval(clearIntVar.intId);
-                    }
-                    if ($this.setIntervals.length == 0) {
-                        angularize($this);
-                        var clearIntVar2 = { id: uuidv4(), counter: 0 };
-                        var angInterval2 = setInterval(function () {
-                            if (clearIntVar2.counter > 20) {
-                                closeDropdowns($this);
-                                clearInterval(clearIntVar2.intId)
-                            }
-                            if ($this.setIntervals.length == 0) {
-                                closeDropdowns($this);
-                                clearInterval(clearIntVar2.intId);
-                            }
-                            clearIntVar2.counter++;
-                        }, 100);
-                        clearIntVar2.intId = angInterval2;
-                        clearInterval(clearIntVar.intId);
-                    }
-                    clearIntVar.counter++;
-                }, 100);
-                clearIntVar.intId = angInterval;
-            });
+        if (this.mode == true) {
+            if (this.values != null && this.values != "") {
+                var $this = this;
+                this.render2().then(res => {
+                    var clearIntVar = { id: uuidv4(), counter: 0 };
+                    var angInterval = setInterval(function () {
+                        if (clearIntVar.counter > 20) {
+                            closeDropdowns($this);
+                            clearInterval(clearIntVar.intId);
+                        }
+                        if ($this.setIntervals.length == 0) {
+                            angularize($this);
+                            var clearIntVar2 = { id: uuidv4(), counter: 0 };
+                            var angInterval2 = setInterval(function () {
+                                if (clearIntVar2.counter > 20) {
+                                    closeDropdowns($this);
+                                    clearInterval(clearIntVar2.intId)
+                                }
+                                if ($this.setIntervals.length == 0) {
+                                    closeDropdowns($this);
+                                    clearInterval(clearIntVar2.intId);
+                                }
+                                clearIntVar2.counter++;
+                            }, 100);
+                            clearIntVar2.intId = angInterval2;
+                            clearInterval(clearIntVar.intId);
+                        }
+                        clearIntVar.counter++;
+                    }, 100);
+                    clearIntVar.intId = angInterval;
+                });
+            }
         }
-
         return html`<p>'Populate Repeating Section' for '${this.repeatingSectionClass}'<p/>`;
     }
 
