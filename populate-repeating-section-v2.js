@@ -431,6 +431,8 @@ function closeDropdowns(parentElement) {
             i.classList.remove('ng-select-opened');
         }
     });
+
+    document.querySelector('body').click();
 }
 
 function removeFromSetIntervals(parentElement, value) {
