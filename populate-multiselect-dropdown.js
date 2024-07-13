@@ -30,8 +30,9 @@ export class PopulateMultiselectDropdown extends LitElement {
                     description: ', or ;# separated string.  , may fail if commas are present in the values'
                 },
                 mode: {
-                    type: 'string',
+                    type: 'boolean',
                     title: 'Form Mode',
+                    description: "'Is New mode' goes here to control rendering",
                     required: true
                 }
             },

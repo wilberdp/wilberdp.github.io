@@ -30,8 +30,9 @@ export class PopulateRepeatingSection extends LitElement {
                     description: "JSON or XML"
                 },
                 mode: {
-                    type: 'string',
+                    type: 'boolean',
                     title: 'Form Mode',
+                    description: "'Is New mode' goes here to control rendering",
                     required: true
                 }
             },
