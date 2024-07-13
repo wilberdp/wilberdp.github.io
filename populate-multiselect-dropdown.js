@@ -28,6 +28,11 @@ export class PopulateMultiselectDropdown extends LitElement {
                     type: 'string',
                     title: 'Data to populate',
                     description: ', or ;# separated string.  , may fail if commas are present in the values'
+                },
+                mode: {
+                    type: 'string',
+                    title: 'Form Mode',
+                    required: true
                 }
             },
             events: ["ntx-value-change"]
