@@ -78,7 +78,7 @@ export class PopulateMultiselectDropdown extends LitElement {
                     inputToTrigger.dispatchEvent(new Event('input'));
 
                     for (var i = 0; i < splitVals.length; i++) {
-                        container.querySelectorAll('.ng-dropdown-panel-items .ng-option').forEach(function (itt) { if (itt.innerText == splitVals[i]) { itt.click(); } });
+                        container.querySelectorAll('.ng-dropdown-panel-items .ng-option').forEach(function (itt) { if (itt.innerText.trim() == splitVals[i].trim()) { itt.click(); } });
                     }
 
                     container.querySelector('ng-dropdown-panel').remove();
