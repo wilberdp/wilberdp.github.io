@@ -74,11 +74,19 @@ export class PopulateMultiselectDropdown extends LitElement {
                     }
                     
                     var container = multiselect.closest('ntx-form-control');
+                    container.querySelector('.ng-value-container .ng-value span.ng-value-icon.ng-star-inserted').forEach(function (itt) { 
+                        itt.click();
+                    });
+
                     var inputToTrigger = container.querySelector('div[role="combobox"] input');
                     inputToTrigger.dispatchEvent(new Event('input'));
 
                     for (var i = 0; i < splitVals.length; i++) {
-                        container.querySelectorAll('.ng-dropdown-panel-items .ng-option').forEach(function (itt) { if (itt.innerText.trim() == splitVals[i].trim()) { itt.click(); } });
+                        container.querySelectorAll('.ng-dropdown-panel-items .ng-option').forEach(function (itt) {
+                            if (itt.innerText.trim() == splitVals[i].trim()) {
+                                itt.click();
+                            }
+                        });
                     }
 
                     container.querySelector('ng-dropdown-panel').remove();
