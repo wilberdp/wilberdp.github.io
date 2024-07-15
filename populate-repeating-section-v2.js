@@ -47,7 +47,7 @@ export class PopulateRepeatingSection extends LitElement {
 
     render() {
         console.log('Populate Repeating Section: render()');
-        if (this.mode == true) {
+        if (this.mode) {
             if (this.values != null && this.values != "") {
                 var $this = this;
                 this.render2().then(res => {
@@ -452,6 +452,7 @@ function removeFromSetIntervals(parentElement, value) {
 function scrollToTop(data) {
     console.log(data);
     document.querySelector('.nx-form-runtime-content.nx-theme-page').scroll({ top: 0, left: 0 });
+    document.activeElement.blur();
 }
 
 function uuidv4() {
