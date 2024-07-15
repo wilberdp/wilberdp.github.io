@@ -47,7 +47,7 @@ export class PopulateMultiselectDropdown extends LitElement {
 
     render() {
         console.log('Populate Multiselect Dropdown: render()');
-        if (this.mode == true) {
+        if (this.mode) {
             if (this.values != null && this.values != "") {
                 var $this = this;
                 this.render2().then(res => {
@@ -73,8 +73,21 @@ export class PopulateMultiselectDropdown extends LitElement {
                         splitVals = this.values.split(',');
                     }
                     
-                    var container = multiselect.closest('ntx-form-control').querySelector('.ng-value-container');
+                    var container = multiselect.closest('ntx-form-control');
+                    var inputToTrigger = container.querySelector('div[role="combobox"] input');
+                    inputToTrigger.dispatchEvent(new Event('input'));
+
                     for (var i = 0; i < splitVals.length; i++) {
+                        container.querySelectorAll('.ng-dropdown-panel-items .ng-option').forEach(function (itt) { if (itt.innerText == splitVals[i]) { itt.click(); } });
+                    }
+
+                    container.querySelector('ng-dropdown-panel').remove();
+                    container.querySelector('ng-select').classList.remove('ng-select-bottom');
+                    container.querySelector('ng-select').classList.remove('ng-select-top');
+                    container.querySelector('ng-select').classList.remove('ng-select-opened');
+                    container.closest('form').dispatchEvent(new Event('input'));
+
+                        /*
                         var containerElement = document.createElement('div');
                         containerElement.classList.add('ng-value');
                         containerElement.classList.add('ng-star-inserted');
@@ -93,13 +106,18 @@ export class PopulateMultiselectDropdown extends LitElement {
                         containerElement.append(valueElement);
                         container.append(containerElement);
 
-                        /*<div class="ng-value ng-star-inserted">
-                            <span aria-hidden="true" class="ng-value-icon left ng-star-inserted">×</span>
-                            <span class="ng-value-label ng-star-inserted" title="Rec &amp; Park">Rec &amp; Park</span>
-                        </div>*/
-                    }
-
-
+                        document.querySelector('#_de07458fb7ca85e382eb5c95ccaf0c77').value = 'SFPD';
+                        document.querySelector('#_de07458fb7ca85e382eb5c95ccaf0c77').dispatchEvent(new Event('input'));
+                        document.querySelector('.ng-option').click();
+                        document.querySelector('#_de07458fb7ca85e382eb5c95ccaf0c77').value = '';
+                        document.querySelector('#_de07458fb7ca85e382eb5c95ccaf0c77').dispatchEvent(new Event('input'));
+                        document.querySelector('#_de07458fb7ca85e382eb5c95ccaf0c77').value = 'Rec & Park';
+                        document.querySelector('#_de07458fb7ca85e382eb5c95ccaf0c77').dispatchEvent(new Event('input'));
+                        document.querySelector('.ng-option').click();
+                        document.querySelector('#_de07458fb7ca85e382eb5c95ccaf0c77').value = '';
+                        document.querySelector('#_de07458fb7ca85e382eb5c95ccaf0c77').dispatchEvent(new Event('input'));
+                        document.querySelector('ng-dropdown-panel').remove()
+                        */
                 }
             }
         }
