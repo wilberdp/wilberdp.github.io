@@ -132,7 +132,7 @@ function cleanUpAndSet(parentElement, container) {
     var entries = container.querySelectorAll('.ng-value-container .ng-value span.ng-value-icon.ng-star-inserted');
     if (entries.length > 0) {
         entries[0].dispatchEvent(new Event('click', { bubbles: true }));
-        setTimeout(cleanUpAndSet, 100, container);
+        setTimeout(cleanUpAndSet, 100, parentElement, container);
     }
     else {
         if (parentElement.values != null && parentElement.values != '') {
