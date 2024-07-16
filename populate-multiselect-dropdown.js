@@ -74,9 +74,7 @@ export class PopulateMultiselectDropdown extends LitElement {
                     }
                     
                     var container = multiselect.closest('ntx-form-control');
-                    container.querySelector('.ng-value-container .ng-value span.ng-value-icon.ng-star-inserted').forEach(function (itt) { 
-                        itt.click();
-                    });
+                    removePreviousEntries(container);
 
                     var inputToTrigger = container.querySelector('div[role="combobox"] input');
                     inputToTrigger.dispatchEvent(new Event('input'));
@@ -198,6 +196,14 @@ function closeDropdowns(parentElement) {
     });
 
     document.querySelector('body').click();
+}
+
+function removePreviousEntries(container) {
+    var entries = container.querySelectorAll('.ng-value-container .ng-value span.ng-value-icon.ng-star-inserted');
+    if (entries.length > 0) {
+        entries[0].click();
+        setTimeout(removeFromEntries, 100, container);
+    }
 }
 
 function removeFromSetIntervals(parentElement, value) {
