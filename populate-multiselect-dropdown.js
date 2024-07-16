@@ -202,7 +202,7 @@ function removePreviousEntries(container) {
     var entries = container.querySelectorAll('.ng-value-container .ng-value span.ng-value-icon.ng-star-inserted');
     if (entries.length > 0) {
         entries[0].click();
-        setTimeout(removeFromEntries, 100, container);
+        setTimeout(removePreviousEntries, 100, container);
     }
 }
 
