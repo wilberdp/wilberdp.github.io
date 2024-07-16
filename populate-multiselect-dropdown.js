@@ -61,71 +61,40 @@ export class PopulateMultiselectDropdown extends LitElement {
 
     async render2() {
         try {
-            if (this.multiClass != null && this.multiClass != '' && this.values != null && this.values != '') {
+            if (this.multiClass != null && this.multiClass != '') {
                 var multiselect = document.getElementsByClassName(this.multiClass);
                 if (multiselect != null && multiselect.length > 0) {
                     multiselect = multiselect[0];
-                
-                    // try ;# split
-                    var splitVals = this.values.split(';#');
-                    if (splitVals == null || splitVals.length == 1) {
-                        // try , split
-                        splitVals = this.values.split(',');
-                    }
-                    
                     var container = multiselect.closest('ntx-form-control');
                     removePreviousEntries(container);
 
-                    var inputToTrigger = container.querySelector('div[role="combobox"] input');
-                    inputToTrigger.dispatchEvent(new Event('input'));
+                    if (this.values != null && this.values != '') {
+                        // try ;# split
+                        var splitVals = this.values.split(';#');
+                        if (splitVals == null || splitVals.length == 1) {
+                            // try , split
+                            splitVals = this.values.split(',');
+                        }
 
-                    for (var i = 0; i < splitVals.length; i++) {
-                        container.querySelectorAll('.ng-dropdown-panel-items .ng-option').forEach(function (itt) {
-                            if (itt.innerText.trim() == splitVals[i].trim()) {
-                                itt.click();
-                            }
-                        });
+                        var inputToTrigger = container.querySelector('div[role="combobox"] input');
+                        inputToTrigger.dispatchEvent(new Event('input'));
+
+                        for (var i = 0; i < splitVals.length; i++) {
+                            container.querySelectorAll('.ng-dropdown-panel-items .ng-option').forEach(function (itt) {
+                                if (itt.innerText.trim() == splitVals[i].trim()) {
+                                    itt.click();
+                                }
+                            });
+                        }
+
+                        container.querySelector('ng-dropdown-panel').remove();
+                        container.querySelector('ng-select').classList.remove('ng-select-bottom');
+                        container.querySelector('ng-select').classList.remove('ng-select-top');
+                        container.querySelector('ng-select').classList.remove('ng-select-opened');
+                        document.activeElement.blur();
                     }
-
-                    container.querySelector('ng-dropdown-panel').remove();
-                    container.querySelector('ng-select').classList.remove('ng-select-bottom');
-                    container.querySelector('ng-select').classList.remove('ng-select-top');
-                    container.querySelector('ng-select').classList.remove('ng-select-opened');
-                    document.activeElement.blur();
-
-                        /*
-                        var containerElement = document.createElement('div');
-                        containerElement.classList.add('ng-value');
-                        containerElement.classList.add('ng-star-inserted');
-                        var xElement = document.createElement('span');
-                        xElement.classList.add('ng-value-icon');
-                        xElement.classList.add('left');
-                        xElement.classList.add('ng-star-inserted');
-                        xElement.innerHTML = "×";
-                        xElement.setAttribute("aria-hidden", "true");
-                        var valueElement = document.createElement('span');
-                        valueElement.classList.add('ng-value-label');
-                        valueElement.classList.add('ng-star-inserted');
-                        valueElement.innerHTML = splitVals[i].replaceAll("&", "&amp;");
-                        valueElement.setAttribute("title", splitVals[i].replaceAll("&", "&amp;"));
-                        containerElement.append(xElement);
-                        containerElement.append(valueElement);
-                        container.append(containerElement);
-
-                        document.querySelector('#_de07458fb7ca85e382eb5c95ccaf0c77').value = 'SFPD';
-                        document.querySelector('#_de07458fb7ca85e382eb5c95ccaf0c77').dispatchEvent(new Event('input'));
-                        document.querySelector('.ng-option').click();
-                        document.querySelector('#_de07458fb7ca85e382eb5c95ccaf0c77').value = '';
-                        document.querySelector('#_de07458fb7ca85e382eb5c95ccaf0c77').dispatchEvent(new Event('input'));
-                        document.querySelector('#_de07458fb7ca85e382eb5c95ccaf0c77').value = 'Rec & Park';
-                        document.querySelector('#_de07458fb7ca85e382eb5c95ccaf0c77').dispatchEvent(new Event('input'));
-                        document.querySelector('.ng-option').click();
-                        document.querySelector('#_de07458fb7ca85e382eb5c95ccaf0c77').value = '';
-                        document.querySelector('#_de07458fb7ca85e382eb5c95ccaf0c77').dispatchEvent(new Event('input'));
-                        document.querySelector('ng-dropdown-panel').remove()
-                        */
                 }
-            }
+            }           
         }
         catch (exc) { 
             console.log(exc);
