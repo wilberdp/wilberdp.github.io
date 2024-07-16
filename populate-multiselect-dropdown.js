@@ -80,7 +80,7 @@ export class PopulateMultiselectDropdown extends LitElement {
                         for (var i = 0; i < splitVals.length; i++) {
                             container.querySelectorAll('.ng-dropdown-panel-items .ng-option').forEach(function (itt) {
                                 if (itt.innerText.trim() == splitVals[i].trim()) {
-                                    itt.click();
+                                    itt.dispatchEvent(new Event('click', { bubbles: true }));
                                 }
                             });
                         }
@@ -158,7 +158,7 @@ function angularize(parentElement) {
 function removePreviousEntries(container) {
     var entries = container.querySelectorAll('.ng-value-container .ng-value span.ng-value-icon.ng-star-inserted');
     if (entries.length > 0) {
-        entries[0].click();
+        entries[0].dispatchEvent(new Event('click', { bubbles: true }));
         setTimeout(removePreviousEntries, 100, container);
     }
 }
