@@ -64,40 +64,49 @@ export class PopulateMultiselectDropdown extends LitElement {
                 if (multiselect != null && multiselect.length > 0) {
                     multiselect = multiselect[0];
                     var container = multiselect.closest('ntx-form-control');
-                    removePreviousEntries(container);
-
-                    if (this.values != null && this.values != '') {
-                        // try ;# split
-                        var splitVals = this.values.split(';#');
-                        if (splitVals == null || splitVals.length == 1) {
-                            // try , split
-                            splitVals = this.values.split(',');
-                        }
-
-                        var inputToTrigger = container.querySelector('div[role="combobox"] input');
-                        inputToTrigger.dispatchEvent(new Event('input'));
-
-                        for (var i = 0; i < splitVals.length; i++) {
-                            container.querySelectorAll('.ng-dropdown-panel-items .ng-option').forEach(function (itt) {
-                                if (itt.innerText.trim() == splitVals[i].trim()) {
-                                    itt.dispatchEvent(new Event('click', { bubbles: true }));
-                                }
-                            });
-                        }
-
-                        container.querySelector('ng-dropdown-panel').remove();
-                        container.querySelector('ng-select').classList.remove('ng-select-bottom');
-                        container.querySelector('ng-select').classList.remove('ng-select-top');
-                        container.querySelector('ng-select').classList.remove('ng-select-opened');
-                    }
-                                    
-                    container.querySelector('ntx-simple-select-multi').dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true })); 
-                    document.activeElement.blur();
+                    cleanUpAndSet(container);
                 }
-            }           
+            }
         }
-        catch (exc) { 
+        catch (exc) {
             console.log(exc);
+        }
+    }
+
+    async cleanUpAndSet(container) {
+        var entries = container.querySelectorAll('.ng-value-container .ng-value span.ng-value-icon.ng-star-inserted');
+        if (entries.length > 0) {
+            entries[0].dispatchEvent(new Event('click', { bubbles: true }));
+            setTimeout(cleanUpAndSet, 100, container);
+        }
+        else {
+            if (this.values != null && this.values != '') {
+                // try ;# split
+                var splitVals = this.values.split(';#');
+                if (splitVals == null || splitVals.length == 1) {
+                    // try , split
+                    splitVals = this.values.split(',');
+                }
+
+                var inputToTrigger = container.querySelector('div[role="combobox"] input');
+                inputToTrigger.dispatchEvent(new Event('input', { bubbles: true }));
+
+                for (var i = 0; i < splitVals.length; i++) {
+                    container.querySelectorAll('.ng-dropdown-panel-items .ng-option').forEach(function (itt) {
+                        if (itt.innerText.trim() == splitVals[i].trim()) {
+                            itt.dispatchEvent(new Event('click', { bubbles: true }));
+                        }
+                    });
+                }
+
+                container.querySelector('ng-dropdown-panel').remove();
+                container.querySelector('ng-select').classList.remove('ng-select-bottom');
+                container.querySelector('ng-select').classList.remove('ng-select-top');
+                container.querySelector('ng-select').classList.remove('ng-select-opened');
+            }
+                        
+            container.querySelector('ntx-simple-select-multi').dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
+            document.activeElement.blur();
         }
     }
 }
@@ -153,14 +162,6 @@ function angularize(parentElement) {
             }
         });
     });
-}
-
-function removePreviousEntries(container) {
-    var entries = container.querySelectorAll('.ng-value-container .ng-value span.ng-value-icon.ng-star-inserted');
-    if (entries.length > 0) {
-        entries[0].dispatchEvent(new Event('click', { bubbles: true }));
-        setTimeout(removePreviousEntries, 100, container);
-    }
 }
 
 function removeFromSetIntervals(parentElement, value) {
