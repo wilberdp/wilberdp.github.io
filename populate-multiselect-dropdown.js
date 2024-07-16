@@ -89,8 +89,9 @@ export class PopulateMultiselectDropdown extends LitElement {
                         container.querySelector('ng-select').classList.remove('ng-select-bottom');
                         container.querySelector('ng-select').classList.remove('ng-select-top');
                         container.querySelector('ng-select').classList.remove('ng-select-opened');
-                        document.activeElement.blur();
                     }
+                    
+                    document.activeElement.blur();
                 }
             }           
         }
