@@ -64,7 +64,7 @@ export class PopulateMultiselectDropdown extends LitElement {
                 if (multiselect != null && multiselect.length > 0) {
                     multiselect = multiselect[0];
                     var container = multiselect.closest('ntx-form-control');
-                    cleanUpAndSet(container);
+                    cleanUpAndSet(this, container);
                 }
             }
         }
@@ -128,19 +128,19 @@ function angularize(parentElement) {
     });
 }
 
-function cleanUpAndSet(container) {
+function cleanUpAndSet(parentElement, container) {
     var entries = container.querySelectorAll('.ng-value-container .ng-value span.ng-value-icon.ng-star-inserted');
     if (entries.length > 0) {
         entries[0].dispatchEvent(new Event('click', { bubbles: true }));
         setTimeout(cleanUpAndSet, 100, container);
     }
     else {
-        if (this.values != null && this.values != '') {
+        if (parentElement.values != null && parentElement.values != '') {
             // try ;# split
-            var splitVals = this.values.split(';#');
+            var splitVals = parentElement.values.split(';#');
             if (splitVals == null || splitVals.length == 1) {
                 // try , split
-                splitVals = this.values.split(',');
+                splitVals = parentElement.values.split(',');
             }
 
             var inputToTrigger = container.querySelector('div[role="combobox"] input');
