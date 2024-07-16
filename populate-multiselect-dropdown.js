@@ -64,7 +64,7 @@ export class PopulateMultiselectDropdown extends LitElement {
                 if (multiselect != null && multiselect.length > 0) {
                     multiselect = multiselect[0];
                     var container = multiselect.closest('ntx-form-control');
-                    cleanUpAndSet(container);
+                    await cleanUpAndSet(container);
                 }
             }
         }
