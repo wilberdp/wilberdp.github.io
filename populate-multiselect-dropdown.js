@@ -50,7 +50,7 @@ export class PopulateMultiselectDropdown extends LitElement {
         if (this.mode) {
             var $this = this;
             this.render2().then(res => {
-            
+                //this.render2();
             });
         }
 
@@ -90,7 +90,8 @@ export class PopulateMultiselectDropdown extends LitElement {
                         container.querySelector('ng-select').classList.remove('ng-select-top');
                         container.querySelector('ng-select').classList.remove('ng-select-opened');
                     }
-                    
+                                    
+                    container.querySelector('ntx-simple-select-multi').dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true })); 
                     document.activeElement.blur();
                 }
             }           
@@ -103,8 +104,8 @@ export class PopulateMultiselectDropdown extends LitElement {
 
 function angularize(parentElement) {
     document.querySelectorAll('.' + parentElement.multiClass + ' ntx-form-control').forEach(function(fc) {
-        fc.querySelectorAll('input, ng-select, ntx-simple-choice').forEach(function(fc2) {
-            if (fc2.tagName.toLowerCase() == 'ng-select' || fc2.tagName.toLowerCase() == 'ntx-simple-choice') { 
+        fc.querySelectorAll('ntx-simple-select-multi').forEach(function(fc2) {
+            if (fc2.tagName.toLowerCase() == 'ntx-simple-choice') { 
                 fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true })); 
                 var clearIntVar = { id: uuidv4(), counter: 0 };
                 var selInterval = setInterval(function (o) {
@@ -152,18 +153,6 @@ function angularize(parentElement) {
             }
         });
     });
-}
-
-function closeDropdowns(parentElement) {
-    document.querySelector('.' + parentElement.multiClass).querySelectorAll('ng-select').forEach(function(i){ 
-        var panel = i.querySelector('ng-dropdown-panel');
-        if (panel != null) {
-            panel.remove();
-            i.classList.remove('ng-select-opened');
-        }
-    });
-
-    document.querySelector('body').click();
 }
 
 function removePreviousEntries(container) {
