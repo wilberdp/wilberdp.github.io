@@ -114,16 +114,6 @@ function angularize(parentElement) {
                 clearIntVar.intId = selInterval;
                 parentElement.setIntervals.push(selInterval);
             }
-            else {
-                fc2.dispatchEvent(new Event('change', { bubbles: true }));
-                fc2.dispatchEvent(new Event('input', {bubbles: true}));
-                fc2.dispatchEvent(new Event('blur', { bubbles: true }));
-
-                if (fc2.closest('ntx-datetime-picker') != null) {
-                    fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
-                }
-                scrollToTop(3);
-            }
         });
     });
 }
@@ -160,7 +150,7 @@ function cleanUpAndSet(parentElement, container) {
             container.querySelector('ng-select').classList.remove('ng-select-opened');
         }
                         
-        container.querySelector('ntx-simple-select-multi').dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
+        //container.querySelector('ntx-simple-select-multi').dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
         document.activeElement.blur();
     }
 }
