@@ -316,7 +316,7 @@ function writeJSONValuesToRepeater(parentElement, parsed, repeatingSection) {
     for (var i = 0; i < parsed.length; i++) {
         var idx2 = 0;
         var fields = getRowFields(repeatingSection, i, parentElement.repeatingSectionClass);
-        console.log(fields);
+
         for (var key in parsed[i]) {
             if (parsed[i].hasOwnProperty(key)) {
                 try {
@@ -356,6 +356,7 @@ async function matchRowCountToData(parsed, repeatingSection) {
             repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section')[sectionCount - 1].querySelector('.ntx-repeating-section-remove-button').click();
             var exists = false;
             while (!exists) {
+                await new Promise(r => setTimeout(r, 100));
                 var newSectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
                 if (sectionCount != newSectionCount) {
                     exists = true;
