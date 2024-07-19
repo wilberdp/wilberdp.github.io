@@ -453,7 +453,6 @@ function removeFromSetIntervals(parentElement, value) {
 function scrollToTop(data) {
     console.log(data);
     document.querySelector('.nx-form-runtime-content.nx-theme-page').scroll({ top: 0, left: 0 });
-    document.activeElement.blur();
 }
 
 function uuidv4() {
