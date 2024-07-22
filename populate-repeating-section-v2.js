@@ -54,7 +54,7 @@ export class PopulateRepeatingSection extends LitElement {
                     var clearIntVar = { id: uuidv4(), counter: 0 };
                     var angInterval = setInterval(function () {
                         if (clearIntVar.counter > 20) {
-                            closeDropdowns($this);
+                            //closeDropdowns($this);
                             clearInterval(clearIntVar.intId);
                         }
                         if ($this.setIntervals.length == 0) {
@@ -62,11 +62,11 @@ export class PopulateRepeatingSection extends LitElement {
                             var clearIntVar2 = { id: uuidv4(), counter: 0 };
                             var angInterval2 = setInterval(function () {
                                 if (clearIntVar2.counter > 20) {
-                                    closeDropdowns($this);
+                                    //closeDropdowns($this);
                                     clearInterval(clearIntVar2.intId)
                                 }
                                 if ($this.setIntervals.length == 0) {
-                                    closeDropdowns($this);
+                                    //closeDropdowns($this);
                                     clearInterval(clearIntVar2.intId);
                                 }
                                 clearIntVar2.counter++;
