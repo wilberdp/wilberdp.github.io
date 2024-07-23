@@ -57,10 +57,10 @@ export class PopulateRepeatingSection extends LitElement {
                             clearInterval(clearIntVar.intId);
                         }
                         if ($this.setIntervals.length == 0) {
-                            angularize($this).then(res2 => {
+                            //angularize($this).then(res2 => {
                                 //closeDropdowns($this);
                                 clearInterval(clearIntVar.intId);
-                            });
+                            //});
                         }
                         clearIntVar.counter++;
                     }, 500);
