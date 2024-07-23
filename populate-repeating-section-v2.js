@@ -54,28 +54,16 @@ export class PopulateRepeatingSection extends LitElement {
                     var clearIntVar = { id: uuidv4(), counter: 0 };
                     var angInterval = setInterval(function () {
                         if (clearIntVar.counter > 20) {
-                            //closeDropdowns($this);
                             clearInterval(clearIntVar.intId);
                         }
                         if ($this.setIntervals.length == 0) {
-                            angularize($this);
-                            var clearIntVar2 = { id: uuidv4(), counter: 0 };
-                            var angInterval2 = setInterval(function () {
-                                if (clearIntVar2.counter > 20) {
-                                    //closeDropdowns($this);
-                                    clearInterval(clearIntVar2.intId)
-                                }
-                                if ($this.setIntervals.length == 0) {
-                                    //closeDropdowns($this);
-                                    clearInterval(clearIntVar2.intId);
-                                }
-                                clearIntVar2.counter++;
-                            }, 100);
-                            clearIntVar2.intId = angInterval2;
-                            clearInterval(clearIntVar.intId);
+                            angularize($this).then(res2 => {
+                                closeDropdowns($this);
+                                clearInterval(clearIntVar.intId);
+                            });
                         }
                         clearIntVar.counter++;
-                    }, 100);
+                    }, 500);
                     clearIntVar.intId = angInterval;
                 });
             }
@@ -160,26 +148,30 @@ function getRowFields(repeatingSection, idx, repeatingSectionClass) {
     return fields2;
 }
 
-function writeValueToRepeaterField(parentElement, valueToWrite, destinationField) {
+async function writeValueToRepeaterField(parentElement, valueToWrite, destinationField) {
     valueToWrite = valueToWrite.replaceAll("&amp;", "&");
 
     if (destinationField.classList.contains('flatpickr-input')) {
-        var clearIntVar = { id: uuidv4(), counter: 0 };
-        var dtInterval = setInterval(function (sel, dt, clearIntVar) {
-            flatpickr(sel, { altInput: true, altFormat: "M d, Y", allowInput: true, dateFormat: "M d, Y" }).setDate(new Date(dt), true);
-            if (sel.value == flatpickr.formatDate(new Date(dt), "M d, Y")) {
-                sel.classList.remove('nx-is-empty');
-                removeFromSetIntervals(parentElement, clearIntVar.intId);
-                clearInterval(clearIntVar.intId);
-            }
-            clearIntVar.counter++;
-            if (clearIntVar.counter > 20) {
-                removeFromSetIntervals(parentElement, clearIntVar.intId);
-                clearInterval(clearIntVar.intId);
-            }
-        }, 100, destinationField, valueToWrite, clearIntVar);
-        clearIntVar.intId = dtInterval;
-        parentElement.setIntervals.push(dtInterval);
+        await new Promise(resolve => {
+            var clearIntVar = { id: uuidv4(), counter: 0 };
+            var dtInterval = setInterval(function (sel, dt, clearIntVar) {
+                flatpickr(sel, { altInput: true, altFormat: "M d, Y", allowInput: true, dateFormat: "M d, Y" }).setDate(new Date(dt), true);
+                if (sel.value == flatpickr.formatDate(new Date(dt), "M d, Y")) {
+                    sel.classList.remove('nx-is-empty');
+                    removeFromSetIntervals(parentElement, clearIntVar.intId);
+                    clearInterval(clearIntVar.intId);
+                    resolve();
+                }
+                clearIntVar.counter++;
+                if (clearIntVar.counter > 20) {
+                    removeFromSetIntervals(parentElement, clearIntVar.intId);
+                    clearInterval(clearIntVar.intId);
+                    resolve();
+                }
+            }, 100, destinationField, valueToWrite, clearIntVar);
+            clearIntVar.intId = dtInterval;
+            parentElement.setIntervals.push(dtInterval);
+        });
     }
     else {
         if (destinationField.classList.contains('nx-checkbox-group')) {
@@ -378,57 +370,62 @@ function clickPeoplePickerSelection(field, counter) {
     }
 }
 
-function angularize(parentElement) {
-    document.querySelectorAll('.' + parentElement.repeatingSectionClass + ' ntx-form-control').forEach(function(fc) {
-        fc.querySelectorAll('input, ng-select, ntx-simple-choice').forEach(function(fc2) {
-            if (fc2.tagName.toLowerCase() == 'ng-select' || fc2.tagName.toLowerCase() == 'ntx-simple-choice') { 
-                fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true })); 
-                var clearIntVar = { id: uuidv4(), counter: 0 };
-                var selInterval = setInterval(function (o) {
-                    var optionToSelect = null;
+async function angularize(parentElement) {
+    var formControls = document.querySelectorAll('.' + parentElement.repeatingSectionClass + ' ntx-form-control');
+    for (var fc in formControls) {
+        var formControls2 = fc.querySelectorAll('input, ng-select, ntx-simple-choice');
+        for (var fc2 in formControls2) {
+            if (fc2.tagName.toLowerCase() == 'ng-select' || fc2.tagName.toLowerCase() == 'ntx-simple-choice') {
+                await new Promise(resolve => {
+                    var clearIntVar = { id: uuidv4(), counter: 0 };
+                    var selInterval = setInterval(function (o) {
+                        var optionToSelect = null;
 
-                    if (o.value != null && o.value != '') {
-                        if (o.tagName.toLowerCase() == 'ng-select')
-                            optionToSelect = o.querySelector('ntx-simple-select-single ng-dropdown-panel .nx-ng-option[value="' + o.value + '"]');
-                        else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
-                            optionToSelect = o.querySelector('ntx-simple-choice .nx-radio input[type="radio"][checked="true"]');
-                    }
+                        if (o.value != null && o.value != '') {
+                            if (o.tagName.toLowerCase() == 'ng-select')
+                                optionToSelect = o.querySelector('ntx-simple-select-single ng-dropdown-panel .nx-ng-option[value="' + o.value + '"]');
+                            else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
+                                optionToSelect = o.querySelector('ntx-simple-choice .nx-radio input[type="radio"][checked="true"]');
+                        }
 
-                    if (clearIntVar.counter > 20) {
-                        removeFromSetIntervals(parentElement, clearIntVar.intId);
-                        clearInterval(clearIntVar.intId);
-                    }
+                        if (clearIntVar.counter > 20) {
+                            removeFromSetIntervals(parentElement, clearIntVar.intId);
+                            clearInterval(clearIntVar.intId);
+                            resolve();
+                        }
 
-                    if (optionToSelect != null) {
+                        if (optionToSelect != null) {
 
-                        if (o.tagName.toLowerCase() == 'ng-select')
-                            optionToSelect.closest('.ng-option').click();
-                        else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
-                            optionToSelect.click();
+                            if (o.tagName.toLowerCase() == 'ng-select')
+                                optionToSelect.closest('.ng-option').click();
+                            else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
+                                optionToSelect.click();
 
-                        removeFromSetIntervals(parentElement, clearIntVar.intId);
-                        clearInterval(clearIntVar.intId);
-                        scrollToTop(2);
-                    }
-                    else {
-                        clearIntVar.counter++;
-                    }
-                }, 100, fc2);
-                clearIntVar.intId = selInterval;
-                parentElement.setIntervals.push(selInterval);
+                            removeFromSetIntervals(parentElement, clearIntVar.intId);
+                            clearInterval(clearIntVar.intId);
+                            resolve();
+                        }
+                        else {
+                            clearIntVar.counter++;
+                        }
+                    }, 100, fc2);
+                    clearIntVar.intId = selInterval;
+                    parentElement.setIntervals.push(selInterval);
+                });
+
+                fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
             }
             else {
                 fc2.dispatchEvent(new Event('change', { bubbles: true }));
-                fc2.dispatchEvent(new Event('input', {bubbles: true}));
+                fc2.dispatchEvent(new Event('input', { bubbles: true }));
                 fc2.dispatchEvent(new Event('blur', { bubbles: true }));
 
                 if (fc2.closest('ntx-datetime-picker') != null) {
                     fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
                 }
-                scrollToTop(3);
             }
-        });
-    });
+        }
+    }
 }
 
 function closeDropdowns(parentElement) {
