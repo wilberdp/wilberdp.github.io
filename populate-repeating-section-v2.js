@@ -58,7 +58,7 @@ export class PopulateRepeatingSection extends LitElement {
                         }
                         if ($this.setIntervals.length == 0) {
                             angularize($this).then(res2 => {
-                                closeDropdowns($this);
+                                //closeDropdowns($this);
                                 clearInterval(clearIntVar.intId);
                             });
                         }
@@ -375,7 +375,7 @@ async function angularize(parentElement) {
     for (var ii = 0; ii < formControls.length; ii++) {
         try {
             var formControls2 = formControls[ii].querySelectorAll('input, ng-select, ntx-simple-choice');
-            for (var oo= 0; oo < formControls2.length; oo++) {
+            for (var oo = 0; oo < formControls2.length; oo++) {
                 var fc2 = formControls2[oo];
                 if (fc2.tagName != null) {
                     if (fc2.tagName.toLowerCase() == 'ng-select' || fc2.tagName.toLowerCase() == 'ntx-simple-choice') {
