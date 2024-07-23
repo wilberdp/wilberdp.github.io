@@ -360,7 +360,6 @@ function clickPeoplePickerSelection(field, counter) {
 }
 
 async function angularize(parentElement) {
-    return;
     var formControls = document.querySelectorAll('.' + parentElement.repeatingSectionClass + ' ntx-form-control input');
     for (var ii = 0; ii < formControls.length; ii++) {
         try {
