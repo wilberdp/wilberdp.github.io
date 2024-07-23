@@ -371,12 +371,12 @@ function clickPeoplePickerSelection(field, counter) {
 }
 
 async function angularize(parentElement) {
-    var formControls = document.querySelectorAll('.' + parentElement.repeatingSectionClass + ' ntx-form-control input, .' + parentElement.repeatingSectionClass + ' ntx-form-control ng-select, .' + parentElement.repeatingSectionClass + ' ntx-form-control ntx-simple-choice');
+    var formControls = document.querySelectorAll('.' + parentElement.repeatingSectionClass + ' ntx-form-control input');
     for (var ii = 0; ii < formControls.length; ii++) {
         try {
             var fc2 = formControls[ii];
             if (fc2.tagName != null) {
-                if (fc2.tagName.toLowerCase() == 'ng-select' || fc2.tagName.toLowerCase() == 'ntx-simple-choice') {
+                if (fc2.closest('ng-select') != null || fc2.closest('ntx-simple-choice') != null ) {
                     fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
 
                     await new Promise(resolve => {
@@ -385,10 +385,10 @@ async function angularize(parentElement) {
                             var optionToSelect = null;
 
                             if (o.value != null && o.value != '') {
-                                if (o.tagName.toLowerCase() == 'ng-select')
-                                    optionToSelect = o.querySelector('ntx-simple-select-single ng-dropdown-panel .nx-ng-option[value="' + o.value + '"]');
-                                else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
-                                    optionToSelect = o.querySelector('ntx-simple-choice .nx-radio input[type="radio"][checked="true"]');
+                                if (o.closest('ng-select') != null)
+                                    optionToSelect = o.closest('ng-select').querySelector('ng-dropdown-panel .nx-ng-option[value="' + o.value + '"]');
+                                else if (o.closest('ntx-simple-choice') != null)
+                                    optionToSelect = o.closest('ntx-simple-choice').querySelector('.nx-radio input[type="radio"][checked="true"]');
                             }
 
                             if (clearIntVar.counter > 20) {
@@ -399,9 +399,9 @@ async function angularize(parentElement) {
 
                             if (optionToSelect != null) {
 
-                                if (o.tagName.toLowerCase() == 'ng-select')
+                                if (o.closest('ng-select') != null)
                                     optionToSelect.closest('.ng-option').click();
-                                else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
+                                else if (o.closest('ntx-simple-choice') != null)
                                     optionToSelect.click();
 
                                 removeFromSetIntervals(parentElement, clearIntVar.intId);
