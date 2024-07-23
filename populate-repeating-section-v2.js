@@ -381,6 +381,8 @@ async function angularize(parentElement) {
                     if (fc2.tagName.toLowerCase() == 'ng-select' || fc2.tagName.toLowerCase() == 'ntx-simple-choice') {
                         fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
 
+                        continue;
+
                         await new Promise(resolve => {
                             var clearIntVar = { id: uuidv4(), counter: 0 };
                             var selInterval = setInterval(function (o) {
