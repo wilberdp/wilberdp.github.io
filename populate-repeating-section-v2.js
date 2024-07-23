@@ -373,8 +373,10 @@ function clickPeoplePickerSelection(field, counter) {
 async function angularize(parentElement) {
     var formControls = document.querySelectorAll('.' + parentElement.repeatingSectionClass + ' ntx-form-control');
     for (var fc in formControls) {
-        var formControls2 = fc.querySelectorAll('input, ng-select, ntx-simple-choice');
+        var formControls2 = formControls[fc].querySelectorAll('input, ng-select, ntx-simple-choice');
         for (var fc2 in formControls2) {
+            fc2 = formControls2[fc2];
+            
             if (fc2.tagName.toLowerCase() == 'ng-select' || fc2.tagName.toLowerCase() == 'ntx-simple-choice') {
                 fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true })); 
 
