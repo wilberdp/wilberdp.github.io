@@ -371,8 +371,11 @@ function clickPeoplePickerSelection(field, counter) {
 }
 
 async function angularize(parentElement) {
-    var formControls = document.querySelectorAll('.' + parentElement.repeatingSectionClass + ' ntx-form-control');
+    var formControls = document.querySelectorAll('.' + parentElement.repeatingSectionClass + ' ntx-form-control input, .' + parentElement.repeatingSectionClass + ' ntx-form-control ng-select, .' + parentElement.repeatingSectionClass + ' ntx-form-control ntx-simple-choice');
     formControls.forEach(function (itt) { 
+        itt.dispatchEvent(new Event('change', { bubbles: true }));
+        itt.dispatchEvent(new Event('input', { bubbles: true }));
+        itt.dispatchEvent(new Event('blur', { bubbles: true }));
         itt.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
     });
 
