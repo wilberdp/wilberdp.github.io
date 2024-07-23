@@ -372,7 +372,7 @@ function clickPeoplePickerSelection(field, counter) {
 
 async function angularize(parentElement) {
     var formControls = document.querySelectorAll('.' + parentElement.repeatingSectionClass + ' ntx-form-control input, .' + parentElement.repeatingSectionClass + ' ntx-form-control ng-select, .' + parentElement.repeatingSectionClass + ' ntx-form-control ntx-simple-choice');
-    formControls.forEach(function (itt) { 
+    formControls.forEach(function (itt) {
         itt.dispatchEvent(new Event('change', { bubbles: true }));
         itt.dispatchEvent(new Event('input', { bubbles: true }));
         itt.dispatchEvent(new Event('blur', { bubbles: true }));
@@ -382,61 +382,59 @@ async function angularize(parentElement) {
 
     for (var ii = 0; ii < formControls.length; ii++) {
         try {
-            var formControls2 = formControls[ii].querySelectorAll('input, ng-select, ntx-simple-choice');
-            for (var oo = 0; oo < formControls2.length; oo++) {
-                var fc2 = formControls2[oo];
-                if (fc2.tagName != null) {
-                    if (fc2.tagName.toLowerCase() == 'ng-select' || fc2.tagName.toLowerCase() == 'ntx-simple-choice') {
-                        //fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
+            var fc2 = formControls[ii];
+            if (fc2.tagName != null) {
+                if (fc2.tagName.toLowerCase() == 'ng-select' || fc2.tagName.toLowerCase() == 'ntx-simple-choice') {
+                    //fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
 
-                        await new Promise(resolve => {
-                            var clearIntVar = { id: uuidv4(), counter: 0 };
-                            var selInterval = setInterval(function (o) {
-                                var optionToSelect = null;
+                    await new Promise(resolve => {
+                        var clearIntVar = { id: uuidv4(), counter: 0 };
+                        var selInterval = setInterval(function (o) {
+                            var optionToSelect = null;
 
-                                if (o.value != null && o.value != '') {
-                                    if (o.tagName.toLowerCase() == 'ng-select')
-                                        optionToSelect = o.querySelector('ntx-simple-select-single ng-dropdown-panel .nx-ng-option[value="' + o.value + '"]');
-                                    else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
-                                        optionToSelect = o.querySelector('ntx-simple-choice .nx-radio input[type="radio"][checked="true"]');
-                                }
+                            if (o.value != null && o.value != '') {
+                                if (o.tagName.toLowerCase() == 'ng-select')
+                                    optionToSelect = o.querySelector('ntx-simple-select-single ng-dropdown-panel .nx-ng-option[value="' + o.value + '"]');
+                                else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
+                                    optionToSelect = o.querySelector('ntx-simple-choice .nx-radio input[type="radio"][checked="true"]');
+                            }
 
-                                if (clearIntVar.counter > 20) {
-                                    removeFromSetIntervals(parentElement, clearIntVar.intId);
-                                    clearInterval(clearIntVar.intId);
-                                    resolve();
-                                }
+                            if (clearIntVar.counter > 20) {
+                                removeFromSetIntervals(parentElement, clearIntVar.intId);
+                                clearInterval(clearIntVar.intId);
+                                resolve();
+                            }
 
-                                if (optionToSelect != null) {
+                            if (optionToSelect != null) {
 
-                                    if (o.tagName.toLowerCase() == 'ng-select')
-                                        optionToSelect.closest('.ng-option').click();
-                                    else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
-                                        optionToSelect.click();
+                                if (o.tagName.toLowerCase() == 'ng-select')
+                                    optionToSelect.closest('.ng-option').click();
+                                else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
+                                    optionToSelect.click();
 
-                                    removeFromSetIntervals(parentElement, clearIntVar.intId);
-                                    clearInterval(clearIntVar.intId);
-                                    resolve();
-                                }
-                                else {
-                                    clearIntVar.counter++;
-                                }
-                            }, 100, fc2);
-                            clearIntVar.intId = selInterval;
-                            parentElement.setIntervals.push(selInterval);
-                        });
-                    }
-                    else {
-                        fc2.dispatchEvent(new Event('change', { bubbles: true }));
-                        fc2.dispatchEvent(new Event('input', { bubbles: true }));
-                        fc2.dispatchEvent(new Event('blur', { bubbles: true }));
+                                removeFromSetIntervals(parentElement, clearIntVar.intId);
+                                clearInterval(clearIntVar.intId);
+                                resolve();
+                            }
+                            else {
+                                clearIntVar.counter++;
+                            }
+                        }, 100, fc2);
+                        clearIntVar.intId = selInterval;
+                        parentElement.setIntervals.push(selInterval);
+                    });
+                }
+                else {
+                    fc2.dispatchEvent(new Event('change', { bubbles: true }));
+                    fc2.dispatchEvent(new Event('input', { bubbles: true }));
+                    fc2.dispatchEvent(new Event('blur', { bubbles: true }));
 
-                        if (fc2.closest('ntx-datetime-picker') != null) {
-                            fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
-                        }
+                    if (fc2.closest('ntx-datetime-picker') != null) {
+                        fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
                     }
                 }
             }
+            
         }
         catch (exc) {
         }
