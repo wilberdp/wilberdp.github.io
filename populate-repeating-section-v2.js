@@ -414,8 +414,6 @@ async function angularize(parentElement) {
                     clearIntVar.intId = selInterval;
                     parentElement.setIntervals.push(selInterval);
                 });
-
-                fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
             }
             else {
                 fc2.dispatchEvent(new Event('change', { bubbles: true }));
