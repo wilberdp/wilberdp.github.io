@@ -50,22 +50,7 @@ export class PopulateRepeatingSection extends LitElement {
         if (this.mode) {
             if (this.values != null && this.values != "") {
                 var $this = this;
-                this.render2().then(res => {
-                    var clearIntVar = { id: uuidv4(), counter: 0 };
-                    var angInterval = setInterval(function () {
-                        if (clearIntVar.counter > 20) {
-                            clearInterval(clearIntVar.intId);
-                        }
-                        if ($this.setIntervals.length == 0) {
-                            //angularize($this).then(res2 => {
-                                //closeDropdowns($this);
-                                clearInterval(clearIntVar.intId);
-                            //});
-                        }
-                        clearIntVar.counter++;
-                    }, 500);
-                    clearIntVar.intId = angInterval;
-                });
+                this.render2();
             }
         }
         return html`<p>'Populate Repeating Section' for '${this.repeatingSectionClass}'<p/>`;
@@ -108,8 +93,10 @@ export class PopulateRepeatingSection extends LitElement {
                         try {
                             var parsed = JSON.parse(this.values);
                             console.log(parsed);
-                            matchRowCountToData(parsed, repeatingSection).then((e) => {
-                                writeJSONValuesToRepeater(this, parsed, repeatingSection);
+                            matchRowCountToData(parsed, repeatingSection).then(async (e) => {
+                                writeJSONValuesToRepeater(this, parsed, repeatingSection).then(async (e2) => {
+                                    await angularize(repeatingSection);
+                                });
                             });
                         }
                         catch (exc2) {
@@ -120,8 +107,10 @@ export class PopulateRepeatingSection extends LitElement {
                         var parser = new DOMParser();
                         var parsed = parser.parseFromString(this.values, "application/xml").querySelectorAll("Items Item");
                         console.log(parsed);
-                        matchRowCountToData(parsed, repeatingSection).then((e) => {
-                            writeXMLValuesToRepeater(this, parsed, repeatingSection);
+                        matchRowCountToData(parsed, repeatingSection).then(async (e) => {
+                            writeXMLValuesToRepeater(this, parsed, repeatingSection).then(async (e2) => {
+                                await angularize(repeatingSection);
+                            });
                         });
                     }
                     else {
@@ -371,6 +360,7 @@ function clickPeoplePickerSelection(field, counter) {
 }
 
 async function angularize(parentElement) {
+    return;
     var formControls = document.querySelectorAll('.' + parentElement.repeatingSectionClass + ' ntx-form-control input');
     for (var ii = 0; ii < formControls.length; ii++) {
         try {
