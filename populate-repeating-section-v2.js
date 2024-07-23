@@ -378,6 +378,7 @@ async function angularize(parentElement) {
         itt.dispatchEvent(new Event('blur', { bubbles: true }));
         itt.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
     });
+    return;
 
     for (var ii = 0; ii < formControls.length; ii++) {
         try {
@@ -387,8 +388,6 @@ async function angularize(parentElement) {
                 if (fc2.tagName != null) {
                     if (fc2.tagName.toLowerCase() == 'ng-select' || fc2.tagName.toLowerCase() == 'ntx-simple-choice') {
                         fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
-
-                        continue;
 
                         await new Promise(resolve => {
                             var clearIntVar = { id: uuidv4(), counter: 0 };
