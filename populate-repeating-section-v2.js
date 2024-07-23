@@ -253,7 +253,7 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
     }
 }
 
-function writeXMLValuesToRepeater(parentElement, parsed, repeatingSection) {
+async function writeXMLValuesToRepeater(parentElement, parsed, repeatingSection) {
     for (var i = 0; i < parsed.length; i++) {
         var idx2 = 0;
         var fields = getRowFields(repeatingSection, i, parentElement.repeatingSectionClass);
@@ -278,7 +278,7 @@ function writeXMLValuesToRepeater(parentElement, parsed, repeatingSection) {
                     valuesWritten.push(o);
                     fieldsWritten.push(fields.indexOf(fieldToFind[0]));
 
-                    writeValueToRepeaterField(parentElement, texts[o], fieldToFind[0]);
+                    await writeValueToRepeaterField(parentElement, texts[o], fieldToFind[0]);
                 }
             }
             catch (exc) {
@@ -299,12 +299,12 @@ function writeXMLValuesToRepeater(parentElement, parsed, repeatingSection) {
             valuesWritten.push(o);
             fieldsWritten.push(idx2);
 
-            writeValueToRepeaterField(parentElement, texts[o], fields[idx2]);
+            await writeValueToRepeaterField(parentElement, texts[o], fields[idx2]);
         }
     }
 }
 
-function writeJSONValuesToRepeater(parentElement, parsed, repeatingSection) {
+async function writeJSONValuesToRepeater(parentElement, parsed, repeatingSection) {
     for (var i = 0; i < parsed.length; i++) {
         var idx2 = 0;
         var fields = getRowFields(repeatingSection, i, parentElement.repeatingSectionClass);
@@ -313,7 +313,7 @@ function writeJSONValuesToRepeater(parentElement, parsed, repeatingSection) {
             if (parsed[i].hasOwnProperty(key)) {
                 try {
                     console.log(key + ': ' + parsed[i][key]);
-                    writeValueToRepeaterField(parentElement, parsed[i][key], fields[idx2]);
+                    await writeValueToRepeaterField(parentElement, parsed[i][key], fields[idx2]);
                     idx2++;
                 }
                 catch (exc) {
