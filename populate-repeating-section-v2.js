@@ -212,9 +212,15 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                     destinationField.value = valToSet;
                     destinationField.dispatchEvent(new CustomEvent('input', { bubbles: true }));
                     var opt = sel.querySelector('ng-dropdown-panel .ng-option .nx-ng-option[value="' + valToSet + '"]');
-                    console.log(opt);
-                    await pause(100);
-                    opt.dispatchEvent(new Event('click', { bubbles: true }));
+
+                    pause(100).then((e) => { 
+                        if (opt == null) {
+                            opt = sel.querySelector('ng-dropdown-panel .ng-option .nx-ng-option[value="' + valToSet + '"]');
+                        }
+                        if (opt != null) {
+                            opt.dispatchEvent(new Event('click', { bubbles: true }));
+                        }
+                    });
                 }
                 // Radio buttons
                 else if (destinationField.classList.contains('nx-radio-group')) {
