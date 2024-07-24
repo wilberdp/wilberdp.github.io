@@ -190,7 +190,7 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                 }
             
                 // Textbox
-                if (destinationField.closest('ntx-textbox') != null || destinationField.closest('ntx-number') != null) {
+                if (destinationField.closest('ntx-textbox') != null || destinationField.closest('ntx-number') != null || destinationField.closest('ntx-email') != null) {
                     destinationField.value = valToSet;
                     fireEvents(destinationField);
                 }
