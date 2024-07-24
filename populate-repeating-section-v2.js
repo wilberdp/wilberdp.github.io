@@ -47,6 +47,7 @@ export class PopulateRepeatingSection extends LitElement {
 
     render() {
         console.log('Populate Repeating Section: render()');
+
         if (this.mode) {
             if (this.values != null && this.values != "") {
                 var $this = this;
@@ -62,6 +63,11 @@ export class PopulateRepeatingSection extends LitElement {
                 var repeatingSection = document.getElementsByClassName(this.repeatingSectionClass);
                 if (repeatingSection != null && repeatingSection.length > 0) {
                     repeatingSection = repeatingSection[0];
+
+                    var loadingScreen = '<div style="z-index: 9000;background: rgba(0,0,0,0.4);" id="overlayContainerCustom" class="overlayLoading"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position: absolute; width: 0; height: 0" id="__SVG_SPRITE_NODE__"><symbol viewBox="0 0 34 34" id="nintex-x-loader-center-left"><path d="M24.01 17l-17 17L0 26.99 9.99 17 0 7.01 7.01 0l17 17z"></path></symbol><symbol viewBox="0 0 34 34" id="nintex-x-loader-center-right"><path d="M24.01 17L34 26.99 26.99 34l-17-17 17-17L34 7.01 24.01 17z"></path></symbol><symbol viewBox="0 0 24 34" id="nintex-x-loader-left"><path d="M24 17L7.01 34 0 26.99 9.98 17 0 7.01 7.01 0 24 17z"></path></symbol><symbol viewBox="0 0 24 34" id="nintex-x-loader-right"><path d="M14.02 16.99L24 26.98l-7.01 7L0 16.99 16.99 0 24 7.01l-9.98 9.98z"></path></symbol></svg><div class="nx-modal-overlay nx-modal-overlay-override"><div class="nx-modal-dialog nx-dialog-thin nx-dialog-small"><div class="nx-modal-dialog-body"><div class="nx-spinner-container nx-spinner-container--center"><div class="nx-nintex-spinner nx-spinner nx-nintex-spinner-large nx-spinner-theme-light"><div class="nx-nintex-spinner-trail-left nx-nintex-spinner-fifth"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-left"></use></svg></div><div class="nx-nintex-spinner-trail-left nx-nintex-spinner-forth"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-left"></use></svg></div><div class="nx-nintex-spinner-trail-left nx-nintex-spinner-third"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-left"></use></svg></div><div class="nx-nintex-spinner-trail-left nx-nintex-spinner-second"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-left"></use></svg></div><div class="nx-nintex-spinner-middle"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon nx-nintex-spinner-left"><use xlink:href="#nintex-x-loader-center-left"></use></svg><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon nx-nintex-spinner-right"><use xlink:href="#nintex-x-loader-center-right"></use></svg></div><div class="nx-nintex-spinner-trail-right nx-nintex-spinner-second"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-right"></use></svg></div><div class="nx-nintex-spinner-trail-right nx-nintex-spinner-third"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-right"></use></svg></div><div class="nx-nintex-spinner-trail-right nx-nintex-spinner-forth"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-right"></use></svg></div><div class="nx-nintex-spinner-trail-right nx-nintex-spinner-fifth"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-right"></use></svg></div></div></div><p class="nx-spinner-status">Loading...</p></div></div></div></div>';
+                    if (document.querySelector('#overlayContainerCustom') == null) {
+                        repeatingSection.closest('body').querySelector('header').append(stringToHTML(loadingScreen));
+                    }
 
                     var isJSON = false;
                     var isXML = false;
@@ -94,7 +100,9 @@ export class PopulateRepeatingSection extends LitElement {
                             var parsed = JSON.parse(this.values);
                             console.log(parsed);
                             matchRowCountToData(parsed, repeatingSection).then(async (e) => {
-                                writeJSONValuesToRepeater(this, parsed, repeatingSection);
+                                writeJSONValuesToRepeater(this, parsed, repeatingSection).then((e2) => { 
+                                    document.querySelector('#overlayContainerCustom').remove();
+                                });
                             });
                         }
                         catch (exc2) {
@@ -106,7 +114,9 @@ export class PopulateRepeatingSection extends LitElement {
                         var parsed = parser.parseFromString(this.values, "application/xml").querySelectorAll("Items Item");
                         console.log(parsed);
                         matchRowCountToData(parsed, repeatingSection).then(async (e) => {
-                            writeXMLValuesToRepeater(this, parsed, repeatingSection);
+                            writeXMLValuesToRepeater(this, parsed, repeatingSection).then((e2) => {
+                                document.querySelector('#overlayContainerCustom').remove();
+                            });
                         });
                     }
                     else {
@@ -203,9 +213,8 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                     destinationField.dispatchEvent(new CustomEvent('input', { bubbles: true }));
                     var opt = sel.querySelector('ng-dropdown-panel .ng-option .nx-ng-option[value="' + valToSet + '"]');
                     console.log(opt);
-                    pause(50).then((ii) => {
-                        opt.dispatchEvent(new Event('click', { bubbles: true }));
-                    });
+                    await pause(100);
+                    opt.dispatchEvent(new Event('click', { bubbles: true }));
                 }
                 // Radio buttons
                 else if (destinationField.classList.contains('nx-radio-group')) {
@@ -312,7 +321,7 @@ async function matchRowCountToData(parsed, repeatingSection) {
             repeatingSection.parentElement.closest('div').querySelector('button.btn-repeating-section-new-row').click();
             var exists = false;
             while (!exists) {
-                await new Promise(r => setTimeout(r, 100));
+                await pause(100);
                 var newSectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
                 if (sectionCount != newSectionCount) {
                     exists = true;
@@ -327,7 +336,7 @@ async function matchRowCountToData(parsed, repeatingSection) {
             repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section')[sectionCount - 1].querySelector('.ntx-repeating-section-remove-button').click();
             var exists = false;
             while (!exists) {
-                await new Promise(r => setTimeout(r, 100));
+                await pause(100);
                 var newSectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
                 if (sectionCount != newSectionCount) {
                     exists = true;
@@ -358,80 +367,20 @@ function fireEvents(ele) {
     ele.dispatchEvent(new Event('blur', { bubbles: true }));
 }
 
-async function angularize(parentElement) {
-    return;
-    var formControls = document.querySelectorAll('.' + parentElement.repeatingSectionClass + ' ntx-form-control input');
-    for (var ii = 0; ii < formControls.length; ii++) {
-        try {
-            var fc2 = formControls[ii];
-            if (fc2.tagName != null) {
-                if (fc2.closest('ng-select') != null || fc2.closest('ntx-simple-choice') != null ) {
-                    fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
+function stringToHTML(html, trim = true) {
+  // Process the HTML string.
+  html = trim ? html.trim() : html;
+  if (!html) return null;
 
-                    await new Promise(resolve => {
-                        var clearIntVar = { id: uuidv4(), counter: 0 };
-                        var selInterval = setInterval(function (o) {
-                            var optionToSelect = null;
+  // Then set up a new template element.
+  const template = document.createElement('template');
+  template.innerHTML = html;
+  const result = template.content.children;
 
-                            if (o.value != null && o.value != '') {
-                                if (o.closest('ng-select') != null)
-                                    optionToSelect = o.closest('ng-select').querySelector('ng-dropdown-panel .nx-ng-option[value="' + o.value + '"]');
-                                else if (o.closest('ntx-simple-choice') != null)
-                                    optionToSelect = o.closest('ntx-simple-choice').querySelector('.nx-radio input[type="radio"][checked="true"]');
-                            }
-
-                            if (clearIntVar.counter > 20) {
-                                removeFromSetIntervals(parentElement, clearIntVar.intId);
-                                clearInterval(clearIntVar.intId);
-                                resolve();
-                            }
-
-                            if (optionToSelect != null) {
-
-                                if (o.closest('ng-select') != null)
-                                    optionToSelect.closest('.ng-option').click();
-                                else if (o.closest('ntx-simple-choice') != null)
-                                    optionToSelect.click();
-
-                                removeFromSetIntervals(parentElement, clearIntVar.intId);
-                                clearInterval(clearIntVar.intId);
-                                resolve();
-                            }
-                            else {
-                                clearIntVar.counter++;
-                            }
-                        }, 100, fc2);
-                        clearIntVar.intId = selInterval;
-                        parentElement.setIntervals.push(selInterval);
-                    });
-                }
-                else {
-                    fc2.dispatchEvent(new Event('change', { bubbles: true }));
-                    fc2.dispatchEvent(new Event('input', { bubbles: true }));
-                    fc2.dispatchEvent(new Event('blur', { bubbles: true }));
-
-                    if (fc2.closest('ntx-datetime-picker') != null) {
-                        fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
-                    }
-                }
-            }
-            
-        }
-        catch (exc) {
-        }
-    }
-}
-
-function closeDropdowns(parentElement) {
-    document.querySelector('.' + parentElement.repeatingSectionClass).querySelectorAll('ng-select').forEach(function(i){ 
-        var panel = i.querySelector('ng-dropdown-panel');
-        if (panel != null) {
-            panel.remove();
-            i.classList.remove('ng-select-opened');
-        }
-    });
-
-    document.querySelector('body').click();
+  // Then return either an HTMLElement or HTMLCollection,
+  // based on whether the input HTML had one or more roots.
+  if (result.length === 1) return result[0];
+  return result;
 }
 
 function removeFromSetIntervals(parentElement, value) {
