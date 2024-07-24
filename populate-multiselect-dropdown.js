@@ -75,49 +75,6 @@ export class PopulateMultiselectDropdown extends LitElement {
 
 }
 
-function angularize(parentElement) {
-    document.querySelectorAll('.' + parentElement.multiClass + ' ntx-form-control').forEach(function(fc) {
-        fc.querySelectorAll('ntx-simple-select-multi').forEach(function(fc2) {
-            if (fc2.tagName.toLowerCase() == 'ntx-simple-choice') { 
-                fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true })); 
-                var clearIntVar = { id: uuidv4(), counter: 0 };
-                var selInterval = setInterval(function (o) {
-                    var optionToSelect = null;
-
-                    if (o.value != null && o.value != '') {
-                        if (o.tagName.toLowerCase() == 'ng-select')
-                            optionToSelect = o.querySelector('ntx-simple-select-single ng-dropdown-panel .nx-ng-option[value="' + o.value + '"]');
-                        else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
-                            optionToSelect = o.querySelector('ntx-simple-choice .nx-radio input[type="radio"][checked="true"]');
-                    }
-
-                    if (clearIntVar.counter > 20) {
-                        removeFromSetIntervals(parentElement, clearIntVar.intId);
-                        clearInterval(clearIntVar.intId);
-                    }
-
-                    if (optionToSelect != null) {
-
-                        if (o.tagName.toLowerCase() == 'ng-select')
-                            optionToSelect.closest('.ng-option').click();
-                        else if (o.tagName.toLowerCase() == 'ntx-simple-choice')
-                            optionToSelect.click();
-
-                        removeFromSetIntervals(parentElement, clearIntVar.intId);
-                        clearInterval(clearIntVar.intId);
-                        scrollToTop(2);
-                    }
-                    else {
-                        clearIntVar.counter++;
-                    }
-                }, 100, fc2);
-                clearIntVar.intId = selInterval;
-                parentElement.setIntervals.push(selInterval);
-            }
-        });
-    });
-}
-
 function cleanUpAndSet(parentElement, container) {
     var entries = container.querySelectorAll('.ng-value-container .ng-value span.ng-value-icon.ng-star-inserted');
     if (entries.length > 0) {
@@ -135,11 +92,13 @@ function cleanUpAndSet(parentElement, container) {
 
             var inputToTrigger = container.querySelector('div[role="combobox"] input');
             inputToTrigger.dispatchEvent(new Event('input', { bubbles: true }));
+            scrollToTop('1');
 
             for (var i = 0; i < splitVals.length; i++) {
                 container.querySelectorAll('.ng-dropdown-panel-items .ng-option').forEach(function (itt) {
                     if (itt.innerText.trim() == splitVals[i].trim()) {
                         itt.dispatchEvent(new Event('click', { bubbles: true }));
+                        scrollToTop('2');
                     }
                 });
             }
