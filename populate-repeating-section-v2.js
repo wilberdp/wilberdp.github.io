@@ -136,95 +136,97 @@ function getRowFields(repeatingSection, idx, repeatingSectionClass) {
 async function writeValueToRepeaterField(parentElement, valueToWrite, destinationField) {
     valueToWrite = valueToWrite.replaceAll("&amp;", "&");
 
-    if (destinationField.classList.contains('flatpickr-input')) {
-        await new Promise(resolve => {
-            var clearIntVar = { id: uuidv4(), counter: 0 };
-            var dtInterval = setInterval(function (sel, dt, clearIntVar) {
-                flatpickr(sel, { altInput: true, altFormat: "M d, Y", allowInput: true, dateFormat: "M d, Y" }).setDate(new Date(dt), true);
-                if (sel.value == flatpickr.formatDate(new Date(dt), "M d, Y")) {
-                    sel.classList.remove('nx-is-empty');
-                    removeFromSetIntervals(parentElement, clearIntVar.intId);
-                    clearInterval(clearIntVar.intId);
-                    resolve();
-                }
-                clearIntVar.counter++;
-                if (clearIntVar.counter > 20) {
-                    removeFromSetIntervals(parentElement, clearIntVar.intId);
-                    clearInterval(clearIntVar.intId);
-                    resolve();
-                }
-            }, 100, destinationField, valueToWrite, clearIntVar);
-            clearIntVar.intId = dtInterval;
-            parentElement.setIntervals.push(dtInterval);
-        });
-    }
-    else {
-        if (destinationField.classList.contains('nx-checkbox-group')) {
-            var cbs = destinationField.querySelectorAll('input[type="checkbox"]');
-            var splitValue = valueToWrite.split(';#');
-            for (var o = 0; o < cbs.length; o++) {
-                cbs[o].checked = false;
-                cbs[o].setAttribute('checked', 'false');
-            }
-            for (var o = 0; o < cbs.length; o++) {
-                for (var p = 0; p < splitValue.length; p++) {
-                    if (cbs[o].value == splitValue[p]) {
-                        cbs[o].checked = true;
-                        cbs[o].setAttribute('checked', 'true');
-                        fireEvents(cbs[o]);
+    if (destinationField != null && destinationField.classList != null) {
+        if (destinationField.classList.contains('flatpickr-input')) {
+            await new Promise(resolve => {
+                var clearIntVar = { id: uuidv4(), counter: 0 };
+                var dtInterval = setInterval(function (sel, dt, clearIntVar) {
+                    flatpickr(sel, { altInput: true, altFormat: "M d, Y", allowInput: true, dateFormat: "M d, Y" }).setDate(new Date(dt), true);
+                    if (sel.value == flatpickr.formatDate(new Date(dt), "M d, Y")) {
+                        sel.classList.remove('nx-is-empty');
+                        removeFromSetIntervals(parentElement, clearIntVar.intId);
+                        clearInterval(clearIntVar.intId);
+                        resolve();
                     }
-                }
-            }
+                    clearIntVar.counter++;
+                    if (clearIntVar.counter > 20) {
+                        removeFromSetIntervals(parentElement, clearIntVar.intId);
+                        clearInterval(clearIntVar.intId);
+                        resolve();
+                    }
+                }, 100, destinationField, valueToWrite, clearIntVar);
+                clearIntVar.intId = dtInterval;
+                parentElement.setIntervals.push(dtInterval);
+            });
         }
         else {
-            var valToSet = valueToWrite;
-
-            try {
-                if (Array.isArray(valueToWrite)) {
-                    valToSet = valueToWrite[0]['mail'];
+            if (destinationField.classList.contains('nx-checkbox-group')) {
+                var cbs = destinationField.querySelectorAll('input[type="checkbox"]');
+                var splitValue = valueToWrite.split(';#');
+                for (var o = 0; o < cbs.length; o++) {
+                    cbs[o].checked = false;
+                    cbs[o].setAttribute('checked', 'false');
                 }
-            }
-            catch (exc) {
-                //console.log(exc);
-            }
-            
-            // Textbox
-            if (destinationField.closest('ntx-textbox') != null || destinationField.closest('ntx-number') != null) {
-                destinationField.value = valToSet;
-                fireEvents(destinationField);
-            }
-            // Dropdown
-            else if (destinationField.closest('ntx-simple-select-single') != null) {
-                var dField = destinationField.closest('ntx-simple-select-single');
-                var sel = dField.querySelector('ng-select');
-                sel.value = valToSet;
-                sel.classList.remove('ng-untouched');
-                sel.classList.add('ng-dirty', 'ng-touched');
-                dField.classList.remove('ng-pristine');
-                dField.classList.add('ng-dirty');
-                var ngVal = dField.querySelector('ng-select .ng-select-container .ng-value-container');
-                ngVal.innerHTML = '<div class="ng-placeholder"></div><div class="ng-value ng-star-inserted"><span title="' + valToSet + '" class="ng-star-inserted">' + valToSet + '</span></div>';
-                fireEvents(sel);
-                fireEvents(dField);
-            }
-            // Radio buttons
-            else if (destinationField.classList.contains('nx-radio-group')) {
-                var rads = destinationField.querySelectorAll('input[type="radio"]');
-                for (var o = 0; o < rads.length; o++) {
-                    if (rads[o].value == valueToWrite) {
-                        rads[o].checked = true;
-                        rads[o].setAttribute('checked', 'true');
-                        fireEvents(rads[o]);
+                for (var o = 0; o < cbs.length; o++) {
+                    for (var p = 0; p < splitValue.length; p++) {
+                        if (cbs[o].value == splitValue[p]) {
+                            cbs[o].checked = true;
+                            cbs[o].setAttribute('checked', 'true');
+                            fireEvents(cbs[o]);
+                        }
                     }
                 }
             }
-            // People picker
-            else if (destinationField.closest('ntx-simple-people-picker') != null) {
-                var peopleField = destinationField.closest('ntx-simple-people-picker');
-                if (peopleField != null) {
+            else {
+                var valToSet = valueToWrite;
+
+                try {
+                    if (Array.isArray(valueToWrite)) {
+                        valToSet = valueToWrite[0]['mail'];
+                    }
+                }
+                catch (exc) {
+                    //console.log(exc);
+                }
+            
+                // Textbox
+                if (destinationField.closest('ntx-textbox') != null || destinationField.closest('ntx-number') != null) {
                     destinationField.value = valToSet;
-                    destinationField.dispatchEvent(new Event('input'));
-                    setTimeout(clickPeoplePickerSelection, 500, peopleField, 0);
+                    fireEvents(destinationField);
+                }
+                // Dropdown
+                else if (destinationField.closest('ntx-simple-select-single') != null) {
+                    var dField = destinationField.closest('ntx-simple-select-single');
+                    var sel = dField.querySelector('ng-select');
+                    sel.value = valToSet;
+                    sel.classList.remove('ng-untouched');
+                    sel.classList.add('ng-dirty', 'ng-touched');
+                    dField.classList.remove('ng-pristine');
+                    dField.classList.add('ng-dirty');
+                    var ngVal = dField.querySelector('ng-select .ng-select-container .ng-value-container');
+                    ngVal.innerHTML = '<div class="ng-placeholder"></div><div class="ng-value ng-star-inserted"><span title="' + valToSet + '" class="ng-star-inserted">' + valToSet + '</span></div>';
+                    fireEvents(sel);
+                    fireEvents(dField);
+                }
+                // Radio buttons
+                else if (destinationField.classList.contains('nx-radio-group')) {
+                    var rads = destinationField.querySelectorAll('input[type="radio"]');
+                    for (var o = 0; o < rads.length; o++) {
+                        if (rads[o].value == valueToWrite) {
+                            rads[o].checked = true;
+                            rads[o].setAttribute('checked', 'true');
+                            fireEvents(rads[o]);
+                        }
+                    }
+                }
+                // People picker
+                else if (destinationField.closest('ntx-simple-people-picker') != null) {
+                    var peopleField = destinationField.closest('ntx-simple-people-picker');
+                    if (peopleField != null) {
+                        destinationField.value = valToSet;
+                        destinationField.dispatchEvent(new Event('input'));
+                        setTimeout(clickPeoplePickerSelection, 500, peopleField, 0);
+                    }
                 }
             }
         }
