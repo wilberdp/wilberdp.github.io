@@ -203,20 +203,9 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                     destinationField.dispatchEvent(new CustomEvent('input', { bubbles: true }));
                     var opt = sel.querySelector('ng-dropdown-panel .ng-option .nx-ng-option[value="' + valToSet + '"]');
                     console.log(opt);
-                    await new Promise(r => setTimeout(r, 100));
-                    opt.dispatchEvent(new Event('click', { bubbles: true }));
-
-                    /*sel.value = valToSet;
-                    sel.setAttribute('value', valToSet);
-                    sel.classList.remove('ng-untouched', 'ng-pristine');
-                    sel.classList.add('ng-dirty', 'ng-touched');
-                    dField.classList.remove('ng-pristine');
-                    dField.classList.add('ng-dirty');
-                    dField.querySelector('ng-select .ng-select-container').classList.add('ng-has-value');
-                    var ngVal = dField.querySelector('ng-select .ng-select-container .ng-value-container');
-                    ngVal.innerHTML = '<div class="ng-placeholder"></div><div class="ng-value ng-star-inserted"><span title="' + valToSet + '" class="ng-star-inserted">' + valToSet + '</span></div><div role="combobox" aria-haspopup="listbox" class="ng-input" aria-expanded="false"><input aria-autocomplete="list" type="text" autocorrect="off" autocapitalize="off" autocomplete="off" id="off"></div>';
-                    fireEvents(sel);
-                    fireEvents(dField);*/
+                    pause(50).then((ii) => {
+                        opt.dispatchEvent(new Event('click', { bubbles: true }));
+                    });
                 }
                 // Radio buttons
                 else if (destinationField.classList.contains('nx-radio-group')) {
@@ -346,6 +335,10 @@ async function matchRowCountToData(parsed, repeatingSection) {
             }
         }
     }
+}
+
+async function pause(ms) {
+    new Promise(r => setTimeout(r, ms));
 }
 
 function clickPeoplePickerSelection(field, counter) {
