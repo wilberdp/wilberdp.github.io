@@ -94,9 +94,7 @@ export class PopulateRepeatingSection extends LitElement {
                             var parsed = JSON.parse(this.values);
                             console.log(parsed);
                             matchRowCountToData(parsed, repeatingSection).then(async (e) => {
-                                writeJSONValuesToRepeater(this, parsed, repeatingSection).then(async (e2) => {
-                                    await angularize(repeatingSection);
-                                });
+                                writeJSONValuesToRepeater(this, parsed, repeatingSection);
                             });
                         }
                         catch (exc2) {
@@ -108,9 +106,7 @@ export class PopulateRepeatingSection extends LitElement {
                         var parsed = parser.parseFromString(this.values, "application/xml").querySelectorAll("Items Item");
                         console.log(parsed);
                         matchRowCountToData(parsed, repeatingSection).then(async (e) => {
-                            writeXMLValuesToRepeater(this, parsed, repeatingSection).then(async (e2) => {
-                                await angularize(repeatingSection);
-                            });
+                            writeXMLValuesToRepeater(this, parsed, repeatingSection);
                         });
                     }
                     else {
@@ -180,7 +176,34 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
             }
         }
         else {
-            if (destinationField.classList.contains('nx-radio-group')) {
+            var valToSet = valueToWrite;
+
+            try {
+                if (Array.isArray(valueToWrite)) {
+                    valToSet = valueToWrite[0]['mail'];
+                }
+            }
+            catch (exc) {
+                //console.log(exc);
+            }
+            
+            // Textbox
+            if (destinationField.closest('ntx-textbox') != null || destinationField.closest('ntx-number') != null) {
+                destinationField.value = valToSet;
+            }
+            // Dropdown
+            else if (destinationField.closest('ntx-choice-dropdown') != null) {
+                var sel = destinationField.querySelector('ng-select');
+                sel.value = valToSet;
+                sel.classList.remove('ng-untouched');
+                sel.classList.add('ng-dirty', 'ng-touched');
+                destinationField.classList.remove('ng-pristine');
+                destinationField.classList.add('ng-dirty');
+                var ngVal = destinationField.querySelector('ng-select .ng-select-container .ng-value-container');
+                ngVal.innerHTML = '<div class="ng-placeholder"></div><div class="ng-value ng-star-inserted"><span title="' + valToSet + '" class="ng-star-inserted">' + valToSet + '</span></div>';
+            }
+            // Radio buttons
+            else if (destinationField.classList.contains('nx-radio-group')) {
                 var rads = destinationField.querySelectorAll('input[type="radio"]');
                 for (var o = 0; o < rads.length; o++) {
                     if (rads[o].value == valueToWrite) {
@@ -189,54 +212,14 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                     }
                 }
             }
-            else {
-                var valToSet = valueToWrite;
-
-                try {
-                    if (Array.isArray(valueToWrite)) {
-                        valToSet = valueToWrite[0]['mail'];
-                    }
-                }
-                catch (exc) {
-                    //console.log(exc);
-                }
-
-                try {
+            // People picker
+            else if (destinationField.closest('ntx-simple-people-picker') != null) {
+                var peopleField = destinationField.closest('ntx-simple-people-picker');
+                if (peopleField != null) {
                     destinationField.value = valToSet;
+                    destinationField.dispatchEvent(new Event('input'));
+                    setTimeout(clickPeoplePickerSelection, 500, peopleField, 0);
                 }
-                catch (exc) {
-                    //console.log(exc);
-                }
-
-                try {
-                    destinationField.closest('ng-select').value = valToSet;
-                }
-                catch (exc) {
-                    //console.log(exc);
-                }
-
-                try {
-                    destinationField.closest('ng-select').querySelector('.ng-value .ng-star-inserted').setAttribute('title', valToSet);
-                }
-                catch (exc) {
-                    //console.log(exc);
-                }
-
-                try {
-                    destinationField.closest('ng-select').querySelector('.ng-value .ng-star-inserted').textContent = valToSet;
-                }
-                catch (exc) {
-                    //console.log(exc);
-                }
-
-                try {
-                    var peopleField = destinationField.closest('ntx-simple-people-picker');
-                    if (peopleField != null) {
-                        destinationField.dispatchEvent(new Event('input'));
-                        setTimeout(clickPeoplePickerSelection, 500, peopleField, 0);
-                    }
-                }
-                catch (exc) { console.log(exc); }
             }
         }
     }
