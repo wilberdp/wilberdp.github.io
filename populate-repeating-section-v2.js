@@ -198,6 +198,10 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                 else if (destinationField.closest('ntx-simple-select-single') != null) {
                     var dField = destinationField.closest('ntx-simple-select-single');
                     var sel = dField.querySelector('ng-select');
+                                        
+                    sel.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
+                    dField.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
+
                     sel.value = valToSet;
                     sel.setAttribute('value', valToSet);
                     sel.classList.remove('ng-untouched', 'ng-pristine');
@@ -209,8 +213,6 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                     ngVal.innerHTML = '<div class="ng-placeholder"></div><div class="ng-value ng-star-inserted"><span title="' + valToSet + '" class="ng-star-inserted">' + valToSet + '</span></div><div role="combobox" aria-haspopup="listbox" class="ng-input" aria-expanded="false"><input aria-autocomplete="list" type="text" autocorrect="off" autocapitalize="off" autocomplete="off" id="off"></div>';
                     fireEvents(sel);
                     fireEvents(dField);
-                    sel.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
-                    dField.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
                 }
                 // Radio buttons
                 else if (destinationField.classList.contains('nx-radio-group')) {
