@@ -171,6 +171,7 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                     if (cbs[o].value == splitValue[p]) {
                         cbs[o].checked = true;
                         cbs[o].setAttribute('checked', 'true');
+                        fireEvents(cbs[o]);
                     }
                 }
             }
@@ -190,6 +191,7 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
             // Textbox
             if (destinationField.closest('ntx-textbox') != null || destinationField.closest('ntx-number') != null) {
                 destinationField.value = valToSet;
+                fireEvents(destinationField);
             }
             // Dropdown
             else if (destinationField.closest('ntx-simple-select-single') != null) {
@@ -202,6 +204,8 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                 dField.classList.add('ng-dirty');
                 var ngVal = dField.querySelector('ng-select .ng-select-container .ng-value-container');
                 ngVal.innerHTML = '<div class="ng-placeholder"></div><div class="ng-value ng-star-inserted"><span title="' + valToSet + '" class="ng-star-inserted">' + valToSet + '</span></div>';
+                fireEvents(sel);
+                fireEvents(dField);
             }
             // Radio buttons
             else if (destinationField.classList.contains('nx-radio-group')) {
@@ -210,6 +214,7 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                     if (rads[o].value == valueToWrite) {
                         rads[o].checked = true;
                         rads[o].setAttribute('checked', 'true');
+                        fireEvents(rads[o]);
                     }
                 }
             }
@@ -341,6 +346,11 @@ function clickPeoplePickerSelection(field, counter) {
             setTimeout(clickPeoplePickerSelection, 500, field, counter + 1);
         }
     }
+}
+
+function fireEvents(ele) {
+    ele.dispatchEvent(new Event('input', { bubbles: true }));
+    ele.dispatchEvent(new Event('blur', { bubbles: true }));
 }
 
 async function angularize(parentElement) {
