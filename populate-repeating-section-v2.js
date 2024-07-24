@@ -192,14 +192,15 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                 destinationField.value = valToSet;
             }
             // Dropdown
-            else if (destinationField.closest('ntx-choice-dropdown') != null) {
-                var sel = destinationField.querySelector('ng-select');
+            else if (destinationField.closest('ntx-simple-select-single') != null) {
+                var dField = destinationField.closest('ntx-simple-select-single');
+                var sel = dField.querySelector('ng-select');
                 sel.value = valToSet;
                 sel.classList.remove('ng-untouched');
                 sel.classList.add('ng-dirty', 'ng-touched');
-                destinationField.classList.remove('ng-pristine');
-                destinationField.classList.add('ng-dirty');
-                var ngVal = destinationField.querySelector('ng-select .ng-select-container .ng-value-container');
+                dField.classList.remove('ng-pristine');
+                dField.classList.add('ng-dirty');
+                var ngVal = dField.querySelector('ng-select .ng-select-container .ng-value-container');
                 ngVal.innerHTML = '<div class="ng-placeholder"></div><div class="ng-value ng-star-inserted"><span title="' + valToSet + '" class="ng-star-inserted">' + valToSet + '</span></div>';
             }
             // Radio buttons
