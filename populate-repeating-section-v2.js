@@ -360,19 +360,19 @@ function clickPeoplePickerSelection(field, counter) {
 }
 
 async function angularize(parentElement) {
+    return;
     var formControls = document.querySelectorAll('.' + parentElement.repeatingSectionClass + ' ntx-form-control input');
     for (var ii = 0; ii < formControls.length; ii++) {
         try {
             var fc2 = formControls[ii];
             if (fc2.tagName != null) {
                 if (fc2.closest('ng-select') != null || fc2.closest('ntx-simple-choice') != null ) {
+                    fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
 
                     await new Promise(resolve => {
                         var clearIntVar = { id: uuidv4(), counter: 0 };
                         var selInterval = setInterval(function (o) {
                             var optionToSelect = null;
-
-                            fc2.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
 
                             if (o.value != null && o.value != '') {
                                 if (o.closest('ng-select') != null)
