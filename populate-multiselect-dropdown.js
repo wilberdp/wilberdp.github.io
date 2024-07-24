@@ -110,7 +110,7 @@ function cleanUpAndSet(parentElement, container) {
         }
                         
         //container.querySelector('ntx-simple-select-multi').dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
-        document.activeElement.blur();
+        //document.activeElement.blur();
     }
 }
 
