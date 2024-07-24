@@ -199,12 +199,9 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                     var dField = destinationField.closest('ntx-simple-select-single');
                     var sel = dField.querySelector('ng-select');
                                         
-                    sel.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
-                    dField.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
-                    destinationField.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
-
                     destinationField.value = valToSet;
-                    destinationField.click();
+                    destinationField.dispatchEvent(new CustomEvent('input', { bubbles: true }));
+                    sel.querySelector('ng-dropdown-panel .ng-option .nx-ng-option[value="' + valToSet + '"]').dispatchEvent(new Event('click', { bubbled: true }));
 
                     /*sel.value = valToSet;
                     sel.setAttribute('value', valToSet);
