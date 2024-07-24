@@ -200,12 +200,12 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                     var sel = dField.querySelector('ng-select');
                     sel.value = valToSet;
                     sel.setAttribute('value', valToSet);
-                    sel.classList.remove('ng-untouched');
+                    sel.classList.remove('ng-untouched', 'ng-pristine');
                     sel.classList.add('ng-dirty', 'ng-touched');
                     dField.classList.remove('ng-pristine');
                     dField.classList.add('ng-dirty');
                     var ngVal = dField.querySelector('ng-select .ng-select-container .ng-value-container');
-                    ngVal.innerHTML = '<div class="ng-placeholder"></div><div class="ng-value ng-star-inserted"><span title="' + valToSet + '" class="ng-star-inserted">' + valToSet + '</span></div>';
+                    ngVal.innerHTML = '<div class="ng-placeholder"></div><div class="ng-value ng-star-inserted"><span title="' + valToSet + '" class="ng-star-inserted">' + valToSet + '</span></div><div role="combobox" aria-haspopup="listbox" class="ng-input" aria-expanded="false"><input aria-autocomplete="list" type="text" autocorrect="off" autocapitalize="off" autocomplete="off" id="off"></div>';
                     fireEvents(sel);
                     fireEvents(dField);
                 }
