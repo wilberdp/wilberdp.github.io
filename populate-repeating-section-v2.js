@@ -204,6 +204,7 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                     sel.classList.add('ng-dirty', 'ng-touched');
                     dField.classList.remove('ng-pristine');
                     dField.classList.add('ng-dirty');
+                    dField.querySelector('ng-select .ng-select-container').classList.add('ng-has-value');
                     var ngVal = dField.querySelector('ng-select .ng-select-container .ng-value-container');
                     ngVal.innerHTML = '<div class="ng-placeholder"></div><div class="ng-value ng-star-inserted"><span title="' + valToSet + '" class="ng-star-inserted">' + valToSet + '</span></div><div role="combobox" aria-haspopup="listbox" class="ng-input" aria-expanded="false"><input aria-autocomplete="list" type="text" autocorrect="off" autocapitalize="off" autocomplete="off" id="off"></div>';
                     fireEvents(sel);
