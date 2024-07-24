@@ -199,6 +199,7 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                     var dField = destinationField.closest('ntx-simple-select-single');
                     var sel = dField.querySelector('ng-select');
                     sel.value = valToSet;
+                    sel.setAttribute('value', valToSet);
                     sel.classList.remove('ng-untouched');
                     sel.classList.add('ng-dirty', 'ng-touched');
                     dField.classList.remove('ng-pristine');
