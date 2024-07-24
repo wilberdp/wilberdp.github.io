@@ -204,6 +204,7 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                     destinationField.dispatchEvent(new CustomEvent('ngModelChange', { bubbles: true }));
 
                     destinationField.value = valToSet;
+                    destinationField.click();
 
                     /*sel.value = valToSet;
                     sel.setAttribute('value', valToSet);
