@@ -59,17 +59,19 @@ export class PopulateRepeatingSection extends LitElement {
 
     async render2() {
         try {
+            console.log('Populate Repeating Section: render2()');
+
             if (this.repeatingSectionClass != null && this.repeatingSectionClass != '' && this.values != null && this.values != '') {
                 var repeatingSection = document.getElementsByClassName(this.repeatingSectionClass);
                 if (repeatingSection != null && repeatingSection.length > 0) {
                     repeatingSection = repeatingSection[0];
 
-                    var loadingScreen = '<div style="z-index: 9000;background: rgba(0,0,0,0.4);" id="overlayContainerCustom" class="overlayLoading"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position: absolute; width: 0; height: 0" id="__SVG_SPRITE_NODE__"><symbol viewBox="0 0 34 34" id="nintex-x-loader-center-left"><path d="M24.01 17l-17 17L0 26.99 9.99 17 0 7.01 7.01 0l17 17z"></path></symbol><symbol viewBox="0 0 34 34" id="nintex-x-loader-center-right"><path d="M24.01 17L34 26.99 26.99 34l-17-17 17-17L34 7.01 24.01 17z"></path></symbol><symbol viewBox="0 0 24 34" id="nintex-x-loader-left"><path d="M24 17L7.01 34 0 26.99 9.98 17 0 7.01 7.01 0 24 17z"></path></symbol><symbol viewBox="0 0 24 34" id="nintex-x-loader-right"><path d="M14.02 16.99L24 26.98l-7.01 7L0 16.99 16.99 0 24 7.01l-9.98 9.98z"></path></symbol></svg><div class="nx-modal-overlay nx-modal-overlay-override"><div class="nx-modal-dialog nx-dialog-thin nx-dialog-small"><div class="nx-modal-dialog-body"><div class="nx-spinner-container nx-spinner-container--center"><div class="nx-nintex-spinner nx-spinner nx-nintex-spinner-large nx-spinner-theme-light"><div class="nx-nintex-spinner-trail-left nx-nintex-spinner-fifth"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-left"></use></svg></div><div class="nx-nintex-spinner-trail-left nx-nintex-spinner-forth"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-left"></use></svg></div><div class="nx-nintex-spinner-trail-left nx-nintex-spinner-third"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-left"></use></svg></div><div class="nx-nintex-spinner-trail-left nx-nintex-spinner-second"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-left"></use></svg></div><div class="nx-nintex-spinner-middle"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon nx-nintex-spinner-left"><use xlink:href="#nintex-x-loader-center-left"></use></svg><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon nx-nintex-spinner-right"><use xlink:href="#nintex-x-loader-center-right"></use></svg></div><div class="nx-nintex-spinner-trail-right nx-nintex-spinner-second"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-right"></use></svg></div><div class="nx-nintex-spinner-trail-right nx-nintex-spinner-third"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-right"></use></svg></div><div class="nx-nintex-spinner-trail-right nx-nintex-spinner-forth"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-right"></use></svg></div><div class="nx-nintex-spinner-trail-right nx-nintex-spinner-fifth"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-right"></use></svg></div></div></div><p class="nx-spinner-status">Loading...</p></div></div></div></div>';
-                    if (document.querySelector('#overlayContainerCustom') == null) {
-                        var loadingHtml = stringToHTML(loadingScreen);
-                        console.log(loadingHtml);
-                        repeatingSection.closest('body').append(loadingHtml);
-                    }
+                    //var loadingScreen = '<div style="z-index: 9000;background: rgba(0,0,0,0.4);" id="overlayContainerCustom" class="overlayLoading"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position: absolute; width: 0; height: 0" id="__SVG_SPRITE_NODE__"><symbol viewBox="0 0 34 34" id="nintex-x-loader-center-left"><path d="M24.01 17l-17 17L0 26.99 9.99 17 0 7.01 7.01 0l17 17z"></path></symbol><symbol viewBox="0 0 34 34" id="nintex-x-loader-center-right"><path d="M24.01 17L34 26.99 26.99 34l-17-17 17-17L34 7.01 24.01 17z"></path></symbol><symbol viewBox="0 0 24 34" id="nintex-x-loader-left"><path d="M24 17L7.01 34 0 26.99 9.98 17 0 7.01 7.01 0 24 17z"></path></symbol><symbol viewBox="0 0 24 34" id="nintex-x-loader-right"><path d="M14.02 16.99L24 26.98l-7.01 7L0 16.99 16.99 0 24 7.01l-9.98 9.98z"></path></symbol></svg><div class="nx-modal-overlay nx-modal-overlay-override"><div class="nx-modal-dialog nx-dialog-thin nx-dialog-small"><div class="nx-modal-dialog-body"><div class="nx-spinner-container nx-spinner-container--center"><div class="nx-nintex-spinner nx-spinner nx-nintex-spinner-large nx-spinner-theme-light"><div class="nx-nintex-spinner-trail-left nx-nintex-spinner-fifth"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-left"></use></svg></div><div class="nx-nintex-spinner-trail-left nx-nintex-spinner-forth"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-left"></use></svg></div><div class="nx-nintex-spinner-trail-left nx-nintex-spinner-third"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-left"></use></svg></div><div class="nx-nintex-spinner-trail-left nx-nintex-spinner-second"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-left"></use></svg></div><div class="nx-nintex-spinner-middle"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon nx-nintex-spinner-left"><use xlink:href="#nintex-x-loader-center-left"></use></svg><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon nx-nintex-spinner-right"><use xlink:href="#nintex-x-loader-center-right"></use></svg></div><div class="nx-nintex-spinner-trail-right nx-nintex-spinner-second"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-right"></use></svg></div><div class="nx-nintex-spinner-trail-right nx-nintex-spinner-third"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-right"></use></svg></div><div class="nx-nintex-spinner-trail-right nx-nintex-spinner-forth"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-right"></use></svg></div><div class="nx-nintex-spinner-trail-right nx-nintex-spinner-fifth"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" class="nx-icon"><use xlink:href="#nintex-x-loader-right"></use></svg></div></div></div><p class="nx-spinner-status">Loading...</p></div></div></div></div>';
+                    //if (document.querySelector('#overlayContainerCustom') == null) {
+                    //    var loadingHtml = stringToHTML(loadingScreen);
+                    //    console.log(loadingHtml);
+                    //    repeatingSection.closest('body').append(loadingHtml);
+                    //}
 
                     var isJSON = false;
                     var isXML = false;
@@ -103,7 +105,7 @@ export class PopulateRepeatingSection extends LitElement {
                             console.log(parsed);
                             matchRowCountToData(parsed, repeatingSection).then(async (e) => {
                                 writeJSONValuesToRepeater(this, parsed, repeatingSection).then((e2) => { 
-                                    document.querySelector('#overlayContainerCustom').remove();
+                                    //document.querySelector('#overlayContainerCustom').remove();
                                 });
                             });
                         }
@@ -117,7 +119,7 @@ export class PopulateRepeatingSection extends LitElement {
                         console.log(parsed);
                         matchRowCountToData(parsed, repeatingSection).then(async (e) => {
                             writeXMLValuesToRepeater(this, parsed, repeatingSection).then((e2) => {
-                                document.querySelector('#overlayContainerCustom').remove();
+                                //document.querySelector('#overlayContainerCustom').remove();
                             });
                         });
                     }
@@ -396,11 +398,6 @@ function removeFromSetIntervals(parentElement, value) {
     if (idx > -1) {
         parentElement.setIntervals.splice(idx, 1);
     }
-}
-
-function scrollToTop(data) {
-    console.log(data);
-    document.querySelector('.nx-form-runtime-content.nx-theme-page').scroll({ top: 0, left: 0 });
 }
 
 function uuidv4() {
