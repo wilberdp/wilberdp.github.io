@@ -22,13 +22,7 @@ export class HideActionBar extends LitElement {
                     title: 'Hide Action Bar',
                     description: "Add any boolean criteria to hide action bar including date range evaluation, etc",
                     required: true
-                },
-                data: {
-                    type: 'string',
-                    title: 'Output Data',
-                    description: "Resulting data output in JSON format",
-                    isValueField: true
-                },
+                }
             },
             events: ["ntx-value-change"]
         };
