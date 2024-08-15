@@ -41,9 +41,12 @@ export class HideActionPanel extends LitElement {
     render() {
         console.log('Hide Action Panel: render()');
 
-        const style = document.createElement('style');
-        style.innerText = 'ntx-action-panel.hide-button [data-e2e="btn-save-and-continue"], ntx-action-panel.hide-button [data-e2e="btn-submit"] { display:none !important }';
-        document.querySelector('head').append(style);
+        if (document.querySelectorAll('.hide-button-style').length == 0) {
+            const style = document.createElement('style');
+            style.classList.add('hide-button-style')
+            style.innerText = 'ntx-action-panel.hide-button [data-e2e="btn-save-and-continue"], ntx-action-panel.hide-button [data-e2e="btn-submit"] { visibility: hidden !important }';
+            document.querySelector('head').append(style);
+        }
 
         document.querySelectorAll('ntx-action-panel').forEach((panel) => {
             if (this.hide) {
