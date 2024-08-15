@@ -40,13 +40,16 @@ export class HideActionPanel extends LitElement {
 
     render() {
         console.log('Hide Action Panel: render()');
+        const style = document.createElement('style');
+        style.innerText = '.hide-button { display:none !important }';
+        document.querySelector('head').append(style);
 
         document.querySelectorAll('[data-e2e="btn-save-and-continue"],[data-e2e="btn-submit"]').forEach((panel) => {
             if (this.hide) {
-                panel.style.display = 'none';
+                panel.classList.add('hide-button');
             }
             else {
-                panel.style.display = '';
+                panel.classList.remove('hide-button');
             }
         });
 
