@@ -1,16 +1,15 @@
 import { html, LitElement } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit-all.min.js';
 
 // define the component
-export class HideActionBar extends LitElement {
+export class HideActionPanel extends LitElement {
     static properties = {
-        hide: { type: Boolean },
-        data: { type: String }
+        hide: { type: Boolean }
     };
   
     // return a promise for contract changes.
     static getMetaConfig() {
         return {
-            controlName: 'Hide Action Bar',
+            controlName: 'Hide Action Panel',
             fallbackDisableSubmit: false,
             version: '1.0',
             standardProperties: {
@@ -19,8 +18,8 @@ export class HideActionBar extends LitElement {
             properties: {
                 hide: {
                     type: 'boolean',
-                    title: 'Hide Action Bar',
-                    description: "Add any boolean criteria to hide action bar including date range evaluation, etc",
+                    title: 'Hide Action Panel',
+                    description: "Add any boolean criteria to hide action panel including date range evaluation, etc",
                     required: true
                 }
             },
@@ -40,7 +39,7 @@ export class HideActionBar extends LitElement {
     }
 
     render() {
-        console.log('Hide Action Bar: render()');
+        console.log('Hide Action Panel: render()');
 
         document.querySelectorAll('ntx-action-panel').forEach((panel) => {
             if (this.hide) {
@@ -52,11 +51,11 @@ export class HideActionBar extends LitElement {
         });
 
 
-        return html`<p>'Hide Action Bar'<p/>`;
+        return html`<p>'Hide Action Panel'<p/>`;
     }
 
 }
 
 // registering the web component
-const elementName = 'hide-action-bar';
-customElements.define(elementName, HideActionBar);
+const elementName = 'hide-action-panel';
+customElements.define(elementName, HideActionPanel);
