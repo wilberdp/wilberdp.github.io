@@ -41,7 +41,7 @@ export class HideActionPanel extends LitElement {
     render() {
         console.log('Hide Action Panel: render()');
 
-        document.querySelectorAll('ntx-action-panel').forEach((panel) => {
+        document.querySelectorAll('[data-e2e="btn-save-and-continue"],[data-e2e="btn-submit"]').forEach((panel) => {
             if (this.hide) {
                 panel.style.display = 'none';
             }
