@@ -881,7 +881,7 @@
                     <input type="file" id="_${this.uuid1}">
                 </div>
                 <div style="padding:10px">
-                    <md-outlined-text-field id="_${this.uuid2}" style="width:100%;height:180px;"></md-outlined-text-field>
+                    <md-outlined-text-field id="_${this.uuid2}" type="textarea"></md-outlined-text-field>
                 </div>
                 <div style="padding:10px">
                     <md-filled-tonal-button @click="${this.analyzeDocument}" id="_${this.uuid3}" style="float:right">
