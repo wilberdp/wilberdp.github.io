@@ -880,7 +880,7 @@
                 <div style="padding:24px">
                     <input type="file" id="_${this.uuid1}" @change="${this.renderDocument}">
                 </div>
-                <div style="padding:24px" style="display:none" class="divIframe">
+                <div style="padding:24px;display:none" class="divIframe">
                     <iframe height="400" width="600" id="_${this.uuid4}"></iframe>
                 </div>
                 <div style="padding:10px">
