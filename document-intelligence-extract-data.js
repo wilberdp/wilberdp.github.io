@@ -880,10 +880,7 @@
                 <div style="padding:24px">
                     <input type="file" id="_${this.uuid1}" @change="${this.renderDocument}">
                 </div>
-                <div style="padding:24px;display:none" class="divIframe">
-                    <iframe height="400" width="600" id="_${this.uuid4}"></iframe>
-                </div>
-                <div style="padding:10px">
+                <div style="padding:10px;display:none">
                     <md-outlined-text-field id="_${this.uuid2}" type="textarea"></md-outlined-text-field>
                 </div>
                 <div style="padding:10px">
@@ -892,6 +889,9 @@
                         <svg slot="icon" viewBox="0 0 48 48"><path d="M6 40V8l38 16Zm3-4.65L36.2 24 9 12.5v8.4L21.1 24 9 27Zm0 0V12.5 27Z"/></svg>
                     </md-filled-tonal-button>
                 </div>
+                <div style="padding:24px;display:none" class="divIframe">
+                    <iframe height="400" width="600" id="_${this.uuid4}"></iframe>
+                </div>
             </div>`:G`<div>
                 <div>
                     <h3>Document Intelligence Extract Data</h3>
@@ -899,4 +899,4 @@
                 <div>
                     Verify API Key and URL are populated
                 <div>
-            </div>`}firstUpdated(){super.firstUpdated(),console.log("Document Intelligence Extract Data: firstUpdated()")}renderDocument(e){console.log("renderDocument()"),console.log(e);const t=document.getElementById("_"+this.uuid4),r=document.getElementById("_"+this.uuid1),o=Array.from(r.files)[0];if(o){const e=new FileReader;e.onloadend=function(e){t.src=e.target.result,t.parentNode.style.display=""},e.readAsDataURL(o)}}analyzeDocument(e){console.log("analyzeDocument()"),console.log(e),console.log(document.querySelector("#_"+this.uuid1));var t=document.querySelector("#_"+this.uuid1).files[0];console.log(t),null!=t&&this.callAzure(t)}async callAzure(e){const t=this.key,r=this.url,o=new Jc(r,new js(t)),i=await o.beginAnalyzeDocument("prebuilt-invoice",e),{documents:[a]}=await i.pollUntilDone();if(!a)throw new Error("Expected at least one receipt in the result.");console.log(a),document.querySelector("#_"+this.uuid2).value=JSON.stringify(a,null,"\t")}}function rp(){return"10000000-1000-4000-8000-100000000000".replace(/[018]/g,(e=>(+e^crypto.getRandomValues(new Uint8Array(1))[0]&15>>+e/4).toString(16)))}customElements.define("document-intelligence-extract-data",tp)}},t={};function r(o){var i=t[o];if(void 0!==i)return i.exports;var a=t[o]={exports:{}};return e[o](a,a.exports,r),a.exports}r.d=(e,t)=>{for(var o in t)r.o(t,o)&&!r.o(e,o)&&Object.defineProperty(e,o,{enumerable:!0,get:t[o]})},r.o=(e,t)=>Object.prototype.hasOwnProperty.call(e,t),r.r=e=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},r(434)})();
+            </div>`}firstUpdated(){super.firstUpdated(),console.log("Document Intelligence Extract Data: firstUpdated()")}renderDocument(e){console.log("renderDocument()"),console.log(e);const t=document.getElementById("_"+this.uuid4),r=document.getElementById("_"+this.uuid1),o=Array.from(r.files)[0];if(o){const e=new FileReader;e.onloadend=function(e){t.src=e.target.result,t.parentNode.style.display=""},e.readAsDataURL(o)}}analyzeDocument(e){console.log("analyzeDocument()"),console.log(e),console.log(document.querySelector("#_"+this.uuid1));var t=document.querySelector("#_"+this.uuid1).files[0];console.log(t),null!=t&&this.callAzure(t)}async callAzure(e){const t=this.key,r=this.url,o=new Jc(r,new js(t)),i=await o.beginAnalyzeDocument("prebuilt-invoice",e),{documents:[a]}=await i.pollUntilDone();if(!a)throw new Error("Expected at least one receipt in the result.");console.log(a),document.querySelector("#_"+this.uuid2).value=JSON.stringify(a,null,"\t"),document.querySelector("#_"+this.uuid2).parentNode.style.display=""}}function rp(){return"10000000-1000-4000-8000-100000000000".replace(/[018]/g,(e=>(+e^crypto.getRandomValues(new Uint8Array(1))[0]&15>>+e/4).toString(16)))}customElements.define("document-intelligence-extract-data",tp)}},t={};function r(o){var i=t[o];if(void 0!==i)return i.exports;var a=t[o]={exports:{}};return e[o](a,a.exports,r),a.exports}r.d=(e,t)=>{for(var o in t)r.o(t,o)&&!r.o(e,o)&&Object.defineProperty(e,o,{enumerable:!0,get:t[o]})},r.o=(e,t)=>Object.prototype.hasOwnProperty.call(e,t),r.r=e=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},r(434)})();
