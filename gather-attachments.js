@@ -1,5 +1,8 @@
 import { html, LitElement } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit-all.min.js';
 
+var initialAttachments = null;
+var newJson = {};
+
 // define the component
 export class GatherAttachments extends LitElement {
     // return a promise for contract changes.
@@ -54,12 +57,49 @@ function populateAttachmentJson() {
             }
         }
         if (className != '') {
-            json[className] = retrieveAttachments('.' + className);
+            var att = retrieveAttachments('.' + className);
+            if (att != null && att.length > 0) {
+                json[className] = att;
+            }
         } 
     }
 
-    document.querySelector('.attachmentsJson textarea').value = JSON.stringify(json);
-    document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
+    if (initialAttachments == null) {
+        initialAttachments = json;
+    }
+    else {
+        var jsonKeys = Object.keys(json);
+        var initialKeys = Object.keys(initialAttachments);
+
+        // add new
+        for (var i = 0; i < jsonKeys.length; i++) {
+            if (initialKeys.indexOf(jsonKeys[i]) == -1) {
+                newJson[jsonKeys[i]] = [];
+            }
+            
+            for (var val in json[jsonKeys[i]]) {
+                if (initialAttachments[jsonKeys[i]].indexOf(val) == -1) {
+                    newJson[jsonKeys[i]].push(val);
+                }
+            }                     
+        }
+
+        // remove
+        for (var i = 0; i < initialKeys.length; i++) {
+            if (jsonKeys.indexOf(initialKeys[i]) == -1) {
+                delete newJson[initialKeys[i]]
+            }
+
+            for (var val in initialAttachments[initialKeys[i]]) {
+                if ((json[initialKeys[i]] == null || json[initialKeys[i]].indexOf(val) == -1) && newJson[initialKeys[i]] != null) {
+                    newJson[initialKeys[i]].pop(newJson[initialKeys[i]].indexOf(val));
+                }
+            }  
+        }
+
+        document.querySelector('.attachmentsJson textarea').value = JSON.stringify(newJson);
+        document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
+    }
 }
 
 function retrieveAttachments(selector) {
