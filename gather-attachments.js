@@ -78,7 +78,7 @@ function populateAttachmentJson() {
             }
             
             for (var val in json[jsonKeys[i]]) {
-                if (initialAttachments[jsonKeys[i]].indexOf(val) == -1) {
+                if (newJson[jsonKeys[i]].indexOf(val) == -1) {
                     newJson[jsonKeys[i]].push(val);
                 }
             }                     
