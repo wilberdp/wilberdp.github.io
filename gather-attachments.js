@@ -77,7 +77,8 @@ function populateAttachmentJson() {
                 newJson[jsonKeys[i]] = [];
             }
             
-            for (var val in json[jsonKeys[i]]) {
+            for (var o = 0; o < json[jsonKeys[i]].length; o++) {
+                var val = json[jsonKeys[i]][o];
                 if (newJson[jsonKeys[i]].indexOf(val) == -1) {
                     newJson[jsonKeys[i]].push(val);
                 }
@@ -90,7 +91,8 @@ function populateAttachmentJson() {
                 delete newJson[initialKeys[i]]
             }
 
-            for (var val in initialAttachments[initialKeys[i]]) {
+            for (var o = 0; o < initialAttachments[initialKeys[i]].length; o++) {
+                var val = initialAttachments[initialKeys[i]][o];
                 if ((json[initialKeys[i]] == null || json[initialKeys[i]].indexOf(val) == -1) && newJson[initialKeys[i]] != null) {
                     newJson[initialKeys[i]].pop(newJson[initialKeys[i]].indexOf(val));
                 }
