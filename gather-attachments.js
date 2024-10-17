@@ -90,8 +90,8 @@ function populateAttachmentJson() {
                 values = values[0]['values'];   
 
                 for (var o = 0; o < values.length; o++) {
-                    if (newJsonEntry[0]['values'].indexOf(val) == -1) {
-                        newJsonEntry[0]['values'].push(val);
+                    if (newJsonEntry[0]['values'].indexOf(values[o]) == -1) {
+                        newJsonEntry[0]['values'].push(values[o]);
                     }
                 }    
             }                 
