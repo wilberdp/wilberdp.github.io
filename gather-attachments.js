@@ -45,6 +45,7 @@ export class GatherAttachments extends LitElement {
 
 function populateAttachmentJson() {
     var json = {};
+    json["uploads"] = [];
 
     var fileUploads = document.querySelectorAll('[class*="attachments"]');
     for (var o = 0; o < fileUploads.length; o++) {
@@ -59,11 +60,16 @@ function populateAttachmentJson() {
         if (className != '') {
             var att = retrieveAttachments('.' + className);
             if (att != null && att.length > 0) {
-                json[className] = att;
+                var tempJson = { "name": className, "values": att };
+                json["uploads"].push(tempJson);
             }
         } 
     }
 
+    document.querySelector('.attachmentsJson textarea').value = JSON.stringify(json);
+    document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
+
+    return;
     if (initialAttachments == null) {
         initialAttachments = json;
     }
