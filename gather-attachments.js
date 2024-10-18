@@ -23,7 +23,6 @@ export class GatherAttachments extends LitElement {
     }
 
     render() {
-        newJson["uploads"] = [];
         this.render2().then(res => {
             console.log(res);            
         });   
