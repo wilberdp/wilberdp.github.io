@@ -76,7 +76,9 @@ function populateAttachmentJson() {
     }
     else {
         var jsonKeys = json['uploads'].map(function(itt) { return itt['name']; });
-        var initialKeys = initialAttachments['uploads'].map(function(itt) { return itt['name']; });
+        var jsonValues = json['uploads'].map(function(itt) { return itt['values']; });
+        var initialKeys = initialAttachments['uploads'].map(function(itt) { return itt['name']; });        
+        var initialValues = initialAttachments['uploads'].map(function(itt) { return itt['values']; });
 
         // add new
         for (var i = 0; i < jsonKeys.length; i++) {
@@ -85,7 +87,7 @@ function populateAttachmentJson() {
             }
 
             var newJsonEntry = newJson['uploads'].filter(function(itt) { return itt['name'] == jsonKeys[i] });         
-            var values = json['uploads'].filter(function(itt) { return itt['name'] == jsonKeys[i] });
+            var values = jsonValues[i];
             if (values != null && values.length > 0) {
                 values = values[0]['values'];   
 
@@ -103,13 +105,16 @@ function populateAttachmentJson() {
                 newJson['uploads'] = newJson['uploads'].filter(function(itt){ return itt['name'] != initialKeys[i] });
             }
 
-            var newJsonEntry = newJson['uploads'].filter(function(itt) { return itt['name'] == initialKeys[i] });         
+            var jsonEntry = json['uploads'].filter(function(itt) { return itt['name'] == initialKeys[i] });         
             var initialEntry = initialAttachments['uploads'].filter(function(itt){ return itt['name'] == initialKeys[i]});
-            if (initialEntry != null && initialEntry.length > 0 && newJsonEntry != null && newJsonEntry.length > 0) {
+            if (initialEntry != null && initialEntry.length > 0 && jsonEntry != null && jsonEntry.length > 0) {
                 for (var o = 0; o < initialEntry[0]['values'].length; o++) {
                     var val = initialEntry[0]['values'][o];
-                    if (newJsonEntry[0]['values'] != null && newJsonEntry[0]['values'].length > 0 && newJsonEntry[0]['values'].indexOf(val) == -1) {
-                        newJsonEntry[0]['values'].pop(newJsonEntry[0]['values'].indexOf(val));
+                    if (jsonEntry[0]['values'] != null && jsonEntry[0]['values'].length > 0 && jsonEntry[0]['values'].indexOf(val) == -1) {
+                        var idx = newJsonEntry[0]['values'].indexOf(val);
+                        if (idx != -1) {
+                            newJsonEntry[0]['values'].pop(idx);
+                        }
                     }
                 }  
             }
