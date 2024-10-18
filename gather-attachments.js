@@ -61,7 +61,7 @@ function populateAttachmentJson() {
         if (className != '') {
             var att = retrieveAttachments('.' + className);
             if (att != null && att.length > 0) {
-                var tempJson = { "name": className, "values": att };
+                var tempJson = { "name": className.replace('attachments','').replaceAll('_', ' '), "values": att };
                 json["uploads"].push(tempJson);
             }
         } 
