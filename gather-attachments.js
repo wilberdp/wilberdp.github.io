@@ -67,10 +67,6 @@ function populateAttachmentJson() {
         } 
     }
 
-    //document.querySelector('.attachmentsJson textarea').value = JSON.stringify(json);
-    //document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
-    //return;
-
     if (initialAttachments == null) {
         initialAttachments = json;
     }
@@ -89,8 +85,6 @@ function populateAttachmentJson() {
             var newJsonEntry = newJson['uploads'].filter(function(itt) { return itt['name'] == jsonKeys[i] });         
             var values = jsonValues[i];
             if (values != null && values.length > 0) {
-                values = values[0]['values'];   
-
                 for (var o = 0; o < values.length; o++) {
                     if (newJsonEntry[0]['values'].indexOf(values[o]) == -1) {
                         newJsonEntry[0]['values'].push(values[o]);
