@@ -1,7 +1,6 @@
 import { html, LitElement } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit-all.min.js';
 
 var initialAttachments = null;
-var newJson = {};
 
 // define the component
 export class GatherAttachments extends LitElement {
@@ -74,7 +73,29 @@ function populateAttachmentJson() {
         var jsonKeys = json['uploads'].map(function(itt) { return itt['name']; });
         var jsonValues = json['uploads'].map(function(itt) { return itt['values']; });
         var initialKeys = initialAttachments['uploads'].map(function(itt) { return itt['name']; });        
-        var initialValues = initialAttachments['uploads'].map(function(itt) { return itt['values']; });
+        var newJson = JSON.parse(document.querySelector('.attachmentsJson textarea').value);
+        var newJsonKeys = newJson['uploads'].map(function(itt) { return itt['name']; });
+        var newJsonValues = newJson['uploads'].map(function(itt) { return itt['values']; });
+
+        // remove
+        for (var i = 0; i < newJsonKeys.length; i++) {
+            if (jsonKeys.indexOf(newJsonKeys[i]) == -1) {
+                newJson['uploads'] = newJson['uploads'].filter(function(itt){ return itt['name'] != newJsonKeys[i] });
+            }
+            else {
+                for (var o = 0; o < newJsonValues[i].length; o++) {
+                    var newJsonEntry = newJson['uploads'].filter(function(itt) { return itt['name'] == newJsonKeys[i] });
+                    var jsonEntry = json['uploads'].filter(function(itt) { return itt['name'] == newJsonKeys[i] });
+                    if (newJsonEntry != null && newJsonEntry.length > 0 && jsonEntry != null && jsonEntry.length > 0) {
+                        var idx = jsonEntry[0]['values'].indexOf(newJsonValues[o]);
+                        if (idx != -1) {
+                            newJsonEntry[0]['values'].pop(idx);
+                        }                    
+                    }
+                }
+            }
+        }
+
 
         // add new
         for (var i = 0; i < jsonKeys.length; i++) {
@@ -91,27 +112,6 @@ function populateAttachmentJson() {
                     }
                 }    
             }                 
-        }
-
-        // remove
-        for (var i = 0; i < initialKeys.length; i++) {
-            if (jsonKeys.indexOf(initialKeys[i]) == -1) {
-                newJson['uploads'] = newJson['uploads'].filter(function(itt){ return itt['name'] != initialKeys[i] });
-            }
-
-            var jsonEntry = json['uploads'].filter(function(itt) { return itt['name'] == initialKeys[i] });         
-            var initialEntry = initialAttachments['uploads'].filter(function(itt){ return itt['name'] == initialKeys[i]});
-            if (initialEntry != null && initialEntry.length > 0 && jsonEntry != null && jsonEntry.length > 0) {
-                for (var o = 0; o < initialEntry[0]['values'].length; o++) {
-                    var val = initialEntry[0]['values'][o];
-                    if (jsonEntry[0]['values'] != null && jsonEntry[0]['values'].length > 0 && jsonEntry[0]['values'].indexOf(val) == -1) {
-                        var idx = newJsonEntry[0]['values'].indexOf(val);
-                        if (idx != -1) {
-                            newJsonEntry[0]['values'].pop(idx);
-                        }
-                    }
-                }  
-            }
         }
 
         initialAttachments = json;
