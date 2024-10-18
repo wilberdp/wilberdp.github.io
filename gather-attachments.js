@@ -108,7 +108,7 @@ function populateAttachmentJson() {
             if (initialEntry != null && initialEntry.length > 0 && newJsonEntry != null && newJsonEntry.length > 0) {
                 for (var o = 0; o < initialEntry[0]['values'].length; o++) {
                     var val = initialEntry[0]['values'][o];
-                    if (newJsonEntry[0]['values'] != null && newJsonEntry[0]['values'].length > 0 && newJsonEntry[0]['values'].indexOf(val) != -1) {
+                    if (newJsonEntry[0]['values'] != null && newJsonEntry[0]['values'].length > 0 && newJsonEntry[0]['values'].indexOf(val) == -1) {
                         newJsonEntry[0]['values'].pop(newJsonEntry[0]['values'].indexOf(val));
                     }
                 }  
