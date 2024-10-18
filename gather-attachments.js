@@ -102,13 +102,12 @@ function populateAttachmentJson() {
                     if (newJsonEntry != null && newJsonEntry.length > 0 && jsonEntry != null && jsonEntry.length > 0) {
                         var idx = jsonEntry[0]['values'].indexOf(newJsonValues[i][o]);
                         if (idx == -1) {
-                            newJsonEntry[0]['values'].pop(o);
+                            newJsonEntry[0]['values'].splice(o, 1);
                         }                    
                     }
                 }
             }
         }
-
 
         // add new
         for (var i = 0; i < jsonKeys.length; i++) {
