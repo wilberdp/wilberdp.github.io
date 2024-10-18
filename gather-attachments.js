@@ -71,52 +71,53 @@ function populateAttachmentJson() {
     else {
         var jsonKeys = json['uploads'].map(function(itt) { return itt['name']; });
         var jsonValues = json['uploads'].map(function(itt) { return itt['values']; });
-        var initialKeys = initialAttachments['uploads'].map(function(itt) { return itt['name']; });        
-        var newJson = JSON.parse(document.querySelector('.attachmentsJson textarea').value);
-        var newJsonKeys = newJson['uploads'].map(function(itt) { return itt['name']; });
-        var newJsonValues = newJson['uploads'].map(function(itt) { return itt['values']; });
+        var initialKeys = initialAttachments['uploads'].map(function(itt) { return itt['name']; });
+        if (document.querySelector('.attachmentsJson textarea').value != '') {        
+            var newJson = JSON.parse(document.querySelector('.attachmentsJson textarea').value);
+            var newJsonKeys = newJson['uploads'].map(function(itt) { return itt['name']; });
+            var newJsonValues = newJson['uploads'].map(function(itt) { return itt['values']; });
 
-        // remove
-        for (var i = 0; i < newJsonKeys.length; i++) {
-            if (jsonKeys.indexOf(newJsonKeys[i]) == -1) {
-                newJson['uploads'] = newJson['uploads'].filter(function(itt){ return itt['name'] != newJsonKeys[i] });
-            }
-            else {
-                for (var o = 0; o < newJsonValues[i].length; o++) {
-                    var newJsonEntry = newJson['uploads'].filter(function(itt) { return itt['name'] == newJsonKeys[i] });
-                    var jsonEntry = json['uploads'].filter(function(itt) { return itt['name'] == newJsonKeys[i] });
-                    if (newJsonEntry != null && newJsonEntry.length > 0 && jsonEntry != null && jsonEntry.length > 0) {
-                        var idx = jsonEntry[0]['values'].indexOf(newJsonValues[o]);
-                        if (idx != -1) {
-                            newJsonEntry[0]['values'].pop(idx);
-                        }                    
+            // remove
+            for (var i = 0; i < newJsonKeys.length; i++) {
+                if (jsonKeys.indexOf(newJsonKeys[i]) == -1) {
+                    newJson['uploads'] = newJson['uploads'].filter(function(itt){ return itt['name'] != newJsonKeys[i] });
+                }
+                else {
+                    for (var o = 0; o < newJsonValues[i].length; o++) {
+                        var newJsonEntry = newJson['uploads'].filter(function(itt) { return itt['name'] == newJsonKeys[i] });
+                        var jsonEntry = json['uploads'].filter(function(itt) { return itt['name'] == newJsonKeys[i] });
+                        if (newJsonEntry != null && newJsonEntry.length > 0 && jsonEntry != null && jsonEntry.length > 0) {
+                            var idx = jsonEntry[0]['values'].indexOf(newJsonValues[o]);
+                            if (idx != -1) {
+                                newJsonEntry[0]['values'].pop(idx);
+                            }                    
+                        }
                     }
                 }
             }
-        }
 
 
-        // add new
-        for (var i = 0; i < jsonKeys.length; i++) {
-            if (initialKeys.indexOf(jsonKeys[i]) == -1) {
-                newJson["uploads"].push({'name': jsonKeys[i], 'values': []})
+            // add new
+            for (var i = 0; i < jsonKeys.length; i++) {
+                if (initialKeys.indexOf(jsonKeys[i]) == -1) {
+                    newJson["uploads"].push({'name': jsonKeys[i], 'values': []})
+                }
+
+                var newJsonEntry = newJson['uploads'].filter(function(itt) { return itt['name'] == jsonKeys[i] });         
+                var values = jsonValues[i];
+                if (values != null && values.length > 0) {
+                    for (var o = 0; o < values.length; o++) {
+                        if (newJsonEntry[0]['values'].indexOf(values[o]) == -1) {
+                            newJsonEntry[0]['values'].push(values[o]);
+                        }
+                    }    
+                }                 
             }
-
-            var newJsonEntry = newJson['uploads'].filter(function(itt) { return itt['name'] == jsonKeys[i] });         
-            var values = jsonValues[i];
-            if (values != null && values.length > 0) {
-                for (var o = 0; o < values.length; o++) {
-                    if (newJsonEntry[0]['values'].indexOf(values[o]) == -1) {
-                        newJsonEntry[0]['values'].push(values[o]);
-                    }
-                }    
-            }                 
+            document.querySelector('.attachmentsJson textarea').value = JSON.stringify(newJson);
+            document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
         }
 
         initialAttachments = json;
-
-        document.querySelector('.attachmentsJson textarea').value = JSON.stringify(newJson);
-        document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
     }
 }
 
