@@ -96,11 +96,11 @@ function populateAttachmentJson() {
                 newJson['uploads'] = newJson['uploads'].filter(function(itt){ return itt['name'] != newJsonKeys[i] });
             }
             else {
-                for (var o = 0; o < newJsonValues[i].length; o++) {
+                for (var o = 0; o < newJsonValues[i]['values'].length; o++) {
                     var newJsonEntry = newJson['uploads'].filter(function(itt) { return itt['name'] == newJsonKeys[i] });
                     var jsonEntry = json['uploads'].filter(function(itt) { return itt['name'] == newJsonKeys[i] });
                     if (newJsonEntry != null && newJsonEntry.length > 0 && jsonEntry != null && jsonEntry.length > 0) {
-                        var idx = jsonEntry[0]['values'].indexOf(newJsonValues[o]);
+                        var idx = jsonEntry[0]['values'].indexOf(newJsonValues[i]['values'][o]);
                         if (idx != -1) {
                             newJsonEntry[0]['values'].pop(idx);
                         }                    
