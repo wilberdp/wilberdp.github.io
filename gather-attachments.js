@@ -100,7 +100,7 @@ function populateAttachmentJson() {
         // remove
         for (var i = 0; i < initialKeys.length; i++) {
             if (jsonKeys.indexOf(initialKeys[i]) == -1) {
-                newJson['uploads'] = newJson['uploads'].filter(function(itt){ itt['name'] != initialKeys[i] });
+                newJson['uploads'] = newJson['uploads'].filter(function(itt){ return itt['name'] != initialKeys[i] });
             }
 
             var newJsonEntry = newJson['uploads'].filter(function(itt) { return itt['name'] == initialKeys[i] });         
