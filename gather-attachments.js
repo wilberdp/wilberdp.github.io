@@ -101,8 +101,8 @@ function populateAttachmentJson() {
                     var jsonEntry = json['uploads'].filter(function(itt) { return itt['name'] == newJsonKeys[i] });
                     if (newJsonEntry != null && newJsonEntry.length > 0 && jsonEntry != null && jsonEntry.length > 0) {
                         var idx = jsonEntry[0]['values'].indexOf(newJsonValues[i][o]);
-                        if (idx != -1) {
-                            newJsonEntry[0]['values'].pop(idx);
+                        if (idx == -1) {
+                            newJsonEntry[0]['values'].pop(o);
                         }                    
                     }
                 }
