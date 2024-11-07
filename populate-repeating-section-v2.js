@@ -224,6 +224,10 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                         if (opt != null) {
                             opt.dispatchEvent(new Event('click', { bubbles: true }));
                         }
+                        var sel2 = sel.querySelector('.ng-dropdown-panel');
+                        if (sel2 != null) {
+                            sel2.style.display = 'none';
+                        }
                     });
                 }
                 // Radio buttons
