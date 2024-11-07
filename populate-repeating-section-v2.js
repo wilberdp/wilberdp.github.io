@@ -209,7 +209,7 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                     fireEvents(destinationField);
                 }
                 // Dropdown
-                else if (destinationField.closest('ntx-simple-select-single') != null) {
+                else if (destinationField.closest('ntx-simple-select-single') != null && valToSet != null && valToSet != '') {
                     var dField = destinationField.closest('ntx-simple-select-single');
                     var sel = dField.querySelector('ng-select');
                                         
