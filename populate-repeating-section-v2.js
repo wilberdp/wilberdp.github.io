@@ -117,7 +117,7 @@ export class PopulateRepeatingSection extends LitElement {
                         var parser = new DOMParser();
                         var parsed = parser.parseFromString(this.values, "application/xml").querySelectorAll("Items Item");
                         console.log(parsed);
-                        matchRowCountToData(parsed, repeatingSection).then(async (e) => {
+                        matchRowCountToData2(parsed, repeatingSection).then(async (e) => {
                             writeXMLValuesToRepeater(this, parsed, repeatingSection).then((e2) => {
                                 document.querySelector('#overlayContainerCustom').remove();
                             });
@@ -326,6 +326,7 @@ async function writeJSONValuesToRepeater(parentElement, parsed, repeatingSection
     }
 }
 
+// deprecated
 async function matchRowCountToData(parsed, repeatingSection) {
     var originalSectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
     if (originalSectionCount < parsed.length) {
@@ -350,6 +351,47 @@ async function matchRowCountToData(parsed, repeatingSection) {
             repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section')[sectionCount - 1].querySelector('.ntx-repeating-section-remove-button').click();
             var exists = false;
             while (!exists) {
+                await pause(100);
+                var newSectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
+                if (sectionCount != newSectionCount) {
+                    exists = true;
+                }
+            }
+        }
+    }
+}
+
+// delete all but the first, add one, delete the first, then add target - 1
+async function matchRowCountToData2(parsed, repeatingSection) {
+    var originalSectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
+    // delete all rows
+    for (var i = originalSectionCount; i > 1; i++) {
+        var sectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
+        repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section')[0].querySelector('.ntx-repeating-section-remove-button').click();
+        var exists = false;
+        while (!exists) {
+            console.log('sectionCount1: ' + sectionCount);
+            await pause(100);
+            var newSectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
+            if (sectionCount != newSectionCount) {
+                exists = true;
+            }
+        }
+    }
+
+    // add one
+    repeatingSection.parentElement.closest('div').querySelector('button.btn-repeating-section-new-row').click();
+
+    // delete first
+    repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section')[0].querySelector('.ntx-repeating-section-remove-button').click();
+
+    if (parsed.length > 1) {
+        for (var i = 1; i < parsed.length; i++) {
+            var sectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
+            repeatingSection.parentElement.closest('div').querySelector('button.btn-repeating-section-new-row').click();
+            var exists = false;
+            while (!exists) {
+                console.log('sectionCount2: ' + sectionCount);
                 await pause(100);
                 var newSectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
                 if (sectionCount != newSectionCount) {
