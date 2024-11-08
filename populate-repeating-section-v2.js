@@ -364,8 +364,9 @@ async function matchRowCountToData(parsed, repeatingSection) {
 // delete all but the first, add one, delete the first, then add target - 1
 async function matchRowCountToData2(parsed, repeatingSection) {
     var originalSectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
+    console.log(originalSectionCount);
     // delete all rows
-    for (var i = originalSectionCount; i > 1; i++) {
+    for (var i = originalSectionCount; i > 1; i--) {
         var sectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
         repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section')[0].querySelector('.ntx-repeating-section-remove-button').click();
         var exists = false;
