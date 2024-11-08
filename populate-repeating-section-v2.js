@@ -386,6 +386,7 @@ async function matchRowCountToData2(parsed, repeatingSection) {
     // delete first
     repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section')[0].querySelector('.ntx-repeating-section-remove-button').click();
 
+    // add new rows
     if (parsed.length > 1) {
         for (var i = 1; i < parsed.length; i++) {
             var sectionCount = repeatingSection.querySelectorAll('.ntx-repeating-section-repeated-section').length;
