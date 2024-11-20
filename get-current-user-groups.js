@@ -2,6 +2,11 @@ import { html, LitElement } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit
 
 // define the component
 export class GetCurrentUserGroups extends LitElement {
+    static properties = {
+        groups: { type: String },
+        spUrl: { type: String }
+    };
+
     // return a promise for contract changes.
     static getMetaConfig() {
         return {
