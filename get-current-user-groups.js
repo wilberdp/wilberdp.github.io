@@ -49,7 +49,32 @@ export class GetCurrentUserGroups extends LitElement {
     }
 
     async render2() {
-        return new Promise();
+        try {
+            if (!window || !window.ntxContext || !window.ntxContext.accessTokenProvider) {
+                return new Promise(res => setTimeout(render2, 100));
+            }
+            else {
+                var token = await window.ntxContext.accessTokenProvider.getAccessToken();
+                if (token != null && token != '') {
+                    var url = this.spUrl + '/_api/web/currentuser/?$expand=groups';
+                    const response = await fetch(url, {
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json;odata=verbose",
+                            "Authorization": "Bearer " + token
+                        }
+                    });
+                    const body = await response.text();
+                    console.log(body);
+                }
+                else {
+                    console.log('token is null or empty');
+                }
+            }
+        }
+        catch(exc) { 
+            console.log(exc);
+        }
     }
 
     onChange(e) {
