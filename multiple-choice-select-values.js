@@ -24,7 +24,7 @@ export class MultipleChoiceClass extends LitElement {
                 },
                 values: {
                     type: 'string',
-                    title: 'Value to populate (;# delimited)'
+                    title: 'Values to populate'
                 }
             }
         };
