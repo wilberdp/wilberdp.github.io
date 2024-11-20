@@ -86,7 +86,7 @@ export class GetCurrentUserGroups extends LitElement {
             bubbles: true,
             cancelable: false,
             composed: true,
-            detail: e.target.values
+            detail: value
         };
         const event = new CustomEvent('ntx-value-change', args);
         this.dispatchEvent(event);
