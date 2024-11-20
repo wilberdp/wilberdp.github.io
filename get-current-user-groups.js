@@ -36,7 +36,7 @@ export class GetCurrentUserGroups extends LitElement {
     }
 
     render() {
-        if (spUrl != null && spUrl != '') {
+        if (this.spUrl != null && this.spUrl != '') {
             this.render2().then(res => {
                 console.log(res);            
             });   
