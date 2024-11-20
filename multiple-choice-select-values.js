@@ -49,13 +49,13 @@ export class MultipleChoiceClass extends LitElement {
                 if (multipleChoice != null && multipleChoice.length > 0) {
                     multipleChoice = multipleChoice[0];
                     multipleChoice.click();    
-                    var checkboxes = multipleChoice.querySelectorAll('.nx-ng-option')
+                    var checkboxes = multipleChoice.querySelectorAll('.nx-checkbox input[type="checkbox"]')
                     var parsed = this.values.split(';#');
 
                     for (var i = 0; i < parsed.length; i++) {
                         for (var o = 0; o < checkboxes.length; o++) {
-                            if (checkboxes[o].innerText == parsed[i]) {
-                                checkboxes[o].querySelector('input[type="checkbox"]').parentNode.click();
+                            if (checkboxes[o].value == parsed[i]) {
+                                checkboxes[o].parentNode.click();
                             }
                         }
                     }
