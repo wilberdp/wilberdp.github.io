@@ -67,6 +67,8 @@ export class GetCurrentUserGroups extends LitElement {
                     const body = await response.text();
                     var json = JSON.parse(body);
                     var results = '|||' + json.d.Groups.results.map(function(itt) { return itt.Title }).join('|||') + '|||';
+                    this.groups = results;
+                    this.onChange(results);
                     console.log(results);
                 }
                 else {
@@ -79,7 +81,7 @@ export class GetCurrentUserGroups extends LitElement {
         }
     }
 
-    onChange(e) {
+    onChange(value) {
         const args = {
             bubbles: true,
             cancelable: false,
