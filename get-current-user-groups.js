@@ -65,6 +65,8 @@ export class GetCurrentUserGroups extends LitElement {
                         }
                     });
                     const body = await response.text();
+                    var json = jSON.parse(body);
+                    var results = '|||' + json.d.Groups.results.map(function(itt) { return itt.Title }).join('|||') + '|||';
                     console.log(body);
                 }
                 else {
