@@ -5,7 +5,7 @@ export class GetCurrentUserGroups extends LitElement {
     // return a promise for contract changes.
     static getMetaConfig() {
         return {
-            controlName: 'GatherAttachments',
+            controlName: 'GetCurrentUserGroups',
             fallbackDisableSubmit: false,
             version: '1.0',
             standardProperties: {
