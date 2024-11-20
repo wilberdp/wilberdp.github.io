@@ -51,6 +51,17 @@ export class GetCurrentUserGroups extends LitElement {
     async render2() {
         return new Promise();
     }
+
+    onChange(e) {
+        const args = {
+            bubbles: true,
+            cancelable: false,
+            composed: true,
+            detail: e.target.values
+        };
+        const event = new CustomEvent('ntx-value-change', args);
+        this.dispatchEvent(event);
+    }
 }
 
 
