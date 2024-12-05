@@ -34,22 +34,22 @@ export class RepeaterReadOnly extends LitElement {
     render() {
         console.log('render');
         if (this.readOnlyControlVariable) {
-            showHide('none');
+            showHide('none', this.repeatingSectionClass);
         }
         else {
-            showHide('inline-block');
+            showHide('inline-block', this.repeatingSectionClass);
         }
         return html`<p>Repeater Read-Only Control</p>`;
     }
 }
 
-function showHide(attr1) {
+function showHide(attr1, repeatingSectionClass) {
     var eles = null;
-    if (this.repeatingSectionClass == null || this.repeatingSectionClass == '') {
+    if (repeatingSectionClass == null || repeatingSectionClass == '') {
         eles = document.querySelectorAll('ntx-repeating-section button.ntx-repeating-section-remove-button, ntx-repeating-section button.btn-repeating-section-new-row');
     }
     else {
-        eles = document.querySelectorAll('.' + this.repeatingSectionClass + ' ntx-repeating-section button.ntx-repeating-section-remove-button, .' + this.repeatingSectionClass + ' ntx-repeating-section button.btn-repeating-section-new-row');
+        eles = document.querySelectorAll('.' + repeatingSectionClass + ' ntx-repeating-section button.ntx-repeating-section-remove-button, .' + repeatingSectionClass + ' ntx-repeating-section button.btn-repeating-section-new-row');
     }
     for (var i = 0; i < eles.length; i++) {
         eles[i].style.display = attr1;
