@@ -3,7 +3,8 @@ import { html, LitElement } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit
 // define the component
 export class HideActionPanel extends LitElement {
     static properties = {
-        hide: { type: Boolean }
+        hide: { type: Boolean },
+        hideByDefault: { type: Boolean }
     };
   
     // return a promise for contract changes.
@@ -21,6 +22,11 @@ export class HideActionPanel extends LitElement {
                     title: 'Hide Action Panel',
                     description: "Add any boolean criteria to hide action panel including date range evaluation, etc",
                     required: true
+                },
+                hideByDefault: {
+                    type: 'boolean',
+                    title: 'Hide By Default',
+                    description: "Hide by default then show?  This property essentially reverses the behavior to become 'Show Action Panel'"          
                 }
             },
             events: ["ntx-value-change"]
@@ -47,6 +53,15 @@ export class HideActionPanel extends LitElement {
             style.innerText = 'ntx-action-panel.hide-button [data-e2e="btn-save-and-continue"], ntx-action-panel.hide-button [data-e2e="btn-submit"] { visibility: hidden !important }';
             document.querySelector('head').append(style);
         }
+
+        document.querySelectorAll('ntx-action-panel').forEach((panel) => {
+            if (this.hideByDefault) {
+                panel.classList.add('hide-button');
+            }
+            else {
+                panel.classList.remove('hide-button');
+            }
+        });
 
         document.querySelectorAll('ntx-action-panel').forEach((panel) => {
             if (this.hide) {
