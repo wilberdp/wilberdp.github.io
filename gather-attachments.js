@@ -80,6 +80,14 @@ function populateAttachmentJson() {
         if (differences[diff]["type"] != "unchanged") {
             console.log(differences);
             previousAttachments = json;
+            break;
+        }
+        for (var kv in differences[diff]) {
+            if (differences[diff][kv] != "unchanged") {
+                console.log(differences);
+                previousAttachments = json;
+                break;      
+            }
         }
     }
     return;
