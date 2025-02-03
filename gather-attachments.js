@@ -76,9 +76,11 @@ function populateAttachmentJson() {
     }
 
     var differences = deepDiffMapper.map(previousAttachments["uploads"], json["uploads"]);
-    if (differences != null && differences.length > 0 && differences.filter(function(itt){ return itt["name"]["type"] != "unchanged" || itt["values"]["type"] != "unchanged"}).length > 0) {
-        console.log(differences);
-        previousAttachments = json;
+    for (var diff in differences) {
+        if (differences[diff]["type"] != "unchanged") {
+            console.log(differences);
+            previousAttachments = json;
+        }
     }
     return;
 
