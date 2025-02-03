@@ -66,7 +66,7 @@ function populateAttachmentJson() {
                     json["uploads"].push( { "name": tcn, "values": att });
                 }
                 else {
-                    tkey["values"].concat(att);
+                    tkey[0].values.concat(att);
                 }                
             }
         } 
