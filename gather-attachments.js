@@ -76,8 +76,10 @@ function populateAttachmentJson() {
     }
 
     var differences = deepDiffMapper.map(previousAttachments, json);
-
-    console.log(differences);
+    if (differences.length > 0) {
+        console.log(differences);
+        previousAttachments = json;
+    }
     return;
 
     if (initialAttachments == null || initialAttachments.uploads == null || initialAttachments.uploads.length == 0) {
