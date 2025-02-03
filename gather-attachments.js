@@ -72,7 +72,7 @@ function populateAttachmentJson() {
         } 
     }
 
-    if (initialAttachments == null) {
+    if (initialAttachments == null || initialAttachments.uploads == null || initialAttachments.uploads.length == 0) {
         initialAttachments = {"uploads":[]};
         document.querySelector('.attachmentsJson textarea').value = JSON.stringify(initialAttachments);
         document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
