@@ -1,7 +1,6 @@
 import { html, LitElement } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit-all.min.js';
 
 var initialAttachments = null;
-var initialAttachments2 = null;
 var updatedAttachments = null;
 
 // define the component
@@ -74,7 +73,9 @@ function populateAttachmentJson() {
     }
 
     if (initialAttachments == null) {
-        initialAttachments = json;
+        initialAttachments = {"uploads":[]};
+        document.querySelector('.attachmentsJson textarea').value = JSON.stringify(initialAttachments);
+        document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
     }
     else {       
         var jsonKeys = json['uploads'].map(function(itt) { return itt['name']; });
@@ -128,7 +129,7 @@ function populateAttachmentJson() {
         document.querySelector('.attachmentsJson textarea').value = JSON.stringify(updatedAttachments);
         document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
 
-        initialAttachments = json;
+        //initialAttachments = json;
     }
 }
 
