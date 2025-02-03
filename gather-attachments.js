@@ -61,7 +61,7 @@ function populateAttachmentJson() {
             var att = retrieveAttachments('.' + className);
             if (att != null && att.length > 0) {
                 var tcn = className.replace('attachments', '').replaceAll('_s_', '/').replaceAll('_', ' ');
-                var tkey = json["uploads"].filter(function(itt){ return itt["name"] == tcv });
+                var tkey = json["uploads"].filter(function(itt){ return itt["name"] == tcn });
                 if (tkey == null || tkey.length == 0) {
                     json["uploads"].push( { "name": tcn, "values": att });
                 }
