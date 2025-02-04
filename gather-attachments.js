@@ -168,18 +168,27 @@ function getObjectDifferences(obj1, obj2) {
     const differences = {};
 
     for (const key of new Set([...Object.keys(obj1), ...Object.keys(obj2)])) {
-        const set1 = new Set(obj1[key] || []);
-        const set2 = new Set(obj2[key] || []);
+        const arr1 = obj1[key] || [];
+        const arr2 = obj2[key] || [];
         
-        const added = [...set2].filter(item => !set1.has(item));
-        const removed = [...set1].filter(item => !set2.has(item));
-        
+        if (deepEqual(arr1, arr2)) continue; // Skip identical arrays
+
+        const set1 = new Set(arr1.map(item => JSON.stringify(item)));
+        const set2 = new Set(arr2.map(item => JSON.stringify(item)));
+
+        const added = [...set2].filter(item => !set1.has(item)).map(item => JSON.parse(item));
+        const removed = [...set1].filter(item => !set2.has(item)).map(item => JSON.parse(item));
+
         if (added.length > 0 || removed.length > 0) {
             differences[key] = { added, removed };
         }
     }
     
     return differences;
+}
+
+function deepEqual(a, b) {
+    return JSON.stringify(a) === JSON.stringify(b);
 }
 
 // registering the web component
