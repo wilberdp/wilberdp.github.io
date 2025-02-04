@@ -84,7 +84,20 @@ function populateAttachmentJson() {
 
     if (differences != null && differences["uploads"] != null) {
         for (var topLevelDifference in differences["uploads"]) {
-            console.log(topLevelDifference);
+            switch (topLevelDifference) {
+                case "added":
+                    for (var added in topLevelDifference["added"]) {
+                        dataToOutput["uploads"].push(added);
+                    }
+                    break;
+                case "removed":
+                    for (var removed in topLevelDifference["removed"]) {
+                        dataToOutput["uploads"].slice(dataToOutput["uploads"].indexOf(removed), 1);
+                    }
+                    break;
+                case "modified": 
+                    break;
+            }
         }
     }
 
