@@ -89,21 +89,24 @@ function populateAttachmentJson() {
 
         if (added != null) {
             for (var addedEntry in added) {
-                dataToOutput.push(addedEntry);
+                dataToOutput["output"].push(addedEntry);
             }
             console.log('added');
             console.log(added);
+            console.log(dataToOutput)
         }
         if (removed != null) {
             for (var removedEntry in removed) {
-                dataToOutput.slice(dataToOutput.indexOf(removedEntry), 1);
+                dataToOutput["output"].slice(dataToOutput["output"].indexOf(removedEntry), 1);
             }
             console.log('removed');
             console.log(removed);
+            console.log(dataToOutput)
         }
         if (modified != null) {
             console.log('modified');
             console.log(modified);
+            console.log(dataToOutput)
         }
 
         //dataToOutput["uploads"].push(added);
