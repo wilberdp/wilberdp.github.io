@@ -171,8 +171,6 @@ function getObjectDifferences(obj1, obj2) {
         const arr1 = obj1[key] || [];
         const arr2 = obj2[key] || [];
 
-        if (deepEqual(arr1, arr2)) continue; // Skip identical arrays
-
         if (!Array.isArray(arr1) || !Array.isArray(arr2)) {
             if (!deepEqual(arr1, arr2)) {
                 differences[key] = { added: arr2, removed: arr1 };
@@ -180,15 +178,45 @@ function getObjectDifferences(obj1, obj2) {
             continue;
         }
 
-        const removed = arr1.filter(item1 => 
-            !arr2.some(item2 => deepEqual(item1, item2))
-        );
-        const added = arr2.filter(item2 => 
-            !arr1.some(item1 => deepEqual(item1, item2))
-        );
+        const arr1Map = new Map(arr1.map(item => [item.name, item]));
+        const arr2Map = new Map(arr2.map(item => [item.name, item]));
 
-        if (added.length > 0 || removed.length > 0) {
-            differences[key] = { added, removed };
+        const added = [];
+        const removed = [];
+        const modified = [];
+
+        for (const [name, item2] of arr2Map.entries()) {
+            if (!arr1Map.has(name)) {
+                added.push(item2);
+            } else {
+                const item1 = arr1Map.get(name);
+                const valuesSet1 = new Set(item1.values || []);
+                const valuesSet2 = new Set(item2.values || []);
+
+                const valuesAdded = [...valuesSet2].filter(v => !valuesSet1.has(v));
+                const valuesRemoved = [...valuesSet1].filter(v => !valuesSet2.has(v));
+
+                if (valuesAdded.length > 0 || valuesRemoved.length > 0) {
+                    modified.push({
+                        name,
+                        added: valuesAdded.length > 0 ? valuesAdded : undefined,
+                        removed: valuesRemoved.length > 0 ? valuesRemoved : undefined
+                    });
+                }
+            }
+        }
+
+        for (const [name, item1] of arr1Map.entries()) {
+            if (!arr2Map.has(name)) {
+                removed.push(item1);
+            }
+        }
+
+        if (added.length > 0 || removed.length > 0 || modified.length > 0) {
+            differences[key] = {};
+            if (added.length > 0) differences[key].added = added;
+            if (removed.length > 0) differences[key].removed = removed;
+            if (modified.length > 0) differences[key].modified = modified;
         }
     }
 
