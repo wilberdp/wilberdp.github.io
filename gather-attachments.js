@@ -34,7 +34,7 @@ export class GatherAttachments extends LitElement {
         try {
             setInterval(function(){
                 populateAttachmentJson();
-            }, 500);
+            }, 10000);
         }
         catch(exc) { 
             console.log(exc);
