@@ -78,11 +78,19 @@ function populateAttachmentJson() {
     var differences = deepDiffMapper.map(previousAttachments["uploads"], json["uploads"]);
     for (var diff in differences) {
         if (differences[diff]["type"] != "unchanged" || 
-        differences[diff]["name"]["type"] != "unchanged" || 
-        differences[diff]["values"].filter(function(itt){ return itt["type"] != "unchanged" }).length > 0) {
+                differences[diff]["name"]["type"] != "unchanged") {
             console.log(differences);
             previousAttachments = json;
             break;      
+        }
+        else {
+            for (var diff2 in differences[diff]["values"]) {
+                if (differences[diff]["values"][diff2]["type"] != "unchanged") {
+                    console.log(differences);
+                    previousAttachments = json;
+                    break;   
+                }
+            }
         }
     }
     return;
