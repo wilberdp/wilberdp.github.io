@@ -46,7 +46,7 @@ function populateAttachmentJson() {
     var json = {"uploads":[]};
 
     if (previousAttachments == null) {
-        previousAttachments = json;
+        previousAttachments = {"uploads":[]};
     }
 
     var fileUploads = document.querySelectorAll('[class*="attachments"]');
@@ -83,7 +83,7 @@ function populateAttachmentJson() {
     console.log('differences');
     console.log(additions);
 
-    previousAttachments = json;
+    previousAttachments = structuredClone(json);
     
     //console.log(dataToOutput);
     //document.querySelector('.attachmentsJson textarea').value = JSON.stringify(dataToOutput);
