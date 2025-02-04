@@ -80,11 +80,8 @@ function populateAttachmentJson() {
     console.log(json);
 
     var additions = getObjectDifferences(previousAttachments, json);
-    var subtractions = getObjectDifferences(json, previousAttachments);
-    console.log('additions');
+    console.log('differences');
     console.log(additions);
-    console.log('subtractions');
-    console.log(subtractions);
 
     previousAttachments = json;
     
@@ -168,16 +165,15 @@ function retrieveAttachments(selector) {
 function getObjectDifferences(obj1, obj2) {
     const differences = {};
 
-    for (const key in obj2) {
-        if (Array.isArray(obj2[key])) {
-            const set1 = new Set(obj1[key] || []);
-            const set2 = new Set(obj2[key]);
-            
-            const diff = [...set2].filter(item => !set1.has(item));
-            
-            if (diff.length > 0) {
-                differences[key] = diff;
-            }
+    for (const key of new Set([...Object.keys(obj1), ...Object.keys(obj2)])) {
+        const set1 = new Set(obj1[key] || []);
+        const set2 = new Set(obj2[key] || []);
+        
+        const added = [...set2].filter(item => !set1.has(item));
+        const removed = [...set1].filter(item => !set2.has(item));
+        
+        if (added.length > 0 || removed.length > 0) {
+            differences[key] = { added, removed };
         }
     }
     
