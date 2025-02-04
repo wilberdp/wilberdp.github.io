@@ -182,7 +182,9 @@ function getObjectDifferences(obj1, obj2) {
         const removed = arr1.filter(item => !set2.has(item));
 
         if (added.length > 0 || removed.length > 0) {
-            differences[key] = { added, removed };
+            differences[key] = {};
+            if (added.length > 0) differences[key].added = added;
+            if (removed.length > 0) differences[key].removed = removed;
         }
     }
 
