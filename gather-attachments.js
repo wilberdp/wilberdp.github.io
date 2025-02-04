@@ -77,8 +77,8 @@ function populateAttachmentJson() {
     var dataToOutput = {"upload":[]};
 
     var differences = getObjectDifferences(previousAttachments, json);
-    console.log('differences');
-    console.log(differences);
+    //console.log('differences');
+    //console.log(differences);
 
     previousAttachments = structuredClone(json);
 
@@ -87,19 +87,25 @@ function populateAttachmentJson() {
         var removed = differences["uploads"]["removed"];
         var modified = differences["uploads"]["modified"];
 
-        if (added != null)
+        if (added != null) {
+            console.log('added');
             console.log(added);
-        if (removed != null)
+        }
+        if (removed != null) {
+            console.log('removed');
             console.log(removed);
-        if (modified != null)
+        }
+        if (modified != null) {
+            console.log('modified');
             console.log(modified);
+        }
 
                         //dataToOutput["uploads"].push(added);
             
                         //dataToOutput["uploads"].slice(dataToOutput["uploads"].indexOf(removed), 1);
     }
 
-    console.log(dataToOutput);
+    //console.log(dataToOutput);
     //document.querySelector('.attachmentsJson textarea').value = JSON.stringify(dataToOutput);
     //document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
 }
