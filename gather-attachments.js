@@ -43,8 +43,7 @@ export class GatherAttachments extends LitElement {
 }
 
 function populateAttachmentJson() {
-    var json = {};
-    json["uploads"] = [];
+    var json = {"uploads":[]};
 
     if (previousAttachments == null) {
         previousAttachments = json;
@@ -74,25 +73,19 @@ function populateAttachmentJson() {
             }
         } 
     }
+    
+    var dataToOutput = {"upload":[]};
 
-    var differences = deepDiffMapper.map(previousAttachments["uploads"], json["uploads"]);
-    for (var diff in differences) {
-        if ((differences[diff]["type"] != null && differences[diff]["type"] != "unchanged") || 
-                (differences[diff]["name"]["type"] != null & differences[diff]["name"]["type"] != "unchanged")) {
-            console.log(differences);
-            previousAttachments = json;
-            break;      
-        }
-        else {
-            for (var diff2 in differences[diff]["values"]) {
-                if (differences[diff]["values"][diff2]["type"] != null && differences[diff]["values"][diff2]["type"] != "unchanged") {
-                    console.log(differences);
-                    previousAttachments = json;
-                    break;   
-                }
-            }
-        }
-    }
+    var additions = getObjectDifferences(previousAttachments["uploads"], json["uploads"]);
+    var subtractions = getObjectDifferences(json["uploads"], previousAttachments["uploads"]);
+    console.log('additions');
+    console.log(additions);
+    console.log('subtractions');
+    console.log(subtractions);
+    
+    console.log(dataToOutput);
+    //document.querySelector('.attachmentsJson textarea').value = JSON.stringify(dataToOutput);
+    //document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
     return;
 
     if (initialAttachments == null || initialAttachments.uploads == null || initialAttachments.uploads.length == 0) {
@@ -107,8 +100,7 @@ function populateAttachmentJson() {
         var initialValues = initialAttachments['uploads'].map(function(itt) { return itt['values']; });
 
         if (updatedAttachments == null) {
-            updatedAttachments = {};
-            updatedAttachments['uploads'] = [];   
+            updatedAttachments = {"upload":[]};
         } 
 
         // remove
@@ -168,79 +160,24 @@ function retrieveAttachments(selector) {
     return arr;
 }
 
-var deepDiffMapper = function () {
-    return {
-      VALUE_CREATED: 'created',
-      VALUE_UPDATED: 'updated',
-      VALUE_DELETED: 'deleted',
-      VALUE_UNCHANGED: 'unchanged',
-      map: function(obj1, obj2) {
-        if (this.isFunction(obj1) || this.isFunction(obj2)) {
-            throw 'Invalid argument. Function given, object expected.';
-        }
-        if (this.isValue(obj1) || this.isValue(obj2)) {
-            return {
-            type: this.compareValues(obj1, obj2),
-            data: obj1 === undefined ? obj2 : obj1
-            };
-        }
+function getObjectDifferences(obj1, obj2) {
+    const differences = {};
 
-        var diff = {};
-        for (var key in obj1) {
-            if (this.isFunction(obj1[key])) {
-            continue;
+    for (const key in obj2) {
+        if (Array.isArray(obj2[key])) {
+            const set1 = new Set(obj1[key] || []);
+            const set2 = new Set(obj2[key]);
+            
+            const diff = [...set2].filter(item => !set1.has(item));
+            
+            if (diff.length > 0) {
+                differences[key] = diff;
             }
-
-            var value2 = undefined;
-            if (obj2[key] !== undefined) {
-            value2 = obj2[key];
-            }
-
-            diff[key] = this.map(obj1[key], value2);
-        }
-        for (var key in obj2) {
-            if (this.isFunction(obj2[key]) || diff[key] !== undefined) {
-            continue;
-            }
-
-            diff[key] = this.map(undefined, obj2[key]);
-        }
-
-        return diff;
-
-        },
-        compareValues: function (value1, value2) {
-        if (value1 === value2) {
-            return this.VALUE_UNCHANGED;
-        }
-        if (this.isDate(value1) && this.isDate(value2) && value1.getTime() === value2.getTime()) {
-            return this.VALUE_UNCHANGED;
-        }
-        if (value1 === undefined) {
-            return this.VALUE_CREATED;
-        }
-        if (value2 === undefined) {
-            return this.VALUE_DELETED;
-        }
-        return this.VALUE_UPDATED;
-        },
-        isFunction: function (x) {
-        return Object.prototype.toString.call(x) === '[object Function]';
-        },
-        isArray: function (x) {
-        return Object.prototype.toString.call(x) === '[object Array]';
-        },
-        isDate: function (x) {
-        return Object.prototype.toString.call(x) === '[object Date]';
-        },
-        isObject: function (x) {
-        return Object.prototype.toString.call(x) === '[object Object]';
-        },
-        isValue: function (x) {
-        return !this.isObject(x) && !this.isArray(x);
         }
     }
-}();
+    
+    return differences;
+}
 
 // registering the web component
 const elementName = 'gather-attachments';
