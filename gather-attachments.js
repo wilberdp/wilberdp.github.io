@@ -32,9 +32,9 @@ export class GatherAttachments extends LitElement {
 
     async render2() {
         try {
-            //setInterval(function(){
-            //    populateAttachmentJson();
-            //}, 10000);
+            setInterval(function(){
+                populateAttachmentJson();
+            }, 10000);
         }
         catch(exc) { 
             console.log(exc);
