@@ -79,8 +79,8 @@ function populateAttachmentJson() {
     console.log(previousAttachments);
     console.log(json);
 
-    var additions = getObjectDifferences(previousAttachments["uploads"], json["uploads"]);
-    var subtractions = getObjectDifferences(json["uploads"], previousAttachments["uploads"]);
+    var additions = getObjectDifferences(previousAttachments, json);
+    var subtractions = getObjectDifferences(json, previousAttachments);
     console.log('additions');
     console.log(additions);
     console.log('subtractions');
