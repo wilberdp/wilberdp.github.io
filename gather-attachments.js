@@ -173,18 +173,22 @@ function getObjectDifferences(obj1, obj2) {
 
         if (deepEqual(arr1, arr2)) continue; // Skip identical arrays
 
-        // Ensure order doesn't affect comparison
-        const set1 = new Set(arr1);
-        const set2 = new Set(arr2);
+        if (!Array.isArray(arr1) || !Array.isArray(arr2)) {
+            if (!deepEqual(arr1, arr2)) {
+                differences[key] = { added: arr2, removed: arr1 };
+            }
+            continue;
+        }
 
-        // Compute differences correctly
-        const added = arr2.filter(item => !set1.has(item));
-        const removed = arr1.filter(item => !set2.has(item));
+        const removed = arr1.filter(item1 => 
+            !arr2.some(item2 => deepEqual(item1, item2))
+        );
+        const added = arr2.filter(item2 => 
+            !arr1.some(item1 => deepEqual(item1, item2))
+        );
 
         if (added.length > 0 || removed.length > 0) {
-            differences[key] = {};
-            if (added.length > 0) differences[key].added = added;
-            if (removed.length > 0) differences[key].removed = removed;
+            differences[key] = { added, removed };
         }
     }
 
