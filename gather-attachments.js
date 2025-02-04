@@ -101,7 +101,7 @@ function populateAttachmentJson() {
         }
     }
 
-    //console.log(dataToOutput);
+    console.log(dataToOutput);
     //document.querySelector('.attachmentsJson textarea').value = JSON.stringify(dataToOutput);
     //document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
 }
