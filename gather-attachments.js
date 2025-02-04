@@ -89,7 +89,7 @@ function populateAttachmentJson() {
 
         if (added != null) {
             for (var addedEntry in added) {
-                dataToOutput["output"].push(addedEntry);
+                dataToOutput["upload"].push(added[addedEntry]);
             }
             console.log('added');
             console.log(added);
@@ -97,7 +97,7 @@ function populateAttachmentJson() {
         }
         if (removed != null) {
             for (var removedEntry in removed) {
-                dataToOutput["output"].slice(dataToOutput["output"].indexOf(removedEntry), 1);
+                dataToOutput["upload"].slice(dataToOutput["upload"].indexOf(removed[removedEntry]), 1);
             }
             console.log('removed');
             console.log(removed);
