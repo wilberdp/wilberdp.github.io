@@ -83,22 +83,20 @@ function populateAttachmentJson() {
     previousAttachments = structuredClone(json);
 
     if (differences != null && differences["uploads"] != null) {
-        for (var topLevelDifference in differences["uploads"]) {
-            switch (topLevelDifference) {
-                case "added":
-                    for (var added in topLevelDifference["added"]) {
-                        dataToOutput["uploads"].push(added);
-                    }
-                    break;
-                case "removed":
-                    for (var removed in topLevelDifference["removed"]) {
-                        dataToOutput["uploads"].slice(dataToOutput["uploads"].indexOf(removed), 1);
-                    }
-                    break;
-                case "modified": 
-                    break;
-            }
-        }
+        var added = differences["uploads"]["added"];
+        var removed = differences["uploads"]["removed"];
+        var modified = differences["uploads"]["modified"];
+
+        if (added != null)
+            console.log(added);
+        if (removed != null)
+            console.log(removed);
+        if (modified != null)
+            console.log(modified);
+
+                        //dataToOutput["uploads"].push(added);
+            
+                        //dataToOutput["uploads"].slice(dataToOutput["uploads"].indexOf(removed), 1);
     }
 
     console.log(dataToOutput);
