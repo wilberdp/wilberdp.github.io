@@ -88,10 +88,16 @@ function populateAttachmentJson() {
         var modified = differences["uploads"]["modified"];
 
         if (added != null) {
+            for (var addedEntry in added) {
+                dataToOutput.push(addedEntry);
+            }
             console.log('added');
             console.log(added);
         }
         if (removed != null) {
+            for (var removedEntry in removed) {
+                dataToOutput.slice(dataToOutput.indexOf(removedEntry), 1);
+            }
             console.log('removed');
             console.log(removed);
         }
@@ -100,9 +106,8 @@ function populateAttachmentJson() {
             console.log(modified);
         }
 
-                        //dataToOutput["uploads"].push(added);
-            
-                        //dataToOutput["uploads"].slice(dataToOutput["uploads"].indexOf(removed), 1);
+        //dataToOutput["uploads"].push(added);
+        //dataToOutput["uploads"].slice(dataToOutput["uploads"].indexOf(removed), 1);
     }
 
     //console.log(dataToOutput);
