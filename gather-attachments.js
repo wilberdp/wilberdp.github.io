@@ -32,9 +32,9 @@ export class GatherAttachments extends LitElement {
 
     async render2() {
         try {
-            setInterval(function(){
-                populateAttachmentJson();
-            }, 10000);
+            //setInterval(function(){
+            //    populateAttachmentJson();
+            //}, 10000);
         }
         catch(exc) { 
             console.log(exc);
@@ -76,11 +76,6 @@ function populateAttachmentJson() {
     
     var dataToOutput = {"upload":[]};
 
-    //console.log(previousAttachments);
-    //console.log(json);
-
-    //console.log(JSON.stringify(previousAttachments) === JSON.stringify(json));
-
     var differences = getObjectDifferences(previousAttachments, json);
     console.log('differences');
     console.log(differences);
@@ -88,16 +83,14 @@ function populateAttachmentJson() {
     previousAttachments = structuredClone(json);
 
     if (differences != null && differences["uploads"] != null) {
-        for (var topLevelDifference in differences) {
+        for (var topLevelDifference in differences["uploads"]) {
             console.log(topLevelDifference);
         }
     }
 
-    
     //console.log(dataToOutput);
     //document.querySelector('.attachmentsJson textarea').value = JSON.stringify(dataToOutput);
     //document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
-    return;
 }
 
 function retrieveAttachments(selector) {
