@@ -76,14 +76,19 @@ function populateAttachmentJson() {
     
     var dataToOutput = {"upload":[]};
 
+    console.log(previousAttachments);
+    console.log(json);
+
     var additions = getObjectDifferences(previousAttachments["uploads"], json["uploads"]);
     var subtractions = getObjectDifferences(json["uploads"], previousAttachments["uploads"]);
     console.log('additions');
     console.log(additions);
     console.log('subtractions');
     console.log(subtractions);
+
+    previousAttachments = json;
     
-    console.log(dataToOutput);
+    //console.log(dataToOutput);
     //document.querySelector('.attachmentsJson textarea').value = JSON.stringify(dataToOutput);
     //document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
     return;
