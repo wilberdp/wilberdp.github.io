@@ -100,7 +100,7 @@ function populateAttachmentJson() {
         }
         if (removed != null) {
             for (var removedEntry in removed) {
-                dataToOutput["upload"].slice(dataToOutput["upload"].indexOf(removed[removedEntry]), 1);
+                dataToOutput["upload"].splice(dataToOutput["upload"].indexOf(removed[removedEntry]), 1);
             }
             //console.log('removed');
             //console.log(removed);
