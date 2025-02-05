@@ -119,7 +119,7 @@ function populateAttachmentJson() {
                     }
                     if (modified[modifiedEntry]["removed"] != null && modified[modifiedEntry]["removed"].length > 0) {
                         for (var removedEntry in modified[modifiedEntry]["removed"]) {
-                            data[0]["values"].slice(data[0].indexOf(modified[modifiedEntry]["removed"][removedEntry]), 1);
+                            data[0]["values"].slice(data[0]["values"].indexOf(modified[modifiedEntry]["removed"][removedEntry]), 1);
                             console.log(dataToOutput);
                         }
                     }
