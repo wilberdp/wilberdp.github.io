@@ -113,13 +113,13 @@ function populateAttachmentJson() {
                 if (data != null && data.length > 0) {
                     if (modified[modifiedEntry]["added"] != null && modified[modifiedEntry]["added"].length > 0) {
                         for (var addedEntry in modified[modifiedEntry]["added"]) {
-                            data[0].push(addedEntry);
+                            data[0].push(modified[modifiedEntry]["added"][addedEntry]);
                             console.log(dataToOutput);
                         }
                     }
                     if (modified[modifiedEntry]["removed"] != null && modified[modifiedEntry]["removed"].length > 0) {
                         for (var removedEntry in modified[modifiedEntry]["removed"]) {
-                            data[0].slice(data[0].indexOf(removedEntry), 1);
+                            data[0].slice(data[0].indexOf(modified[modifiedEntry]["removed"][removedEntry]), 1);
                             console.log(dataToOutput);
                         }
                     }
