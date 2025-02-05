@@ -35,7 +35,7 @@ export class GatherAttachments extends LitElement {
         try {
             setInterval(function(){
                 populateAttachmentJson();
-            }, 10000);
+            }, 500);
         }
         catch(exc) { 
             console.log(exc);
@@ -94,40 +94,40 @@ function populateAttachmentJson() {
             for (var addedEntry in added) {
                 dataToOutput["upload"].push(added[addedEntry]);
             }
-            console.log('added');
-            console.log(added);
-            console.log(dataToOutput)
+            //console.log('added');
+            //console.log(added);
+            //console.log(dataToOutput)
         }
         if (removed != null) {
             for (var removedEntry in removed) {
                 dataToOutput["upload"].slice(dataToOutput["upload"].indexOf(removed[removedEntry]), 1);
             }
-            console.log('removed');
-            console.log(removed);
-            console.log(dataToOutput)
+            //console.log('removed');
+            //console.log(removed);
+            //console.log(dataToOutput)
         }
         if (modified != null) {
             for (var modifiedEntry in modified) {
                 var data = dataToOutput["upload"].filter(function(itt) { return itt["name"] == modified[modifiedEntry]["name"] });
-                console.log(data);
+                //console.log(data);
                 if (data != null && data.length > 0) {
                     if (modified[modifiedEntry]["added"] != null && modified[modifiedEntry]["added"].length > 0) {
                         for (var addedEntry in modified[modifiedEntry]["added"]) {
                             data[0]["values"].push(modified[modifiedEntry]["added"][addedEntry]);
-                            console.log(dataToOutput);
+                            //console.log(dataToOutput);
                         }
                     }
                     if (modified[modifiedEntry]["removed"] != null && modified[modifiedEntry]["removed"].length > 0) {
                         for (var removedEntry in modified[modifiedEntry]["removed"]) {
                             data[0]["values"].splice(data[0]["values"].indexOf(modified[modifiedEntry]["removed"][removedEntry]), 1);
-                            console.log(dataToOutput);
+                            //console.log(dataToOutput);
                         }
                     }
                 }
             }
-            console.log('modified');
-            console.log(modified);
-            console.log(dataToOutput)
+            //console.log('modified');
+            //console.log(modified);
+            //console.log(dataToOutput)
         }
     }
 
