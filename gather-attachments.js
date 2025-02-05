@@ -1,6 +1,7 @@
 import { html, LitElement } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit-all.min.js';
 
 var previousAttachments = null;
+var dataToOutput = null;
 
 // define the component
 export class GatherAttachments extends LitElement {
@@ -49,6 +50,10 @@ function populateAttachmentJson() {
         previousAttachments = {"uploads":[]};
     }
 
+    if (dataToOutput == null) {
+        dataToOutput = {"upload":[]};
+    }
+
     var fileUploads = document.querySelectorAll('[class*="attachments"]');
     for (var o = 0; o < fileUploads.length; o++) {
         var classes = fileUploads[o].classList;
@@ -74,8 +79,6 @@ function populateAttachmentJson() {
         } 
     }
     
-    var dataToOutput = {"upload":[]};
-
     var differences = getObjectDifferences(previousAttachments, json);
     //console.log('differences');
     //console.log(differences);
