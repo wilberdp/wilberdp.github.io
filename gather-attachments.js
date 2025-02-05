@@ -104,18 +104,29 @@ function populateAttachmentJson() {
             console.log(dataToOutput)
         }
         if (modified != null) {
+            for (var modifiedEntry in modified) {
+                var data = dataToOutput["upload"].filter(function(itt) { return itt["name"] == modifiedEntry["name"] });
+                if (data != null && data.length > 0) {
+                    if (modifiedEntry["added"] != null && modifiedEntry["added"].length > 0) {
+                        for (var addedEntry in modifiedEntry["added"]) {
+                            data[0].push(addedEntry);
+                        }
+                    }
+                    if (modifiedEntry["removed"] != null && modifiedEntry["removed"].length > 0) {
+                        for (var removedEntry in modifiedEntry["removed"]) {
+                            data[0].slice(data[0].indexOf(removedEntry), 1);
+                        }
+                    }
+                }
+            }
             console.log('modified');
             console.log(modified);
             console.log(dataToOutput)
         }
-
-        //dataToOutput["uploads"].push(added);
-        //dataToOutput["uploads"].slice(dataToOutput["uploads"].indexOf(removed), 1);
     }
 
-    //console.log(dataToOutput);
-    //document.querySelector('.attachmentsJson textarea').value = JSON.stringify(dataToOutput);
-    //document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
+    document.querySelector('.attachmentsJson textarea').value = JSON.stringify(dataToOutput);
+    document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
 }
 
 function retrieveAttachments(selector) {
