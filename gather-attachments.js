@@ -46,10 +46,6 @@ export class GatherAttachments extends LitElement {
 function populateAttachmentJson() {
     var json = {"uploads":[]};
 
-    if (previousAttachments == null) {
-        previousAttachments = {"uploads":[]};
-    }
-
     if (dataToOutput == null) {
         dataToOutput = {"upload":[]};
     }
@@ -79,11 +75,14 @@ function populateAttachmentJson() {
         } 
     }
     
-    var differences = getObjectDifferences(previousAttachments, json);
     //console.log('differences');
     //console.log(differences);
 
-    previousAttachments = structuredClone(json);
+    if (previousAttachments == null) {
+        previousAttachments = structuredClone(json);
+    }
+    
+    var differences = getObjectDifferences(previousAttachments, json);
 
     if (differences != null && differences["uploads"] != null) {
         var added = differences["uploads"]["added"];
