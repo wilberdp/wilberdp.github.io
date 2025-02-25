@@ -32,6 +32,10 @@ export class CurrentlyAssigned extends LitElement {
                 spUrl: {
                     title: 'Sharepoint Url',
                     type: 'string'
+                },
+                itemId: {
+                    title: 'Item ID',
+                    type: 'string'
                 }
             },
             events: ['ntx-value-change']
