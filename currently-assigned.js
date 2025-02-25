@@ -74,7 +74,7 @@ export class CurrentlyAssigned extends LitElement {
                     });
                     const body = await response.text();
                     var json = JSON.parse(body);
-                    var results = json.d;
+                    var results = json.d.results;
                     console.log(results);
                     var userEmail = this.currentUserEmail.toLowerCase();
                     for (var result in results) {
