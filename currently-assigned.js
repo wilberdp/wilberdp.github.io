@@ -80,8 +80,11 @@ export class CurrentlyAssigned extends LitElement {
                     for (var i = 0; i < results.length; i++) {
                         if (results[i].AssigneeID != null && results[i].AssigneeID.toLowerCase() == userEmail) {
                             this.currentlyAssigned = true;
+                            this.onChange(true);
+                            return;
                         }
                     }
+                    this.onChange(false);
                 }
                 else {
                     console.log('token is null or empty');
@@ -91,6 +94,17 @@ export class CurrentlyAssigned extends LitElement {
         catch(exc) { 
             console.log(exc);
         }
+    }
+
+    onChange(value) {
+        const args = {
+            bubbles: true,
+            cancelable: false,
+            composed: true,
+            detail: value
+        };
+        const event = new CustomEvent('ntx-value-change', args);
+        this.dispatchEvent(event);
     }
 }
 
