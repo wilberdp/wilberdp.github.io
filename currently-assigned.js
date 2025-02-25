@@ -61,7 +61,7 @@ export class CurrentlyAssigned extends LitElement {
             else {
                 var token = await window.ntxContext.accessTokenProvider.getAccessToken();
                 if (token != null && token != '') {
-                    var url = this.spUrl + '/_api/web/lists/getbytitle("' + this.taskListTitle + '")/items(' + this.itemId + ')?select=AssigneeID';
+                    var url = this.spUrl + '/_api/web/lists/getbytitle(\'' + this.taskListTitle + '\')/items(' + this.itemId + ')?select=AssigneeID';
                     const response = await fetch(url, {
                         headers: {
                             "Content-Type": "application/json",
