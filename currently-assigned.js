@@ -77,8 +77,8 @@ export class CurrentlyAssigned extends LitElement {
                     var results = json.d.results;
                     console.log(results);
                     var userEmail = this.currentUserEmail.toLowerCase();
-                    for (var result in results) {
-                        if (result.AssigneeID != null && result.AssigneeID.toLowerCase() == userEmail) {
+                    for (var i = 0; i < results.length; i++) {
+                        if (results[i].AssigneeID != null && results[i].AssigneeID.toLowerCase() == userEmail) {
                             this.currentlyAssigned = true;
                         }
                     }
