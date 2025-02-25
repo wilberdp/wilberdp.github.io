@@ -6,7 +6,8 @@ export class CurrentlyAssigned extends LitElement {
         currentlyAssigned: { type: Boolean },
         taskListTitle: { type: String },
         spUrl: { type: String },
-        itemId: { type: String }
+        itemId: { type: String },
+        currentUserEmail: { type: String }
     };
 
     // return a promise for contract changes.
@@ -35,6 +36,10 @@ export class CurrentlyAssigned extends LitElement {
                 },
                 itemId: {
                     title: 'Item ID',
+                    type: 'string'
+                },
+                currentUserEmail: {
+                    title: 'Current User Email',
                     type: 'string'
                 }
             },
@@ -71,6 +76,12 @@ export class CurrentlyAssigned extends LitElement {
                     var json = JSON.parse(body);
                     var results = json.d;
                     console.log(results);
+                    var userEmail = this.currentUserEmail.toLowerCase();
+                    for (var result in results) {
+                        if (result.AssigneeID != null && result.AssigneeID.toLowerCase() == userEmail) {
+                            this.currentlyAssigned = true;
+                        }
+                    }
                 }
                 else {
                     console.log('token is null or empty');
