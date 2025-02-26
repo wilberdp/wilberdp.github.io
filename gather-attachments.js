@@ -130,6 +130,8 @@ function populateAttachmentJson() {
         }
     }
 
+    previousAttachments = structuredClone(json);
+
     document.querySelector('.attachmentsJson textarea').value = JSON.stringify(dataToOutput);
     document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
 }
