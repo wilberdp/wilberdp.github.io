@@ -47,7 +47,7 @@ function populateAttachmentJson() {
     var json = {"uploads":[]};
 
     if (dataToOutput == null) {
-        dataToOutput = {"upload":[]};
+        dataToOutput = {"uploads":[]};
     }
 
     var fileUploads = document.querySelectorAll('[class*="attachments"]');
@@ -91,7 +91,7 @@ function populateAttachmentJson() {
 
         if (added != null) {
             for (var addedEntry in added) {
-                dataToOutput["upload"].push(added[addedEntry]);
+                dataToOutput["uploads"].push(added[addedEntry]);
             }
             //console.log('added');
             //console.log(added);
@@ -99,7 +99,7 @@ function populateAttachmentJson() {
         }
         if (removed != null) {
             for (var removedEntry in removed) {
-                dataToOutput["upload"].splice(dataToOutput["upload"].indexOf(removed[removedEntry]), 1);
+                dataToOutput["uploads"].splice(dataToOutput["uploads"].indexOf(removed[removedEntry]), 1);
             }
             //console.log('removed');
             //console.log(removed);
@@ -107,7 +107,7 @@ function populateAttachmentJson() {
         }
         if (modified != null) {
             for (var modifiedEntry in modified) {
-                var data = dataToOutput["upload"].filter(function(itt) { return itt["name"] == modified[modifiedEntry]["name"] });
+                var data = dataToOutput["uploads"].filter(function(itt) { return itt["name"] == modified[modifiedEntry]["name"] });
                 //console.log(data);
                 if (data != null && data.length > 0) {
                     if (modified[modifiedEntry]["added"] != null && modified[modifiedEntry]["added"].length > 0) {
