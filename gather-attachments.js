@@ -79,12 +79,12 @@ function populateAttachmentJson() {
         previousAttachments = structuredClone(json);
     }
 
-    console.log('differences');
-    console.log(differences);
-
     var differences = getObjectDifferences(previousAttachments, json);
 
     if (differences != null && differences["uploads"] != null) {
+        console.log('differences');
+        console.log(differences);
+        
         var added = differences["uploads"]["added"];
         var removed = differences["uploads"]["removed"];
         var modified = differences["uploads"]["modified"];
