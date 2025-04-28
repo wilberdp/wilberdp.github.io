@@ -44,10 +44,10 @@ export class GatherAttachments extends LitElement {
 }
 
 function populateAttachmentJson() {
-    var json = {"uploads":[]};
+    var json = {"uploads":[], "removed": []};
 
     if (dataToOutput == null) {
-        dataToOutput = {"uploads":[]};
+        dataToOutput = {"uploads":[], "removed": []};
     }
 
     var fileUploads = document.querySelectorAll('[class*="attachments"]');
@@ -84,7 +84,7 @@ function populateAttachmentJson() {
     if (differences != null && differences["uploads"] != null) {
         console.log('differences');
         console.log(differences);
-        
+
         var added = differences["uploads"]["added"];
         var removed = differences["uploads"]["removed"];
         var modified = differences["uploads"]["modified"];
@@ -100,6 +100,7 @@ function populateAttachmentJson() {
         if (removed != null) {
             for (var removedEntry in removed) {
                 dataToOutput["uploads"].splice(dataToOutput["uploads"].indexOf(removed[removedEntry]), 1);
+                dataToOutput["removed"].push(removedEntry["name"]);
             }
             console.log('removed');
             console.log(removed);
@@ -108,7 +109,7 @@ function populateAttachmentJson() {
         if (modified != null) {
             for (var modifiedEntry in modified) {
                 var data = dataToOutput["uploads"].filter(function(itt) { return itt["name"] == modified[modifiedEntry]["name"] });
-                
+
                 if (data != null && data.length > 0) {
                     if (modified[modifiedEntry]["added"] != null && modified[modifiedEntry]["added"].length > 0) {
                         for (var addedEntry in modified[modifiedEntry]["added"]) {
@@ -118,6 +119,7 @@ function populateAttachmentJson() {
                     if (modified[modifiedEntry]["removed"] != null && modified[modifiedEntry]["removed"].length > 0) {
                         for (var removedEntry in modified[modifiedEntry]["removed"]) {
                             data[0]["values"].splice(data[0]["values"].indexOf(modified[modifiedEntry]["removed"][removedEntry]), 1);
+                            dataToOutput["removed"].push(removedEntry);
                         }
                     }
                 }
@@ -129,9 +131,17 @@ function populateAttachmentJson() {
     }
 
     previousAttachments = structuredClone(json);
+    try {
+        document.querySelector('.attachmentsJson textarea').value = JSON.stringify(dataToOutput);
+        document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
+    }
+    catch (exc) { }
 
-    document.querySelector('.attachmentsJson textarea').value = JSON.stringify(dataToOutput);
-    document.querySelector('.attachmentsJson textarea').dispatchEvent(new Event('blur'));
+    try {
+        //document.querySelector('.attachmentsJsonToRemove textarea').value = JSON.stringify(dataToRemove);
+        //document.querySelector('.attachmentsJsonToRemove textarea').dispatchEvent(new Event('blur'));
+    }
+    catch (exc) { }
 }
 
 function retrieveAttachments(selector) {
