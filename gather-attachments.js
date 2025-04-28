@@ -100,7 +100,7 @@ function populateAttachmentJson() {
         if (removed != null) {
             for (var removedEntry in removed) {
                 dataToOutput["uploads"].splice(dataToOutput["uploads"].indexOf(removed[removedEntry]), 1);
-                dataToOutput["removed"].push(removedEntry["name"]);
+                //dataToOutput["removed"].push(removedEntry["name"]);
             }
             console.log('removed');
             console.log(removed);
@@ -119,10 +119,10 @@ function populateAttachmentJson() {
                     if (modified[modifiedEntry]["removed"] != null && modified[modifiedEntry]["removed"].length > 0) {
                         for (var removedEntry in modified[modifiedEntry]["removed"]) {
                             data[0]["values"].splice(data[0]["values"].indexOf(modified[modifiedEntry]["removed"][removedEntry]), 1);
-                            if (dataToOutput["removed"][modified[modifiedEntry]["name"]] == null) {
-                                dataToOutput["removed"].push(modified[modifiedEntry]["name"])
-                            }
-                            dataToOutput["removed"][modified[modifiedEntry]["name"]].push(removedEntry);
+                            //if (dataToOutput["removed"][modified[modifiedEntry]["name"]] == null) {
+                            //    dataToOutput["removed"].push(modified[modifiedEntry]["name"])
+                            //}
+                            //dataToOutput["removed"][modified[modifiedEntry]["name"]].push(removedEntry);
                         }
                     }
                 }
@@ -140,11 +140,11 @@ function populateAttachmentJson() {
     }
     catch (exc) { }
 
-    try {
+    //try {
         //document.querySelector('.attachmentsJsonToRemove textarea').value = JSON.stringify(dataToRemove);
         //document.querySelector('.attachmentsJsonToRemove textarea').dispatchEvent(new Event('blur'));
-    }
-    catch (exc) { }
+    //}
+    //catch (exc) { }
 }
 
 function retrieveAttachments(selector) {
