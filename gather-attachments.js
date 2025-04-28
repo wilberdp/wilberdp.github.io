@@ -75,13 +75,13 @@ function populateAttachmentJson() {
         } 
     }
     
-    console.log('differences');
-    console.log(differences);
-
     if (previousAttachments == null) {
         previousAttachments = structuredClone(json);
     }
-    
+
+    console.log('differences');
+    console.log(differences);
+
     var differences = getObjectDifferences(previousAttachments, json);
 
     if (differences != null && differences["uploads"] != null) {
