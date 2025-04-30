@@ -74,7 +74,7 @@ export class HideActionPanel extends LitElement {
             });
         }
 
-        return html`<p>'Hide Action Panel'<p/>`;
+        return html`<p>Hide Action Panel<p/>`;
     }
 
 }
