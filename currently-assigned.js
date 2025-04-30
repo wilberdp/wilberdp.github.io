@@ -7,7 +7,8 @@ export class CurrentlyAssigned extends LitElement {
         taskListTitle: { type: String },
         spUrl: { type: String },
         itemId: { type: String },
-        currentUserEmail: { type: String }
+        currentUserEmail: { type: String },
+        listTitle: { type: String }
     };
 
     // return a promise for contract changes.
@@ -40,6 +41,10 @@ export class CurrentlyAssigned extends LitElement {
                 },
                 currentUserEmail: {
                     title: 'Current User Email',
+                    type: 'string'
+                },
+                listTitle: {
+                    title: 'List Title',
                     type: 'string'
                 }
             },
@@ -76,6 +81,22 @@ export class CurrentlyAssigned extends LitElement {
                     var json = JSON.parse(body);
                     var results = json.d.results;
                     console.log(results);
+
+                    if (this.listTitle != null && this.listTitle != '') {
+                        var url2 = this.spUrl + '/_api/web/lists/getbytitle(\'' + this.listTitle + '\')/items(' + this.itemId + ')';
+                        const response2 = await fetch(url2, {
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Accept": "application/json;odata=verbose",
+                                "Authorization": "Bearer " + token
+                            }
+                        });
+                        const body2 = await response2.text();
+                        var json2 = JSON.parse(body2);
+                        var results2 = json2.d.results;
+                        console.log(results2);
+                    }
+
                     var userEmail = this.currentUserEmail.toLowerCase();
                     for (var i = 0; i < results.length; i++) {
                         if (results[i].AssigneeID != null && results[i].AssigneeID.toLowerCase() == userEmail) {
