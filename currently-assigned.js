@@ -97,11 +97,11 @@ export class CurrentlyAssigned extends LitElement {
                         var results2 = json2.d;
                         console.log(results2);
 
-                        /*if () {
+                        if (!results2.PauseForWorkflow) {
                             this.currentlyAssigned = false;
                             this.onChange(false);
                             return;
-                        }*/
+                        }
                     }
 
                     for (var i = 0; i < results.length; i++) {
