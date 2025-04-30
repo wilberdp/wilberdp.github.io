@@ -93,7 +93,7 @@ export class CurrentlyAssigned extends LitElement {
                         });
                         const body2 = await response2.text();
                         var json2 = JSON.parse(body2);
-                        var results2 = json2.d.EMail;
+                        var results2 = json2.d.Editor.EMail;
                         console.log(results2);
                     }
 
