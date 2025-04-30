@@ -83,7 +83,7 @@ export class CurrentlyAssigned extends LitElement {
                     console.log(results);
 
                     if (this.listTitle != null && this.listTitle != '') {
-                        var url2 = this.spUrl + '/_api/web/lists/getbytitle(\'' + this.listTitle + '\')/items(' + this.itemId + ')';
+                        var url2 = this.spUrl + '/_api/web/lists/getbytitle(\'' + this.listTitle + '\')/items(' + this.itemId + ')?$select=Editor/EMail&$expand=Editor';
                         const response2 = await fetch(url2, {
                             headers: {
                                 "Content-Type": "application/json",
@@ -93,7 +93,7 @@ export class CurrentlyAssigned extends LitElement {
                         });
                         const body2 = await response2.text();
                         var json2 = JSON.parse(body2);
-                        var results2 = json2.d.results;
+                        var results2 = json2.d.EMail;
                         console.log(results2);
                     }
 
