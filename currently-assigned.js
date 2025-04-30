@@ -98,9 +98,9 @@ export class CurrentlyAssigned extends LitElement {
                         console.log(results2);
 
                         if (!results2.PauseForWorkflow) {
-                            this.currentlyAssigned = false;
-                            this.onChange(false);
-                            return;
+                            //this.currentlyAssigned = false;
+                            //this.onChange(false);
+                            //return;
                         }
                     }
 
