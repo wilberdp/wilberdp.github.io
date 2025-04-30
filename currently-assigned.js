@@ -69,6 +69,7 @@ export class CurrentlyAssigned extends LitElement {
             else {
                 var token = await window.ntxContext.accessTokenProvider.getAccessToken();
                 if (token != null && token != '') {
+                    var userEmail = this.currentUserEmail.toLowerCase();
                     var url = this.spUrl + '/_api/web/lists/getbytitle(\'' + this.taskListTitle + '\')/items?$filter=RequestID eq \'' + this.itemId + '\' and TaskStatus eq \'Pending\'&$select=AssigneeID';
                     const response = await fetch(url, {
                         headers: {
@@ -83,7 +84,7 @@ export class CurrentlyAssigned extends LitElement {
                     console.log(results);
 
                     if (this.listTitle != null && this.listTitle != '') {
-                        var url2 = this.spUrl + '/_api/web/lists/getbytitle(\'' + this.listTitle + '\')/items(' + this.itemId + ')?$select=Stage,Editor/EMail&$expand=Editor';
+                        var url2 = this.spUrl + '/_api/web/lists/getbytitle(\'' + this.listTitle + '\')/items(' + this.itemId + ')?$select=PauseForWorkflow,Stage,Editor/EMail&$expand=Editor';
                         const response2 = await fetch(url2, {
                             headers: {
                                 "Content-Type": "application/json",
@@ -95,9 +96,14 @@ export class CurrentlyAssigned extends LitElement {
                         var json2 = JSON.parse(body2);
                         var results2 = json2.d;
                         console.log(results2);
+
+                        /*if () {
+                            this.currentlyAssigned = false;
+                            this.onChange(false);
+                            return;
+                        }*/
                     }
 
-                    var userEmail = this.currentUserEmail.toLowerCase();
                     for (var i = 0; i < results.length; i++) {
                         if (results[i].AssigneeID != null && results[i].AssigneeID.toLowerCase() == userEmail) {
                             this.currentlyAssigned = true;
@@ -105,6 +111,7 @@ export class CurrentlyAssigned extends LitElement {
                             return;
                         }
                     }
+                    this.currentlyAssigned = false;
                     this.onChange(false);
                 }
                 else {
