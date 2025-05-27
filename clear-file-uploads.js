@@ -57,7 +57,7 @@ export class ClearFileUploads extends LitElement {
                     for (var i = 0; i < fileUploads.length; i++) {
                         var toTrash = fileUploads[i].querySelectorAll('[data-e2e="trash"]');
                         if (toTrash != null) {
-                            while (toTrash.length < 0) {
+                            while (toTrash.length > 0) {
                                 toTrash[0].dispatchEvent(new Event('click'));
                                 toTrash = fileUploads[i].querySelectorAll('[data-e2e="trash"]');
                             }
