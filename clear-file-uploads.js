@@ -34,7 +34,7 @@ export class ClearFileUploads extends LitElement {
     }
 
     render() {
-        if (this.hasRun === false) {
+        if (this.hasRun === false || this.expressionFor_hasRun === false) {
             this.render2().then(res => {
                 console.log(res);            
             });   
