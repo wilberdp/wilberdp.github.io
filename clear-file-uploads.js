@@ -2,6 +2,7 @@ import { html, LitElement } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit
 
 export class ClearFileUploads extends LitElement {
     static properties = {
+        hasRun: { type: Boolean },
         classToTarget: { type: String },
     };        
 
@@ -33,7 +34,7 @@ export class ClearFileUploads extends LitElement {
     }
 
     render() {
-        if (!this.hasRun) {
+        if (this.hasRun === false) {
             this.render2().then(res => {
                 console.log(res);            
             });   
