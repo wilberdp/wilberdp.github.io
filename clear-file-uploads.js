@@ -59,8 +59,9 @@ export class ClearFileUploads extends LitElement {
                         if (toTrash != null) {
                             //while (toTrash.length > 0) {
                                 toTrash[0].closest('button').click();
-                                toTrash[0].closest('button').dispatchEvent(new Event('click'));
+                                toTrash[0].closest('.file-actions').querySelector('button.delete-action').click();
                                 toTrash = fileUploads[i].querySelectorAll('[data-e2e="trash"]');
+                                console.log(toTrash);
                             //}
                         }
                     }
