@@ -51,7 +51,7 @@ export class ClearFileUploads extends LitElement {
                 return;
             }
 
-            var theInterval = setInterval(function(){
+            setTimeout(function(){
                 var fileUploads = document.querySelectorAll('.' + $this.classToTarget);
                 if (fileUploads != null) {
                     for (var i = 0; i < fileUploads.length; i++) {
@@ -64,7 +64,6 @@ export class ClearFileUploads extends LitElement {
                         }
                     }
                     $this.hasRun = true;
-                    clearInterval(theInterval);
                 }
             }, 500);
         }
