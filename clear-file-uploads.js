@@ -58,6 +58,7 @@ export class ClearFileUploads extends LitElement {
                         var toTrash = fileUploads[i].querySelectorAll('[data-e2e="trash"]');
                         if (toTrash != null) {
                             while (toTrash.length > 0) {
+                                toTrash[0].closest('button').click();
                                 toTrash[0].closest('button').dispatchEvent(new Event('click'));
                                 toTrash = fileUploads[i].querySelectorAll('[data-e2e="trash"]');
                             }
@@ -73,11 +74,8 @@ export class ClearFileUploads extends LitElement {
     }
 }
 
-
-
-
-function deepEqual(a, b) {
-    return JSON.stringify(a) === JSON.stringify(b);
+async function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 // registering the web component
