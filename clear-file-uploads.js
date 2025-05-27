@@ -2,7 +2,6 @@ import { html, LitElement } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit
 
 export class ClearFileUploads extends LitElement {
     static properties = {
-        hasRun: { type: Boolean },
         classToTarget: { type: String },
     };        
 
