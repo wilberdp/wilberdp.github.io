@@ -45,8 +45,14 @@ export class ClearFileUploads extends LitElement {
 
     async render2() {
         try {
+            var $this = this;
+            if ($this.classToTarget == null || $this.classToTarget == '') {
+                $this.hasRun = true;
+                return;
+            }
+
             var theInterval = setInterval(function(){
-                var fileUploads = document.querySelectorAll('.' + this.classToTarget);
+                var fileUploads = document.querySelectorAll('.' + $this.classToTarget);
                 if (fileUploads != null) {
                     for (var i = 0; i < fileUploads.length; i++) {
                         var toTrash = fileUploads[i].querySelectorAll('[data-e2e="trash"]');
@@ -57,7 +63,7 @@ export class ClearFileUploads extends LitElement {
                             }
                         }
                     }
-                    this.hasRun = true;
+                    $this.hasRun = true;
                     clearInterval(theInterval);
                 }
             }, 500);
