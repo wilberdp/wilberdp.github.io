@@ -21,9 +21,9 @@ export class Iframe extends LitElement {
     static getMetaConfig() {
         // plugin contract information
         return {
-            controlName: 'IFrame-new',
+            controlName: 'IFrame',
             fallbackDisableSubmit: false,
-            description: 'IFrame component which can render url view with the frame',
+            description: 'IFrame component',
             iconUrl: "one-line-text",
             groupName: 'Visual',
             version: '1.0',
@@ -48,8 +48,8 @@ export class Iframe extends LitElement {
     }
 
     static properties = {
-        name: 'Hello',
-        title: 'Hello',
+        name: 'Wikipedia',
+        title: 'Wikipedia',
         src: 'https://www.wikipedia.org/',
         height: '100%'
     }
