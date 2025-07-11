@@ -49,7 +49,7 @@ export class SharepointListView extends LitElement {
             });   
         }
         else {
-            return html`<p>Custom IFrame: src is null or empty</p>`
+            return html`<p>Sharepoint List View: parameters empty</p>`
         }
     }
 
@@ -131,11 +131,11 @@ export class SharepointListView extends LitElement {
     async getListItemsForView(ntxToken, webUrl, listTitle, viewTitle)
     {
         var viewQueryUrl = webUrl + "/_api/web/lists/getByTitle('" + listTitle + "')/Views/getbytitle('" + viewTitle + "')/ViewQuery";
-        return getJson(ntxToken, viewQueryUrl).then(
+        return this.getJson(ntxToken, viewQueryUrl).then(
             async function(data){         
                 var viewQuery = data.d.ViewQuery;
                 console.log('viewQuery: ' + viewQuery);
-                return await getListItems(ntxToken, webUrl, listTitle, viewQuery); 
+                return await this.getListItems(ntxToken, webUrl, listTitle, viewQuery); 
             }
         );
     }
