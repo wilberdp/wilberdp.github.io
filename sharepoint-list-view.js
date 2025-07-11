@@ -73,6 +73,8 @@ export class SharepointListView extends LitElement {
         catch (e) {
             console.log(e);
         }
+
+        return '<div>temporary result</div>';
     }
 
     async getJson(ntxToken, url) 
@@ -139,7 +141,7 @@ export class SharepointListView extends LitElement {
                 var viewQuery = data.d.ViewQuery;
                 console.log('listViewXml: ' + listViewXml);
                 console.log('viewQuery: ' + viewQuery);
-                return await(await $this.getListItems(ntxToken, webUrl, listTitle, listViewXml)).json();
+                return await $this.getListItems(ntxToken, webUrl, listTitle, listViewXml);
             }
         );
     }
