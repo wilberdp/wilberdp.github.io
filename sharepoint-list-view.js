@@ -130,6 +130,7 @@ export class SharepointListView extends LitElement {
 
     async getListItemsForView(ntxToken, webUrl, listTitle, viewTitle)
     {
+        var $this = this;
         var viewQueryUrl = webUrl + "/_api/web/lists/getByTitle('" + listTitle + "')/Views/getbytitle('" + viewTitle + "')";
         return await this.getJson(ntxToken, viewQueryUrl).then(
             async function(data){   
@@ -138,7 +139,7 @@ export class SharepointListView extends LitElement {
                 var viewQuery = data.d.ViewQuery;
                 console.log('listViewXml: ' + listViewXml);
                 console.log('viewQuery: ' + viewQuery);
-                return await this.getListItems(ntxToken, webUrl, listTitle, listViewXml); 
+                return await $this.getListItems(ntxToken, webUrl, listTitle, listViewXml); 
             }
         );
     }
