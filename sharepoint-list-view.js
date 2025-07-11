@@ -156,6 +156,7 @@ export class SharepointListView extends LitElement {
 
         var listItemData = await $this.getListItems(ntxToken, webUrl, listTitle, listViewXml);
         if (listItemData != null) {
+            console.log(listItemData);
             console.log('id: ' + id);
             var parser = new DOMParser();
             var doc = parser.parseFromString(listViewXml, "text/xml")                
@@ -168,6 +169,14 @@ export class SharepointListView extends LitElement {
                 var displayName = listFields.filter(function(itt){ return itt.InternalName == fieldRef.attributes["Name"].nodeValue})[0].Title;
                 console.log("displayName: " + displayName);
                 htmlView += `<th>${displayName}</th>`;
+            }
+
+            for (var o = 0; o < listItemData.length; o++) {
+                htmlView += "<tr>";
+                for (var i = 0; i < fieldRefs.length; i++) { 
+                    htmlView += "<td></td>";
+                }
+                htmlView += "</tr>";
             }
 
             htmlView += "</tr></table>"
