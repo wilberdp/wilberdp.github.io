@@ -88,9 +88,9 @@ export class SharepointListView extends LitElement {
     }
 
 
-    async getListItems(ntxToken, webUrl, listTitle, queryText) 
+    async getListItems(ntxToken, webUrl, listTitle, viewXml) 
     {
-        var viewXml = '<View><Query>' + queryText + '</Query></View>';
+        //var viewXml = '<View><Query>' + queryText + '</Query></View>';
         var url = webUrl + "/_api/web/lists/getbytitle('" + listTitle + "')/getitems"; 
         var queryPayload = {  
                 'query' : {
