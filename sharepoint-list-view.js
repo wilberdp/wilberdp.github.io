@@ -61,9 +61,9 @@ export class SharepointListView extends LitElement {
             else {
                 var token = await window.ntxContext.accessTokenProvider.getAccessToken();
                 if (token != null && token != '') {
-                    this.getListItemsForView(id, token, this.siteUrl, this.listName, this.viewName).then(function(result){
-                        console.log(result);
-                    });
+                    var result = await this.getListItemsForView(id, token, this.siteUrl, this.listName, this.viewName);
+                    console.log(result);
+                    return result;
                 }
                 else {
                     console.log('no token');
@@ -146,35 +146,37 @@ export class SharepointListView extends LitElement {
         console.log(listFields);
 
         var viewQueryUrl = webUrl + "/_api/web/lists/getByTitle('" + listTitle + "')/Views/getbytitle('" + viewTitle + "')";
-        return await this.getJson(ntxToken, viewQueryUrl).then(
-            async function(data){   
-                data = (await data.json());   
-                var listViewXml = data.d.ListViewXml;  
-                var viewQuery = data.d.ViewQuery;
-                console.log('listViewXml: ' + listViewXml);
-                console.log('viewQuery: ' + viewQuery);
-                var listItemData = await $this.getListItems(ntxToken, webUrl, listTitle, listViewXml);
-                if (listItemData != null) {
-                    console.log('id: ' + id);
-                    var parser = new DOMParser();
-                    var doc = parser.parseFromString(listViewXml, "text/xml")                
-                    var fieldRefs = doc.getElementsByTagName("View")[0].getElementsByTagName("ViewFields")[0].getElementsByTagName("FieldRef");
-                    var htmlView = `<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><input type="text" placeholder="Search View..." style="margin-bottom: 10px; width: 500px; padding: 8px;" /><br><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto;"><table class="paho-table"><thead><tr>`;
+        var data = await this.getJson(ntxToken, viewQueryUrl);
+        data = (await data.json());   
 
-                    for (var i = 0; i < fieldRefs.length; i++) {
-                        var fieldRef = fieldRefs[i];
-                        console.log("internalName: " + fieldRef.attributes["Name"].nodeValue);
-                        var displayName = listFields.filter(function(itt){ return itt.InternalName == fieldRef.attributes["Name"].nodeValue})[0].Title;
-                        console.log("displayName: " + displayName);
-                        htmlView += `<th>${displayName}</th>`;
-                    }
+        var listViewXml = data.d.ListViewXml;  
+        var viewQuery = data.d.ViewQuery;
+        console.log('listViewXml: ' + listViewXml);
+        console.log('viewQuery: ' + viewQuery);
 
-                    htmlView += "</tr></table>"
+        var listItemData = await $this.getListItems(ntxToken, webUrl, listTitle, listViewXml);
+        if (listItemData != null) {
+            console.log('id: ' + id);
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(listViewXml, "text/xml")                
+            var fieldRefs = doc.getElementsByTagName("View")[0].getElementsByTagName("ViewFields")[0].getElementsByTagName("FieldRef");
+            var htmlView = `<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><input type="text" placeholder="Search View..." style="margin-bottom: 10px; width: 500px; padding: 8px;" /><br><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto;"><table class="paho-table"><thead><tr>`;
 
-                    document.querySelector(`#sharepoint-list-view-${id}`).innerHTML = htmlView;
-                }
+            for (var i = 0; i < fieldRefs.length; i++) {
+                var fieldRef = fieldRefs[i];
+                console.log("internalName: " + fieldRef.attributes["Name"].nodeValue);
+                var displayName = listFields.filter(function(itt){ return itt.InternalName == fieldRef.attributes["Name"].nodeValue})[0].Title;
+                console.log("displayName: " + displayName);
+                htmlView += `<th>${displayName}</th>`;
             }
-        );
+
+            htmlView += "</tr></table>"
+
+            return htmlView;
+        }
+        else {        
+            return "";
+        }
     }
 }
 
