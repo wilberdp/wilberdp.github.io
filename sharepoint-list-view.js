@@ -175,7 +175,8 @@ export class SharepointListView extends LitElement {
             for (var o = 0; o < listItemData.length; o++) {
                 htmlView += "<tr>";
                 for (var i = 0; i < fieldRefs.length; i++) { 
-                    htmlView += "<td>" + $this.getFieldValue(fieldRefs[i], listItemData[o]) + "</td>";
+                    var displayName = listFields.filter(function(itt){ return itt.InternalName == fieldRef.attributes["Name"].nodeValue})[0].Title;
+                    htmlView += "<td>" + $this.getFieldValue(displayName, listItemData[o]) + "</td>";
                 }
                 htmlView += "</tr>";
             }
@@ -192,7 +193,7 @@ export class SharepointListView extends LitElement {
     getFieldValue(fieldRef, item) {
         console.log(fieldRef);
 
-        var value = item[fieldRef.attributes["Name"].nodeValue];
+        var value = item[fieldRef];
 
         console.log(value);
 
