@@ -115,7 +115,7 @@ export class SharepointListView extends LitElement {
             digest = null;
         }
 
-        return await fetch(url, {
+        return await (await fetch(url, {
             method: "POST",
             body: JSON.stringify(queryPayload),
             headers: {
@@ -124,14 +124,14 @@ export class SharepointListView extends LitElement {
                 "Content-Type": "application/json;odata=verbose",
                 "Authorization": "Bearer " + ntxToken
             }
-        });
+        })).json();
     }
 
 
     async getListItemsForView(ntxToken, webUrl, listTitle, viewTitle)
     {
         var viewQueryUrl = webUrl + "/_api/web/lists/getByTitle('" + listTitle + "')/Views/getbytitle('" + viewTitle + "')/ViewQuery";
-        return this.getJson(ntxToken, viewQueryUrl).then(
+        return await this.getJson(ntxToken, viewQueryUrl).then(
             async function(data){         
                 var viewQuery = data.d.ViewQuery;
                 console.log('viewQuery: ' + viewQuery);
