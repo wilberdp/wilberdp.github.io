@@ -159,7 +159,8 @@ export class SharepointListView extends LitElement {
                     var parser = new DOMParser();
                     var doc = parser.parseFromString(listViewXml, "text/xml")                
                     var fieldRefs = doc.getElementsByTagName("View")[0].getElementsByTagName("ViewFields")[0].getElementsByTagName("FieldRef");
-                    foreach (fieldRef in fieldRefs) {
+                    for (var i = 0; i < fieldRefs.length; i++) {
+                        var fieldRef = fieldRefs[i];
                         console.log("internalName: " + fieldRef.attributes["Name"].nodeValue);
                         var displayName = listFields.filter(function(itt){ return itt.InternalName == fieldRef.attributes["Name"].nodeValue})[0].Title;
                         console.log("displayName: " + displayName);
