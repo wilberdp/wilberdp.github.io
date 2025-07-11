@@ -130,11 +130,13 @@ export class SharepointListView extends LitElement {
 
     async getListItemsForView(ntxToken, webUrl, listTitle, viewTitle)
     {
-        var viewQueryUrl = webUrl + "/_api/web/lists/getByTitle('" + listTitle + "')/Views/getbytitle('" + viewTitle + "')/ViewQuery";
+        var viewQueryUrl = webUrl + "/_api/web/lists/getByTitle('" + listTitle + "')/Views/getbytitle('" + viewTitle + "')";
         return await this.getJson(ntxToken, viewQueryUrl).then(
             async function(data){   
-                data = (await data.json());      
+                data = (await data.json());   
+                var listViewXml = data.d.ListViewXml;  
                 var viewQuery = data.d.ViewQuery;
+                console.log('listViewXml: ' + listViewXml);
                 console.log('viewQuery: ' + viewQuery);
                 return await this.getListItems(ntxToken, webUrl, listTitle, viewQuery); 
             }
