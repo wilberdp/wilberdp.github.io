@@ -44,16 +44,16 @@ export class SharepointListView extends LitElement {
 
     render() {
         if (this.siteUrl != null && this.siteUrl != '' && this.listName != null && this.listName != '' && this.viewName != null && this.viewName != '') {
-            return this.render2().then(res => {
-                return res;          
-            });   
+            var id = Math.floor(Math.random() * 10000);
+            this.render2(id);
+            return html`<p><div id="sharepoint-list-view-${id}></div></p>`
         }
         else {
             return html`<p>Sharepoint List View: parameters empty</p>`
         }
     }
 
-    async render2() {
+    async render2(id) {
         try {
             if (!window || !window.ntxContext || !window.ntxContext.accessTokenProvider) {
                 return new Promise(res => setTimeout(render2, 100));
@@ -61,7 +61,7 @@ export class SharepointListView extends LitElement {
             else {
                 var token = await window.ntxContext.accessTokenProvider.getAccessToken();
                 if (token != null && token != '') {
-                    this.getListItemsForView(token, this.siteUrl, this.listName, this.viewName).then(function(result){
+                    this.getListItemsForView(id, token, this.siteUrl, this.listName, this.viewName).then(function(result){
                         console.log(result);
                     });
                 }
@@ -130,7 +130,7 @@ export class SharepointListView extends LitElement {
     }
 
 
-    async getListItemsForView(ntxToken, webUrl, listTitle, viewTitle)
+    async getListItemsForView(id, ntxToken, webUrl, listTitle, viewTitle)
     {
         var $this = this;
         var viewQueryUrl = webUrl + "/_api/web/lists/getByTitle('" + listTitle + "')/Views/getbytitle('" + viewTitle + "')";
@@ -141,7 +141,10 @@ export class SharepointListView extends LitElement {
                 var viewQuery = data.d.ViewQuery;
                 console.log('listViewXml: ' + listViewXml);
                 console.log('viewQuery: ' + viewQuery);
-                return await $this.getListItems(ntxToken, webUrl, listTitle, listViewXml);
+                var listItemData = await $this.getListItems(ntxToken, webUrl, listTitle, listViewXml);
+                if (listItemData != null) {
+                    console.log('id: ' + id);
+                }
             }
         );
     }
