@@ -175,7 +175,7 @@ export class SharepointListView extends LitElement {
             for (var o = 0; o < listItemData.length; o++) {
                 htmlView += "<tr>";
                 for (var i = 0; i < fieldRefs.length; i++) { 
-                    var displayName = listFields.filter(function(itt){ return itt.InternalName == fieldRef.attributes["Name"].nodeValue})[0].Title;
+                    var displayName = listFields.filter(function(itt){ return itt.InternalName == fieldRefs[i].attributes["Name"].nodeValue})[0].Title;
                     htmlView += "<td>" + $this.getFieldValue(displayName, listItemData[o]) + "</td>";
                 }
                 htmlView += "</tr>";
