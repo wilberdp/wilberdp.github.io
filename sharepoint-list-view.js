@@ -159,12 +159,19 @@ export class SharepointListView extends LitElement {
                     var parser = new DOMParser();
                     var doc = parser.parseFromString(listViewXml, "text/xml")                
                     var fieldRefs = doc.getElementsByTagName("View")[0].getElementsByTagName("ViewFields")[0].getElementsByTagName("FieldRef");
+                    var htmlView = `<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><input type="text" placeholder="Search View..." style="margin-bottom: 10px; width: 500px; padding: 8px;" /><br><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto;"><table class="paho-table"><thead><tr>`;
+
                     for (var i = 0; i < fieldRefs.length; i++) {
                         var fieldRef = fieldRefs[i];
                         console.log("internalName: " + fieldRef.attributes["Name"].nodeValue);
                         var displayName = listFields.filter(function(itt){ return itt.InternalName == fieldRef.attributes["Name"].nodeValue})[0].Title;
                         console.log("displayName: " + displayName);
+                        htmlView += `<th>${displayName}</th>`;
                     }
+
+                    htmlView += "</tr></table>"
+
+                    document.querySelector(`#sharepoint-list-view-${id}`).innerHTML = htmlView;
                 }
             }
         );
