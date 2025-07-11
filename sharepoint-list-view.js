@@ -156,6 +156,7 @@ export class SharepointListView extends LitElement {
 
         var listItemData = await $this.getListItems(ntxToken, webUrl, listTitle, listViewXml);
         if (listItemData != null) {
+            listItemData = listItemData.d.results;
             console.log(listItemData);
             console.log('id: ' + id);
             var parser = new DOMParser();
