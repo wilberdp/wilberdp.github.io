@@ -134,14 +134,14 @@ export class SharepointListView extends LitElement {
     {
         var $this = this;
         var listFieldsUrl = webUrl + "/_api/web/lists/getByTitle('" + listTitle + "')/Fields";
-        var listFields = await fetch(listFieldsUrl, {
+        var listFields = await (await fetch(listFieldsUrl, {
             method: "GET", 
             headers: { 
                 "Content-Type": "application/json;odata=verbose",
                 "Accept": "application/json;odata=verbose",
                 "Authorization": "Bearer " + ntxToken
             }
-        });
+        })).json();
 
         console.log(listFields);
 
