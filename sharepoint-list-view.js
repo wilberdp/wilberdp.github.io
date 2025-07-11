@@ -194,6 +194,8 @@ export class SharepointListView extends LitElement {
 
         var value = item[fieldRef.attributes["Name"].nodeValue];
 
+        console.log(value);
+
         return value;
     }
 }
