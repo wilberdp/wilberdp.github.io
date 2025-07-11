@@ -134,14 +134,14 @@ export class SharepointListView extends LitElement {
     {
         var $this = this;
         var listFieldsUrl = webUrl + "/_api/web/lists/getByTitle('" + listTitle + "')/Fields";
-        var listFields = await (await fetch(listFieldsUrl, {
+        var listFields = (await (await fetch(listFieldsUrl, {
             method: "GET", 
             headers: { 
                 "Content-Type": "application/json;odata=verbose",
                 "Accept": "application/json;odata=verbose",
                 "Authorization": "Bearer " + ntxToken
             }
-        })).json();
+        })).json()).d.results;
 
         console.log(listFields);
 
@@ -156,6 +156,14 @@ export class SharepointListView extends LitElement {
                 var listItemData = await $this.getListItems(ntxToken, webUrl, listTitle, listViewXml);
                 if (listItemData != null) {
                     console.log('id: ' + id);
+                    var parser = new DOMParser();
+                    var doc = parser.parseFromString(listViewXml, "text/xml")                
+                    var fieldRefs = doc.getElementsByTagName("View")[0].getElementsByTagName("ViewFields")[0].getElementsByTagName("FieldRef");
+                    foreach (fieldRef in fieldRefs) {
+                        console.log("internalName: " + fieldRef.attributes["Name"].nodeValue);
+                        var displayName = listFields.filter(function(itt){ return itt.InternalName == fieldRef.attributes["Name"].nodeValue})[0].Title;
+                        console.log("displayName: " + displayName);
+                    }
                 }
             }
         );
