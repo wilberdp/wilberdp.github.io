@@ -138,7 +138,7 @@ export class SharepointListView extends LitElement {
                 var viewQuery = data.d.ViewQuery;
                 console.log('listViewXml: ' + listViewXml);
                 console.log('viewQuery: ' + viewQuery);
-                return await this.getListItems(ntxToken, webUrl, listTitle, viewQuery); 
+                return await this.getListItems(ntxToken, webUrl, listTitle, listViewXml); 
             }
         );
     }
