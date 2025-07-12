@@ -46,7 +46,8 @@ export class SharepointListView extends LitElement {
         if (this.siteUrl != null && this.siteUrl != '' && this.listName != null && this.listName != '' && this.viewName != null && this.viewName != '') {
             var id = Math.floor(Math.random() * 10000);
             this.render2(id).then(function(result) {
-                document.querySelector(`#sharepoint-list-view-${id}`).innerHTML(result);
+                var nodes = $$$(`#sharepoint-list-view-${id}`);
+                nodes[0].innerHTML = result;
             });
             return html`<p><div id='sharepoint-list-view-${id}'></div></p>`;
         }
@@ -199,6 +200,43 @@ export class SharepointListView extends LitElement {
         console.log(value);
 
         return value;
+    }
+
+    $$$(selector, rootNode = document.body) {
+        const arr = []
+        
+        const traverser = node => {
+            // 1. decline all nodes that are not elements
+            if(node.nodeType !== Node.ELEMENT_NODE) {
+                return
+            }
+            
+            // 2. add the node to the array, if it matches the selector
+            if(node.matches(selector)) {
+                arr.push(node)
+            }
+            
+            // 3. loop through the children
+            const children = node.children
+            if (children.length) {
+                for(const child of children) {
+                    traverser(child)
+                }
+            }
+            
+            // 4. check for shadow DOM, and loop through it's children
+            const shadowRoot = node.shadowRoot
+            if (shadowRoot) {
+                const shadowChildren = shadowRoot.children
+                for(const shadowChild of shadowChildren) {
+                    traverser(shadowChild)
+                }
+            }
+        }
+        
+        traverser(rootNode)
+        
+        return arr
     }
 }
 
