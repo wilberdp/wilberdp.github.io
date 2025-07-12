@@ -45,10 +45,10 @@ export class SharepointListView extends LitElement {
     render() {
         if (this.siteUrl != null && this.siteUrl != '' && this.listName != null && this.listName != '' && this.viewName != null && this.viewName != '') {
             var id = Math.floor(Math.random() * 10000);
-            var prom = this.render2(id).then(function(result) {
-                return html`${result}`;
+            this.render2(id).then(function(result) {
+                document.querySelector(`#sharepoint-list-view-${id}`).innerHTML(result);
             });
-            return Promise.resolve(prom);
+            return html`<p><div id='sharepoint-list-view-${id}'></div></p>`;
         }
         else {
             return html`<p>Sharepoint List View: parameters empty</p>`
