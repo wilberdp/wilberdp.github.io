@@ -45,8 +45,9 @@ export class SharepointListView extends LitElement {
     render() {
         if (this.siteUrl != null && this.siteUrl != '' && this.listName != null && this.listName != '' && this.viewName != null && this.viewName != '') {
             var id = Math.floor(Math.random() * 10000);
-            this.render2(id);
-            return html`<p><div id="sharepoint-list-view-${id}></div></p>`
+            return this.render2(id).then(function(result) {
+                return html`${result}`;
+            });
         }
         else {
             return html`<p>Sharepoint List View: parameters empty</p>`
@@ -62,7 +63,6 @@ export class SharepointListView extends LitElement {
                 var token = await window.ntxContext.accessTokenProvider.getAccessToken();
                 if (token != null && token != '') {
                     var result = await this.getListItemsForView(id, token, this.siteUrl, this.listName, this.viewName);
-                    console.log(result);
                     return result;
                 }
                 else {
