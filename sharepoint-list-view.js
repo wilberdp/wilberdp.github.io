@@ -45,9 +45,10 @@ export class SharepointListView extends LitElement {
     render() {
         if (this.siteUrl != null && this.siteUrl != '' && this.listName != null && this.listName != '' && this.viewName != null && this.viewName != '') {
             var id = Math.floor(Math.random() * 10000);
-            return this.render2(id).then(function(result) {
+            var prom = this.render2(id).then(function(result) {
                 return html`${result}`;
             });
+            return Promise.resolve(prom);
         }
         else {
             return html`<p>Sharepoint List View: parameters empty</p>`
