@@ -269,7 +269,7 @@ export class SharepointListView extends LitElement {
         const table = $this.$$$(`${target} .sharepoint-listview-table`);
         console.log(table);
         if (table) {
-            const headers = table.querySelectorAll('th');
+            const headers = table[0].querySelectorAll('th');
             headers.forEach((header, index) => {
                 header.addEventListener('click', () => {
                     const key = header.getAttribute('data-key');
@@ -289,9 +289,9 @@ export class SharepointListView extends LitElement {
     sortTableByColumn($this, key, intKey, tableSelector) {        
         var table = $this.$$$(tableSelector);
         if (table) {
-            var tbody = table.querySelector('tbody');
+            var tbody = table[0].querySelector('tbody');
             if (!tbody) {
-                console.warn('No tbody found for table:', table);
+                console.warn('No tbody found for table: ', tableSelector);
                 return;
             }
       
