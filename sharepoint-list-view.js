@@ -190,6 +190,8 @@ export class SharepointListView extends LitElement {
                 htmlView += `<th data-key="${i + 1}">${displayName}</th>`;
             }
 
+            htmlView += '</tr></thead><tbody>'
+
             for (var o = 0; o < listItemData.length; o++) {
                 htmlView += "<tr>";
                 for (var i = 0; i < fieldRefs.length; i++) { 
@@ -199,7 +201,7 @@ export class SharepointListView extends LitElement {
                 htmlView += "</tr>";
             }
 
-            htmlView += "</tr></table>"
+            htmlView += "</tbody></table>"
 
             return htmlView;
         }
