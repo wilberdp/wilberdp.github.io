@@ -181,7 +181,7 @@ export class SharepointListView extends LitElement {
                 htmlView += "<tr>";
                 for (var i = 0; i < fieldRefs.length; i++) { 
                     var displayName = listFields.filter(function(itt){ return itt.InternalName == fieldRefs[i].attributes["Name"].nodeValue})[0].Title;
-                    htmlView += "<td>" + $this.getFieldValue(displayName, fieldRefs[i].attributes["Name"].nodeValue, listItemData[o]) + "</td>";
+                    htmlView += "<td>" + $this.getFieldValue($this.siteUrl, displayName, fieldRefs[i].attributes["Name"].nodeValue, listItemData[o]) + "</td>";
                 }
                 htmlView += "</tr>";
             }
@@ -195,7 +195,7 @@ export class SharepointListView extends LitElement {
         }
     }
 
-    getFieldValue(displayName, internalName, item) {
+    getFieldValue(siteUrl, displayName, internalName, item) {
         console.log(displayName);
         console.log(internalName);
 
@@ -213,7 +213,7 @@ export class SharepointListView extends LitElement {
                 if (itemUrl != null && itemUrl != "") {
                     var tempItemUrl = itemUrl.split("Lists/")[1];
                     tempItemUrl = tempItemUrl.split("/")[0];
-                    itemUrl = sUrl + "/Lists/" + tempItemUrl + "/DispForm.aspx?ID=" + item["ID"];
+                    itemUrl = siteUrl + "/Lists/" + tempItemUrl + "/DispForm.aspx?ID=" + item["ID"];
                     var titleLink = item.FieldValuesAsText["Title"];
                     if (displayName.toLowerCase() == "edit") {
                         titleLink =  "Edit";
