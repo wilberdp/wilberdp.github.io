@@ -2,6 +2,8 @@ import {css, html, LitElement, styleMap} from 'https://cdn.jsdelivr.net/gh/lit/d
 
 export class SharepointListView extends LitElement {
     sortDirection;
+    groupBy;
+    groupByIdx;
 
     // Define scoped styles right with your component, in plain CSS
     static styles = css`  //Add custom CSS. See https://help.nintex.com/en-US/formplugins/Reference/Style.htm
@@ -64,6 +66,9 @@ export class SharepointListView extends LitElement {
             this.render2(id).then(function(result) {
                 var nodes = $this.$$$(`#sharepoint-list-view-${id}`);
                 nodes[0].innerHTML = result;
+                if ($this.groupByIdx != null && $this.groupByIdx != "") {
+                    $this.appendGroupedRows($this, $this.$$$(`#sharepoint-list-view-${id} tbody`)[0], $this.$$$(`#sharepoint-list-view-${id} tbody tr`), $this.groupByIdx, true)
+                }
                 $this.attachSortHandlers($this, `#sharepoint-list-view-${id}`);
             });
             return html`<p><div id='sharepoint-list-view-${id}'></div></p>`;
@@ -172,6 +177,13 @@ export class SharepointListView extends LitElement {
         console.log('listViewXml: ' + listViewXml);
         console.log('viewQuery: ' + viewQuery);
 
+        if (listViewXml.toLowerCase().indexOf("groupby") > -1) {
+            var matches = listViewXml.match(/<GroupBy.*>.+?<\/GroupBy>/g, '');
+            if (matches != null && matches.length > 0) {
+                $this.groupBy = matches[0].replace("<GroupBy>","").replace("</GroupBy>","");
+            }
+        }
+
         var listItemData = await $this.getListItems(ntxToken, webUrl, listTitle, listViewXml);
         if (listItemData != null) {
             listItemData = listItemData.d.results;
@@ -188,6 +200,9 @@ export class SharepointListView extends LitElement {
                 var displayName = listFields.filter(function(itt){ return itt.InternalName == fieldRef.attributes["Name"].nodeValue})[0].Title;
                 console.log("displayName: " + displayName);
                 htmlView += `<th data-key="${i + 1}">${displayName}</th>`;
+                if ($this.groupBy != null && $this.groupBy != "" && fieldRef.attributes["Name"].nodeValue == $this.groupBy) {
+                    $this.groupByIdx = i + 1;
+                }
             }
 
             htmlView += '</tr></thead><tbody>'
@@ -201,7 +216,7 @@ export class SharepointListView extends LitElement {
                 htmlView += "</tr>";
             }
 
-            htmlView += "</tbody></table>"
+            htmlView += "</tbody></table>";
 
             return htmlView;
         }
@@ -266,7 +281,6 @@ export class SharepointListView extends LitElement {
         return value;
     }
 
-    
     attachSortHandlers($this, target) {
         const table = $this.$$$(`${target} .sharepoint-listview-table`);
         console.log(table);
@@ -321,6 +335,88 @@ export class SharepointListView extends LitElement {
         }
     }
 
+    appendGroupedRows($this, tbody, rows, groupByKey, ascending) {
+        //console.log('appendGroupedRows');
+      
+        var groupedRows = $this.groupBy(rows, groupByKey, ascending);    
+        tbody.innerHTML = "";
+        //console.log('1');
+        for (var group in groupedRows) {
+          //console.log('2');
+            if (Object.prototype.hasOwnProperty.call(groupedRows, group)) {
+              //console.log('3');
+                var groupHeader = document.createElement('tr');
+                var groupCell = document.createElement('td');
+                groupCell.colSpan = 2; // Adjust colspan based on number of columns
+                groupCell.textContent = `Group: ${group}`;
+                groupCell.style.cursor = 'pointer';
+        
+                // Create icon element
+                var icon = document.createElement('i');
+                icon.className = 'fas fa-chevron-right'; // Default to collapsed state
+                icon.style.marginRight = '8px';
+        
+                // Add click event listener to toggle icon and row visibility
+                groupCell.addEventListener('click', () => {
+                    var isExpanded = groupHeader.getAttribute('data-expanded') === 'true';
+                    groupHeader.setAttribute('data-expanded', (!isExpanded).toString());
+                    
+                    if (isExpanded) {
+                        icon.className = 'fas fa-chevron-right'; // Collapsed state
+                    } else {
+                        icon.className = 'fas fa-chevron-down'; // Expanded state
+                    }
+        
+                    groupedRows[group].forEach(row => {
+                        row.style.display = isExpanded ? 'none' : '';
+                    });
+                });
+                //console.log('4');
+                groupCell.insertBefore(icon, groupCell.firstChild);
+                groupHeader.appendChild(groupCell);
+                groupHeader.setAttribute('data-expanded', 'false'); // Default to collapsed
+                tbody.appendChild(groupHeader);
+        
+                groupedRows[group].forEach(row => {
+                    row.style.display = 'none'; // Initially hide all rows
+                    tbody.appendChild(row);
+                });
+            }
+        }
+    }
+
+    groupBy(rows, key, ascending) {
+        // Step 1: Calculate the values for each row and store them in an array.
+        var values = rows.map(row => {
+            var cell = row.querySelector(`td:nth-child(${key})`);
+            var cellValue = cell ? cell.textContent || 'Unknown' : 'Unknown';
+            return { row, cellValue };
+        });
+      
+        // Step 2: Group the rows based on the calculated values.
+        var groupedRows = values.reduce((result, { row, cellValue }) => {
+            if (!result[cellValue]) {
+                result[cellValue] = [];
+            }
+            result[cellValue].push(row);
+            return result;
+        });
+      
+        // Step 3: Sort the grouped rows based on the keys.
+        var sortedGroupedRows = Object.keys(groupedRows).sort((a, b) => {
+            if (ascending) {
+                return a.localeCompare(b, undefined, { numeric: true });
+            } else {
+                return b.localeCompare(a, undefined, { numeric: true });
+            }
+        }).reduce((result, key) => {
+            result[key] = groupedRows[key];
+            return result;
+        });
+        
+        return sortedGroupedRows;
+    }
+   
     $$$(selector, rootNode = document.body) {
         const arr = []
         
