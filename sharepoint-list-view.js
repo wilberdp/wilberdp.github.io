@@ -178,9 +178,10 @@ export class SharepointListView extends LitElement {
         console.log('viewQuery: ' + viewQuery);
 
         if (listViewXml.toLowerCase().indexOf("groupby") > -1) {
-            var matches = listViewXml.match(/<GroupBy.*>.+?<\/GroupBy>/g, '');
+            var matches = listViewXml.match(/<GroupBy.*><FieldRef Name=".+?<\/GroupBy>/g, '');
             if (matches != null && matches.length > 0) {
-                $this.groupBy = matches[0].replace("<GroupBy><FieldRef Name=\"","").replace("\" /></GroupBy>","");
+                $this.groupBy = matches[0].replace(/<GroupBy.*><FieldRef Name="/g,"").replace("\" /></GroupBy>","");
+                console.log($this.groupBy);
             }
         }
 
