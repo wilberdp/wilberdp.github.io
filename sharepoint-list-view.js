@@ -1,6 +1,8 @@
 import {css, html, LitElement, styleMap} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit-all.min.js';
 
 export class SharepointListView extends LitElement {
+    sortDirection;
+
     // Define scoped styles right with your component, in plain CSS
     static styles = css`  //Add custom CSS. See https://help.nintex.com/en-US/formplugins/Reference/Style.htm
       :host {
@@ -55,12 +57,14 @@ export class SharepointListView extends LitElement {
 
     render() {
         var $this = this;
+        $this.sortDirection = new Map();
 
         if (this.siteUrl != null && this.siteUrl != '' && this.listName != null && this.listName != '' && this.viewName != null && this.viewName != '') {
             var id = Math.floor(Math.random() * 10000);
             this.render2(id).then(function(result) {
                 var nodes = $this.$$$(`#sharepoint-list-view-${id}`);
                 nodes[0].innerHTML = result;
+                $this.attachSortHandlers($this, `#sharepoint-list-view-${id}`);
             });
             return html`<p><div id='sharepoint-list-view-${id}'></div></p>`;
         }
@@ -104,7 +108,6 @@ export class SharepointListView extends LitElement {
         });
     }
 
-
     async getListItems(ntxToken, webUrl, listTitle, listViewXml) 
     {
         listViewXml = listViewXml.replace('</ViewFields>', '<FieldRef Name="FileRef" /></ViewFields>');
@@ -145,7 +148,6 @@ export class SharepointListView extends LitElement {
         })).json();
     }
 
-
     async getListItemsForView(id, ntxToken, webUrl, listTitle, viewTitle)
     {
         var $this = this;
@@ -178,7 +180,7 @@ export class SharepointListView extends LitElement {
             var parser = new DOMParser();
             var doc = parser.parseFromString(listViewXml, "text/xml")                
             var fieldRefs = doc.getElementsByTagName("View")[0].getElementsByTagName("ViewFields")[0].getElementsByTagName("FieldRef");
-            var htmlView = `<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><input type="text" placeholder="Search View..." style="margin-bottom: 10px; width: 500px; padding: 8px;" /><br><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto;"><table class="sharepoint-listview-table"><thead><tr>`;
+            var htmlView = `<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><input type="text" placeholder="Search View..." style="margin-bottom: 10px; width: 500px; padding: 8px;" /><br><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto;"><h2>${listTitle} - ${viewTitle}</h2><table class="sharepoint-listview-table"><thead><tr>`;
 
             for (var i = 0; i < fieldRefs.length; i++) {
                 var fieldRef = fieldRefs[i];
@@ -260,6 +262,60 @@ export class SharepointListView extends LitElement {
         console.log(value);
 
         return value;
+    }
+
+    
+    attachSortHandlers($this, target) {
+        const table = $this.domElement.querySelector(`${target} .sharepoint-listview-table`);
+        if (table) {
+            const headers = table.querySelectorAll('th');
+            headers.forEach((header, index) => {
+                header.addEventListener('click', () => {
+                    const key = header.getAttribute('data-key');
+                    if (key) {
+                        $this.sortTableByColumn($this, key, index + 1, `${target} .sharepoint-listview-table`); // Adjust index as nth-child expects 1-based index
+                    } else {
+                        console.warn('No data-key attribute found on header:', header);
+                    }
+                });
+            });
+        } 
+        else {
+            console.warn(`Table with selector '${target} .sharepoint-listview-table' not found`);
+        }
+    }
+
+    sortTableByColumn($this, key, intKey, tableSelector) {        
+        var table = $this.domElement.querySelector(tableSelector);
+        if (table) {
+            var tbody = table.querySelector('tbody');
+            if (!tbody) {
+                console.warn('No tbody found for table:', table);
+                return;
+            }
+      
+            var rows = Array.from(tbody.querySelectorAll('tr'));
+            var currentDirection = $this.sortDirection.get(key) || false;
+        
+            var sortedRows = rows.sort((a, b) => {
+                var cellA = a.querySelector(`td:nth-child(${intKey})`)?.textContent || '';
+                var cellB = b.querySelector(`td:nth-child(${intKey})`)?.textContent || '';
+            
+                if (currentDirection) {
+                    return cellB.localeCompare(cellA); // descending
+                } else {
+                    return cellA.localeCompare(cellB); // ascending
+                }
+            });
+      
+          
+            $this.sortDirection.set(key, !currentDirection);
+        
+            tbody.innerHTML = '';
+            sortedRows.forEach(row => tbody.appendChild(row));
+        } else {
+            console.warn('Table not found');
+        }
     }
 
     $$$(selector, rootNode = document.body) {
