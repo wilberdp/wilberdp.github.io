@@ -226,7 +226,7 @@ export class SharepointListView extends LitElement {
                 }
             }
             else {
-                if (item[internalName] != null) {
+                if (item[internalName].__metadata != null) {
                     var metadata = item[internalName].__metadata;
                     console.log(metadata);
                     if (metadata.type == "SP.FieldUrlValue") {
@@ -240,6 +240,7 @@ export class SharepointListView extends LitElement {
             }
         }
         catch (e) {
+            console.log(e);
         }
 
         console.log(value);
