@@ -94,7 +94,7 @@ export class SharepointListView extends LitElement {
     }
 
 
-    async getListItems(ntxToken, webUrl, listTitle, viewXml) 
+    async getListItems(ntxToken, webUrl, listTitle, listViewXml) 
     {
         var parser = new DOMParser();
         var doc = parser.parseFromString(listViewXml, "text/xml")                
@@ -105,7 +105,7 @@ export class SharepointListView extends LitElement {
         var queryPayload = {  
                 'query' : {
                     '__metadata': { 'type': 'SP.CamlQuery' }, 
-                    'ViewXml' : viewXml  
+                    'ViewXml' : listViewXml
                 }
         };
         
