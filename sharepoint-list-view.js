@@ -67,7 +67,7 @@ export class SharepointListView extends LitElement {
                 var nodes = $this.$$$(`#sharepoint-list-view-${id}`);
                 nodes[0].innerHTML = result;
                 if ($this.groupByIdx != null && $this.groupByIdx != "") {
-                    $this.appendGroupedRows($this, $this.$$$(`#sharepoint-list-view-${id} tbody`)[0], $this.$$$(`#sharepoint-list-view-${id} tbody tr`), $this.groupByIdx, true)
+                    $this.appendGroupedRows($this.$$$(`#sharepoint-list-view-${id} tbody`)[0], $this.$$$(`#sharepoint-list-view-${id} tbody tr`), $this.groupByIdx, true)
                 }
                 $this.attachSortHandlers($this, `#sharepoint-list-view-${id}`);
             });
@@ -336,10 +336,36 @@ export class SharepointListView extends LitElement {
         }
     }
 
-    appendGroupedRows($this, tbody, rows, groupByKey, ascending) {
+    appendGroupedRows(tbody, rows, key, ascending) {
         //console.log('appendGroupedRows');
+
+        var values = rows.map(row => {
+            var cell = row.querySelector(`td:nth-child(${key})`);
+            var cellValue = cell ? cell.textContent || 'Unknown' : 'Unknown';
+            return { row, cellValue };
+        });
       
-        var groupedRows = $this.groupBy(rows, groupByKey, ascending);    
+        // Step 2: Group the rows based on the calculated values.
+        var groupedRows = values.reduce((result, { row, cellValue }) => {
+            if (!result[cellValue]) {
+                result[cellValue] = [];
+            }
+            result[cellValue].push(row);
+            return result;
+        });
+      
+        // Step 3: Sort the grouped rows based on the keys.
+        var groupedRows = Object.keys(groupedRows).sort((a, b) => {
+            if (ascending) {
+                return a.localeCompare(b, undefined, { numeric: true });
+            } else {
+                return b.localeCompare(a, undefined, { numeric: true });
+            }
+        }).reduce((result, key) => {
+            result[key] = groupedRows[key];
+            return result;
+        });
+      
         tbody.innerHTML = "";
         //console.log('1');
         for (var group in groupedRows) {
@@ -386,38 +412,6 @@ export class SharepointListView extends LitElement {
         }
     }
 
-    groupBy(rows, key, ascending) {
-        // Step 1: Calculate the values for each row and store them in an array.
-        var values = rows.map(row => {
-            var cell = row.querySelector(`td:nth-child(${key})`);
-            var cellValue = cell ? cell.textContent || 'Unknown' : 'Unknown';
-            return { row, cellValue };
-        });
-      
-        // Step 2: Group the rows based on the calculated values.
-        var groupedRows = values.reduce((result, { row, cellValue }) => {
-            if (!result[cellValue]) {
-                result[cellValue] = [];
-            }
-            result[cellValue].push(row);
-            return result;
-        });
-      
-        // Step 3: Sort the grouped rows based on the keys.
-        var sortedGroupedRows = Object.keys(groupedRows).sort((a, b) => {
-            if (ascending) {
-                return a.localeCompare(b, undefined, { numeric: true });
-            } else {
-                return b.localeCompare(a, undefined, { numeric: true });
-            }
-        }).reduce((result, key) => {
-            result[key] = groupedRows[key];
-            return result;
-        });
-        
-        return sortedGroupedRows;
-    }
-   
     $$$(selector, rootNode = document.body) {
         const arr = []
         
