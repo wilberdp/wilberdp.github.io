@@ -96,10 +96,7 @@ export class SharepointListView extends LitElement {
 
     async getListItems(ntxToken, webUrl, listTitle, listViewXml) 
     {
-        var parser = new DOMParser();
-        var doc = parser.parseFromString(listViewXml, "text/xml")                
-        var fieldRefs = doc.getElementsByTagName("View")[0].getElementsByTagName("ViewFields")[0].getElementsByTagName("FieldRef");
-
+        listViewXml = listViewXml.replace('</ViewFields>', '<FieldRef Name="FileRef" /></ViewFields>');
 
         var url = webUrl + "/_api/web/lists/getbytitle('" + listTitle + "')/getitems?$expand=FieldValuesAsText,FieldValuesAsHtml"; 
         var queryPayload = {  
@@ -177,7 +174,7 @@ export class SharepointListView extends LitElement {
                 console.log("internalName: " + fieldRef.attributes["Name"].nodeValue);
                 var displayName = listFields.filter(function(itt){ return itt.InternalName == fieldRef.attributes["Name"].nodeValue})[0].Title;
                 console.log("displayName: " + displayName);
-                htmlView += `<th>${displayName}</th>`;
+                htmlView += `<th data-key="${i + 1}">${displayName}</th>`;
             }
 
             for (var o = 0; o < listItemData.length; o++) {
@@ -204,29 +201,40 @@ export class SharepointListView extends LitElement {
 
         var value = '';
 
-        /*
         try {
-            if (internalName == "Title")
-                value = item.FieldValuesAsHtml[displayName];
-            else 
-                value = item.FieldValuesAsText[displayName];
+            if(internalName.toLowerCase() == "linktitle" 
+            || internalName.toLowerCase() == "linktitlenomenu" 
+            || displayname.toLowerCase()  == "title"
+            || displayname.toLowerCase() == "title english" 
+            || displayname.toLowerCase() == "title english" 
+            || displayname.toLowerCase()  == "edit") {
+                var itemUrl = item.FileRef;
+                if (itemUrl != null && itemUrl != "") {
+                    var tempItemUrl = itemUrl.split("Lists/")[1];
+                    tempItemUrl = tempItemUrl.split("/")[0];
+                    itemUrl = sUrl + "/Lists/" + tempItemUrl + "/DispForm.aspx?ID=" + item["ID"];
+                    var titleLink = item.FieldValuesAsText["Title"];
+                    if (displayname.toLowerCase() == "edit") {
+                        titleLink =  "Edit";
+                    }
+                    
+                    if (titleLink.length > 60) {
+                        titleLink = titleLink.substring(0, 60);
+                      titleLink = titleLink + "...";
+                    }
+                    value = "<a href='" + itemUrl + "' data-interception='off' rel='noopener noreferrer'>" + titleLink + "</a>";
+                }
+            }
+            else {
+                if (item[internalName] != null) {
+                    var metadata = item[internalName]["__metadata"];
+                    console.log(metadata);
+                }
+                value = item.FieldValuesAsText[internalName];
+            }
         }
         catch (e) {
         }
-
-        console.log(value);
-        */
-
-        //if (value == null) {
-            try {
-                if (internalName == "Title")
-                    value = item.FieldValuesAsHtml[internalName];
-                else 
-                    value = item.FieldValuesAsText[internalName];
-            }
-            catch (e) {
-            }
-        //}
 
         console.log(value);
 
