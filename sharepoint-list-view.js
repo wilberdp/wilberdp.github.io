@@ -201,7 +201,7 @@ export class SharepointListView extends LitElement {
                 var displayName = listFields.filter(function(itt){ return itt.InternalName == fieldRef.attributes["Name"].nodeValue})[0].Title;
                 console.log("displayName: " + displayName);
                 htmlView += `<th data-key="${i + 1}">${displayName}</th>`;
-                if ($this.groupBy != null && $this.groupBy != "" && fieldRef.attributes["Name"].nodeValue == $this.groupBy) {
+                if ($this.groupBy != null && $this.groupBy != "" && (fieldRef.attributes["Name"].nodeValue == $this.groupBy || (fieldRef.attributes["Name"].nodeValue.toLowerCase() == "linktitle" && $this.GroupBy == "Title"))) {
                     $this.groupByIdx = i + 1;
                 }
             }
