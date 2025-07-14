@@ -267,6 +267,7 @@ export class SharepointListView extends LitElement {
     
     attachSortHandlers($this, target) {
         const table = $this.$$$(`${target} .sharepoint-listview-table`);
+        console.log(table);
         if (table) {
             const headers = table.querySelectorAll('th');
             headers.forEach((header, index) => {
