@@ -203,22 +203,30 @@ export class SharepointListView extends LitElement {
         console.log(internalName);
 
         var value = '';
-        
+
+        /*
         try {
-            value = item.FieldValuesAsText[displayName];
+            if (internalName == "Title")
+                value = item.FieldValuesAsHtml[displayName];
+            else 
+                value = item.FieldValuesAsText[displayName];
         }
         catch (e) {
         }
 
         console.log(value);
+        */
 
-        if (value == null) {
+        //if (value == null) {
             try {
-                value = item.FieldValuesAsText[internalName];
+                if (internalName == "Title")
+                    value = item.FieldValuesAsHtml[internalName];
+                else 
+                    value = item.FieldValuesAsText[internalName];
             }
             catch (e) {
             }
-        }
+        //}
 
         console.log(value);
 
