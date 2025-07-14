@@ -227,10 +227,16 @@ export class SharepointListView extends LitElement {
             }
             else {
                 if (item[internalName] != null) {
-                    var metadata = item[internalName]["__metadata"];
+                    var metadata = item[internalName].__metadata;
                     console.log(metadata);
+                    if (metadata.type == "SP.FieldUrlValue") {
+                        value = `<a href='${item[internalName]["Url"]}' target="_blank">${item[internalName]["Description"]}</a>`;
+                    } 
+                    else {
+                        value = item.FieldValuesAsText[internalName];
+                    }
                 }
-                value = item.FieldValuesAsText[internalName];
+                
             }
         }
         catch (e) {
