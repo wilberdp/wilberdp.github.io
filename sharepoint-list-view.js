@@ -365,7 +365,7 @@ export class SharepointListView extends LitElement {
         }).reduce((result, key) => {
             result[key] = groupedRows[key];
             return result;
-        });
+        }, {});
       
         tbody.innerHTML = "";
         //console.log('1');
