@@ -346,13 +346,14 @@ export class SharepointListView extends LitElement {
         });
       
         // Step 2: Group the rows based on the calculated values.
-        var groupedRows = values.reduce((result, { row, cellValue }) => {
-            if (!result[cellValue]) {
-                result[cellValue] = [];
+        var groupedRows = values.reduce((result, kvp) => {
+            var key = kvp.cellValue;
+            if (!result[key]) {
+                result[key] = [];
             }
-            result[cellValue].push(row);
+            result[key].push(kvp.row);
             return result;
-        });
+        }, {});
       
         // Step 3: Sort the grouped rows based on the keys.
         var groupedRows = Object.keys(groupedRows).sort((a, b) => {
