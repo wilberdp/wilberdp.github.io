@@ -226,7 +226,7 @@ export class SharepointListView extends LitElement {
                 }
             }
             else {
-                if (item[internalName].__metadata != null) {
+                if (item[internalName] != null && item[internalName].__metadata != null) {
                     var metadata = item[internalName].__metadata;
                     console.log(metadata);
                     if (metadata.type == "SP.FieldUrlValue") {
@@ -236,7 +236,9 @@ export class SharepointListView extends LitElement {
                         value = item.FieldValuesAsText[internalName];
                     }
                 }
-                
+                else {
+                    value = item.FieldValuesAsText[internalName];
+                }
             }
         }
         catch (e) {
