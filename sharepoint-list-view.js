@@ -96,8 +96,12 @@ export class SharepointListView extends LitElement {
 
     async getListItems(ntxToken, webUrl, listTitle, viewXml) 
     {
-        //var viewXml = '<View><Query>' + queryText + '</Query></View>';
-        var url = webUrl + "/_api/web/lists/getbytitle('" + listTitle + "')/getitems"; 
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(listViewXml, "text/xml")                
+        var fieldRefs = doc.getElementsByTagName("View")[0].getElementsByTagName("ViewFields")[0].getElementsByTagName("FieldRef");
+
+
+        var url = webUrl + "/_api/web/lists/getbytitle('" + listTitle + "')/getitems?$expand=FieldValuesAsText,FieldValuesAsHtml"; 
         var queryPayload = {  
                 'query' : {
                     '__metadata': { 'type': 'SP.CamlQuery' }, 
