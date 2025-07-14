@@ -9,13 +9,24 @@ export class SharepointListView extends LitElement {
         display: block;
       }
 
-      .frame {
-        display: inline-block;
-        height: 100%;
+    .sharepoint-listview-table {
         width: 100%;
+        padding: 5px;
         background-color: transparent;
-        border: none;
-      }
+        border-collapse: collapse;
+    }
+    .sharepoint-listview-table tr + tr td {
+        border-top: solid 1px #e7e7e7;
+    }
+    .sharepoint-listview-table th,
+    .sharepoint-listview-table td {
+        text-align: left;
+        padding: 5px;
+        vertical-align: top;
+        white-space: nowrap;
+        
+        background-color: transparent;
+    }
     `;
 
     static getMetaConfig() {
@@ -167,7 +178,7 @@ export class SharepointListView extends LitElement {
             var parser = new DOMParser();
             var doc = parser.parseFromString(listViewXml, "text/xml")                
             var fieldRefs = doc.getElementsByTagName("View")[0].getElementsByTagName("ViewFields")[0].getElementsByTagName("FieldRef");
-            var htmlView = `<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><input type="text" placeholder="Search View..." style="margin-bottom: 10px; width: 500px; padding: 8px;" /><br><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto;"><table class="paho-table"><thead><tr>`;
+            var htmlView = `<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><input type="text" placeholder="Search View..." style="margin-bottom: 10px; width: 500px; padding: 8px;" /><br><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto;"><table class="sharepoint-listview-table"><thead><tr>`;
 
             for (var i = 0; i < fieldRefs.length; i++) {
                 var fieldRef = fieldRefs[i];
