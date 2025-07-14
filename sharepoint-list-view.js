@@ -204,17 +204,17 @@ export class SharepointListView extends LitElement {
         try {
             if(internalName.toLowerCase() == "linktitle" 
             || internalName.toLowerCase() == "linktitlenomenu" 
-            || displayname.toLowerCase()  == "title"
-            || displayname.toLowerCase() == "title english" 
-            || displayname.toLowerCase() == "title english" 
-            || displayname.toLowerCase()  == "edit") {
+            || displayName.toLowerCase()  == "title"
+            || displayName.toLowerCase() == "title english" 
+            || displayName.toLowerCase() == "title english" 
+            || displayName.toLowerCase()  == "edit") {
                 var itemUrl = item.FileRef;
                 if (itemUrl != null && itemUrl != "") {
                     var tempItemUrl = itemUrl.split("Lists/")[1];
                     tempItemUrl = tempItemUrl.split("/")[0];
                     itemUrl = sUrl + "/Lists/" + tempItemUrl + "/DispForm.aspx?ID=" + item["ID"];
                     var titleLink = item.FieldValuesAsText["Title"];
-                    if (displayname.toLowerCase() == "edit") {
+                    if (displayName.toLowerCase() == "edit") {
                         titleLink =  "Edit";
                     }
                     
