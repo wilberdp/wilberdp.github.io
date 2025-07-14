@@ -180,7 +180,7 @@ export class SharepointListView extends LitElement {
         if (listViewXml.toLowerCase().indexOf("groupby") > -1) {
             var matches = listViewXml.match(/<GroupBy.*>.+?<\/GroupBy>/g, '');
             if (matches != null && matches.length > 0) {
-                $this.groupBy = matches[0].replace("<GroupBy>","").replace("</GroupBy>","");
+                $this.groupBy = matches[0].replace("<GroupBy><FieldRef Name=\"","").replace("\" /></GroupBy>","");
             }
         }
 
