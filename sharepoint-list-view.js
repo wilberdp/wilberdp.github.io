@@ -208,7 +208,7 @@ export class SharepointListView extends LitElement {
             || displayName.toLowerCase() == "title english" 
             || displayName.toLowerCase() == "title english" 
             || displayName.toLowerCase()  == "edit") {
-                var itemUrl = item.FileRef;
+                var itemUrl = item.FieldValuesAsText.FileRef;
                 console.log(itemUrl);
                 if (itemUrl != null && itemUrl != "") {
                     var tempItemUrl = itemUrl.split("Lists/")[1];
