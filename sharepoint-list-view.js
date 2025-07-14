@@ -202,12 +202,22 @@ export class SharepointListView extends LitElement {
         console.log(displayName);
         console.log(internalName);
 
-        var value = item[displayName];
+        var value = '';
         
+        try {
+            value = item.FieldValuesAsText[displayName];
+        }
+        catch (e) {
+        }
+
         console.log(value);
 
         if (value == null) {
-            value = item[internalName];
+            try {
+                value = item.FieldValuesAsText[internalName];
+            }
+            catch (e) {
+            }
         }
 
         console.log(value);
