@@ -264,6 +264,7 @@ export class SharepointListView extends LitElement {
     }
 
     getFieldValue(siteUrl, listField, item) {
+        console.log(item);
         console.log(listField.InternalName + ": " + listField.TypeAsString);
 
         var internalName = listField.InternalName;
@@ -296,19 +297,19 @@ export class SharepointListView extends LitElement {
                 }
             }
             else {
-                if (item[internalName] != null && item[internalName].__metadata != null) {
-
-                    var metadata = item[internalName].__metadata;
-                    //console.log(metadata);
-                    if (metadata.type == "SP.FieldUrlValue") {
-                        returner.DisplayValue = `<a href='${item[internalName]["Url"]}' target="_blank">${item[internalName]["Description"]}</a>`;
-                    } 
-                    else {
+                if (listField.TypeAsString == "URL"){
+                    returner.SortValue = item[internalName]["Description"];
+                    returner.DisplayValue = `<a href='${item[internalName]["Url"]}' target="_blank">${item[internalName]["Description"]}</a>`;
+                } 
+                else {
+                    if (listField.TypeAsString == "DateTime"){
+                        returner.SortValue = item[internalName];
                         returner.DisplayValue = item.FieldValuesAsText[internalName];
                     }
-                }
-                else {
-                    returner.DisplayValue = item.FieldValuesAsText[internalName];
+                    else {
+                        returner.SortValue = item.FieldValuesAsText[internalName];
+                        returner.DisplayValue = item.FieldValuesAsText[internalName];
+                    }
                 }
             }
         }
