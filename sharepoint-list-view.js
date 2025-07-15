@@ -16,8 +16,7 @@ export class SharepointListView extends LitElement {
     .sharepoint-listview-table {
         width: 100%;
         padding: 5px;
-        background-color: transparent;
-        border-collapse: collapse;
+        background-color: white;
     }
     .sharepoint-listview-table tr + tr td {
         border-top: solid 1px #e7e7e7;
@@ -30,6 +29,14 @@ export class SharepointListView extends LitElement {
         white-space: nowrap;
         
         background-color: transparent;
+    }
+
+    .sharepoint-listview-table tr:nth-child(even) {
+        background-color: #f3f3f3;
+    }
+
+    .sharepoint-listview-table tr:nth-child(odd) {
+        background-color: #f1f1f1;
     }
     `;
 
