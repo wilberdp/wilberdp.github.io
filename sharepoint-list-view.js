@@ -378,6 +378,7 @@ export class SharepointListView extends LitElement {
                 groupCell.colSpan = 2; // Adjust colspan based on number of columns
                 groupCell.textContent = `Group: ${group}`;
                 groupCell.style.cursor = 'pointer';
+                groupCell.attributes.setAttribute('group', group);
         
                 // Create icon element
                 var icon = document.createElement('i');
@@ -386,9 +387,10 @@ export class SharepointListView extends LitElement {
         
                 // Add click event listener to toggle icon and row visibility
                 groupCell.addEventListener('click', (ele) => {
-                    var currentGroup = structuredClone(group);
+                    var currentGroup = ele.target.getAttribute('group');
                     console.log(ele);
                     console.log(ele.target);
+                    console.log(currentGroup);
 
                     var isExpanded = ele.target.closest('tr').getAttribute('data-expanded') === 'true';
                     ele.target.closest('tr').setAttribute('data-expanded', (!isExpanded).toString());
