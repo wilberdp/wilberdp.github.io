@@ -31,12 +31,12 @@ export class SharepointListView extends LitElement {
         background-color: transparent;
     }
 
-    .sharepoint-listview .custom-chevron-right:before {
+    .sharepoint-listview-table .custom-chevron-right:before {
         content: "+";
         display: block;
     }
 
-    .sharepoint-listview .custom-chevron-down:before {
+    .sharepoint-listview-table .custom-chevron-down:before {
         content: "-";
         display: block;
     }
