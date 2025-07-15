@@ -31,11 +31,11 @@ export class SharepointListView extends LitElement {
         background-color: transparent;
     }
 
-    .sharepoint-list-view i.custom-chevron-right::before {
+    .sharepoint-list-view .custom-chevron-right::before {
         content: "+";
     }
 
-    .sharepoint-list-view i.custom-chevron-down::before {
+    .sharepoint-list-view .custom-chevron-down::before {
         content: "-";
     }
 ˅
@@ -398,7 +398,7 @@ export class SharepointListView extends LitElement {
         
                 // Create icon element
                 var icon = document.createElement('i');
-                icon.className = 'fas fa-chevron-right'; // Default to collapsed state
+                icon.className = 'custom-chevron-right'; // Default to collapsed state
                 icon.style.marginRight = '8px';
         
                 // Add click event listener to toggle icon and row visibility
