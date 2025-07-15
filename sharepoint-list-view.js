@@ -230,7 +230,7 @@ export class SharepointListView extends LitElement {
         listViewXml = listViewXml.replace(/<RowLimit.*>.+?<\/RowLimit>/g, '');
         console.log(listViewXml);
 
-        var listItemData = await $this.getListItems(ntxToken, webUrl, listTitle, listViewXml);
+        var listItemData = await $this.getListItems(ntxToken, webUrl, listTitle, listViewXml, filter);
         if (listItemData != null) {
             listItemData = listItemData.d.results;
             //console.log(listItemData);
