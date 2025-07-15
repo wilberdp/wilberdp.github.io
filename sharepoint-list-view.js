@@ -73,6 +73,10 @@ export class SharepointListView extends LitElement {
                 viewName: {
                     type: 'string',
                     title: 'List View Name'
+                },
+                filter: {
+                    type: 'string',
+                    title: 'Filter Expression'
                 }
             }
         };
@@ -107,7 +111,7 @@ export class SharepointListView extends LitElement {
             else {
                 var token = await window.ntxContext.accessTokenProvider.getAccessToken();
                 if (token != null && token != '') {
-                    var result = await this.getListItemsForView(id, token, this.siteUrl, this.listName, this.viewName);
+                    var result = await this.getListItemsForView(id, token, this.siteUrl, this.listName, this.viewName, this.filter);
                     return result;
                 }
                 else {
@@ -134,12 +138,19 @@ export class SharepointListView extends LitElement {
         });
     }
 
-    async getListItems(ntxToken, webUrl, listTitle, listViewXml) 
+    async getListItems(ntxToken, webUrl, listTitle, listViewXml, filter) 
     {
         listViewXml = listViewXml.replace('</ViewFields>', '<FieldRef Name="FileRef" /></ViewFields>');
         console.log(listViewXml);
 
-        var url = webUrl + "/_api/web/lists/getbytitle('" + listTitle + "')/getitems?$expand=FieldValuesAsText,FieldValuesAsHtml"; 
+        if (filter != null && filter != "") {
+            filter = `&$filter=${filter}`;
+        }
+        else if (filter == null) {
+            filter = "";
+        }
+
+        var url = `${webUrl}/_api/web/lists/getbytitle('${listTitle}')/getitems?$expand=FieldValuesAsText,FieldValuesAsHtml${filter}`; 
         var queryPayload = {  
                 'query' : {
                     '__metadata': { 'type': 'SP.CamlQuery' }, 
@@ -175,7 +186,7 @@ export class SharepointListView extends LitElement {
         })).json();
     }
 
-    async getListItemsForView(id, ntxToken, webUrl, listTitle, viewTitle)
+    async getListItemsForView(id, ntxToken, webUrl, listTitle, viewTitle, filter)
     {
         var $this = this;
         var listFieldsUrl = webUrl + "/_api/web/lists/getByTitle('" + listTitle + "')/Fields";
