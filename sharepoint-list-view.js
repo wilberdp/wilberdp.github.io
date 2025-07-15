@@ -386,6 +386,7 @@ export class SharepointListView extends LitElement {
         
                 // Add click event listener to toggle icon and row visibility
                 groupCell.addEventListener('click', () => {
+                    console.log(this);
                     var isExpanded = groupHeader.getAttribute('data-expanded') === 'true';
                     groupHeader.setAttribute('data-expanded', (!isExpanded).toString());
                     
