@@ -34,11 +34,13 @@ export class SharepointListView extends LitElement {
     .sharepoint-listview-table .custom-chevron-right:before {
         content: "+";
         font-weight: bold;
+        font-family: initial;
     }
 
     .sharepoint-listview-table .custom-chevron-down:before {
         content: "-";
         font-weight: bold;
+        font-family: initial;
     }
 
     //.sharepoint-listview-table tbody tr:nth-child(even) {
