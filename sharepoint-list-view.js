@@ -265,7 +265,7 @@ export class SharepointListView extends LitElement {
 
     getFieldValue(siteUrl, listField, item) {
         console.log(listField);
-        
+
         var internalName = listField.InternalName;
         var displayName = listField.DisplayName;
         var returner = { DisplayValue: "", SortValue: "" };
@@ -313,7 +313,7 @@ export class SharepointListView extends LitElement {
             }
         }
         catch (e) {
-            //console.log(e);
+            console.log(e);
         }
 
         //console.log(value);
