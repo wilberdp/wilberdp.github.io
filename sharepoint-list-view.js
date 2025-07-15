@@ -410,19 +410,30 @@ export class SharepointListView extends LitElement {
                     console.log(ele.target);
                     console.log(currentGroup);
 
-                    var isExpanded = ele.target.closest('tr').getAttribute('data-expanded') === 'true';
-                    ele.target.closest('tr').setAttribute('data-expanded', (!isExpanded).toString());
+                    var tar = null;
+                    if (ele.target.nodeName.toLowerCase() == "td") {
+                        tar = ele.target;
+                    }
+                    else {
+                        tar = ele.closest('td');
+                    }
+
+                    console.log(tar);
+
+                    var isExpanded = tar.closest('tr').getAttribute('data-expanded') === 'true';
+                    tar.closest('tr').setAttribute('data-expanded', (!isExpanded).toString());
                     
                     if (isExpanded) {
-                        ele.target.querySelector('i').className = 'custom-chevron-right'; // Collapsed state
+                        tar.querySelector('i').className = 'custom-chevron-right'; // Collapsed state
                     } else {
-                        ele.target.querySelector('i').className = 'custom-chevron-down'; // Expanded state
+                        tar.querySelector('i').className = 'custom-chevron-down'; // Expanded state
                     }
         
                     groupedRows[currentGroup].forEach(row => {
                         row.style.display = isExpanded ? 'none' : '';
                     });
                 });
+
                 //console.log('4');
                 groupCell.insertBefore(icon, groupCell.firstChild);
                 groupHeader.appendChild(groupCell);
