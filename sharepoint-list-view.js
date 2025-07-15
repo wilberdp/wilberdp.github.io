@@ -264,6 +264,8 @@ export class SharepointListView extends LitElement {
     }
 
     getFieldValue(siteUrl, listField, item) {
+        console.log(listField);
+        
         var internalName = listField.InternalName;
         var displayName = listField.DisplayName;
         var returner = { DisplayValue: "", SortValue: "" };
@@ -295,7 +297,7 @@ export class SharepointListView extends LitElement {
             }
             else {
                 if (item[internalName] != null && item[internalName].__metadata != null) {
-                    console.log(listField);
+
                     var metadata = item[internalName].__metadata;
                     //console.log(metadata);
                     if (metadata.type == "SP.FieldUrlValue") {
