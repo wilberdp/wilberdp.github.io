@@ -78,9 +78,21 @@ export class SharepointListView extends LitElement {
                     type: 'string',
                     title: 'Filter Expression (CAML)',
                     description: 'CAML for additional filtering.  This will be AND the view query.  For example: <Eq><FieldRef Name="Title" /><Value Type="Text">123</Value></Eq>'
-                }
+                },
+                events: ["ntx-value-change"]
             }
         };
+    }
+
+    onChange(e) {
+        const args = {
+            bubbles: true,
+            cancelable: false,
+            composed: true,
+            detail: e.target.values
+        };
+        const event = new CustomEvent('ntx-value-change', args);
+        this.dispatchEvent(event);
     }
 
     render() {
