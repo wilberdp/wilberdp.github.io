@@ -415,7 +415,7 @@ export class SharepointListView extends LitElement {
                         tar = ele.target;
                     }
                     else {
-                        tar = ele.closest('td');
+                        tar = ele.target.closest('td');
                     }
 
                     console.log(tar);
