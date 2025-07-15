@@ -76,7 +76,8 @@ export class SharepointListView extends LitElement {
                 },
                 filter: {
                     type: 'string',
-                    title: 'Filter Expression'
+                    title: 'Filter Expression (CAML)',
+                    description: 'CAML for additional filtering.  This will be AND the view query.  For example: <Eq><FieldRef Name="Title" /><Value Type="Text">123</Value></Eq>'
                 }
             }
         };
@@ -143,14 +144,19 @@ export class SharepointListView extends LitElement {
         listViewXml = listViewXml.replace('</ViewFields>', '<FieldRef Name="FileRef" /></ViewFields>');
         console.log(listViewXml);
 
-        if (filter != null && filter != "") {
-            filter = `&$filter=${filter}`;
-        }
-        else if (filter == null) {
-            filter = "";
-        }
+        //<Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">123</Value></Eq></Where></Query><ViewFields>
 
-        var url = `${webUrl}/_api/web/lists/getbytitle('${listTitle}')/getitems?$expand=FieldValuesAsText,FieldValuesAsHtml${filter}`; 
+        if (filter != null && filter != "") {
+            if (listViewXml.indexOf("<Where>") > -1) {
+                listViewXml = listViewXml.replace("<Where>", `<Where><And>${filter}`).replace("</Where>", `</And></Where>`);
+            }
+            else {
+                listViewXml = listViewXml.replace("<ViewFields>", `<Query><Where>${filter}</Where></Query><ViewFields>`);
+            }
+        }
+        console.log(listViewXml);
+
+        var url = `${webUrl}/_api/web/lists/getbytitle('${listTitle}')/getitems?$expand=FieldValuesAsText,FieldValuesAsHtml`; 
         var queryPayload = {  
                 'query' : {
                     '__metadata': { 'type': 'SP.CamlQuery' }, 
@@ -226,9 +232,9 @@ export class SharepointListView extends LitElement {
             }
         }
 
-        console.log(listViewXml);
+        //console.log(listViewXml);
         listViewXml = listViewXml.replace(/<RowLimit.*>.+?<\/RowLimit>/g, '');
-        console.log(listViewXml);
+        //console.log(listViewXml);
 
         var listItemData = await $this.getListItems(ntxToken, webUrl, listTitle, listViewXml, filter);
         if (listItemData != null) {
@@ -275,8 +281,8 @@ export class SharepointListView extends LitElement {
     }
 
     getFieldValue(siteUrl, listField, item) {
-        console.log(item);
-        console.log(listField.InternalName + ": " + listField.TypeAsString);
+        //console.log(item);
+        //console.log(listField.InternalName + ": " + listField.TypeAsString);
 
         var internalName = listField.InternalName;
         var displayName = listField.Title;
