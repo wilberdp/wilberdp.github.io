@@ -386,19 +386,20 @@ export class SharepointListView extends LitElement {
         
                 // Add click event listener to toggle icon and row visibility
                 groupCell.addEventListener('click', (ele) => {
+                    var currentGroup = structuredClone(group);
                     console.log(ele);
                     console.log(ele.target);
 
-                    var isExpanded = groupHeader.getAttribute('data-expanded') === 'true';
-                    groupHeader.setAttribute('data-expanded', (!isExpanded).toString());
+                    var isExpanded = ele.target.closest('tr').getAttribute('data-expanded') === 'true';
+                    ele.target.closest('tr').setAttribute('data-expanded', (!isExpanded).toString());
                     
                     if (isExpanded) {
-                        icon.className = 'fas fa-chevron-right'; // Collapsed state
+                        ele.target.querySelector('i').className = 'fas fa-chevron-right'; // Collapsed state
                     } else {
-                        icon.className = 'fas fa-chevron-down'; // Expanded state
+                        ele.target.querySelector('i').className = 'fas fa-chevron-down'; // Expanded state
                     }
         
-                    groupedRows[group].forEach(row => {
+                    groupedRows[currentGroup].forEach(row => {
                         row.style.display = isExpanded ? 'none' : '';
                     });
                 });
