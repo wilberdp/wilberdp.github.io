@@ -267,7 +267,7 @@ export class SharepointListView extends LitElement {
         console.log(listField);
 
         var internalName = listField.InternalName;
-        var displayName = listField.DisplayName;
+        var displayName = listField.Title;
         var returner = { DisplayValue: "", SortValue: "" };
 
         try {
