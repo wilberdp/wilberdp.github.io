@@ -232,7 +232,9 @@ export class SharepointListView extends LitElement {
             for (var i = 0; i < fieldRefs.length; i++) {
                 var fieldRef = fieldRefs[i];
                 //console.log("internalName: " + fieldRef.attributes["Name"].nodeValue);
-                var displayName = listFields.filter(function(itt){ return itt.InternalName == fieldRef.attributes["Name"].nodeValue})[0].Title;
+                var displayName = listFields.filter(function(itt){ return itt.InternalName == fieldRef.attributes["Name"].nodeValue})[0];
+                console.log(displayName);
+                displayName = displayName.Title;
                 //console.log("displayName: " + displayName);
                 htmlView += `<th data-key="${i + 1}">${displayName}</th>`;
                 if ($this.groupBy != null && $this.groupBy != "" && (fieldRef.attributes["Name"].nodeValue == $this.groupBy || (fieldRef.attributes["Name"].nodeValue.toLowerCase() == "linktitle" && $this.groupBy == "Title"))) {
@@ -261,10 +263,6 @@ export class SharepointListView extends LitElement {
     }
 
     getFieldValue(siteUrl, displayName, internalName, item) {
-        //console.log(displayName);
-        //console.log(internalName);
-        console.log(item);
-
         var value = '';
 
         try {
