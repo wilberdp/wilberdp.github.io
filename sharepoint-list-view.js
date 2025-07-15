@@ -4,6 +4,7 @@ export class SharepointListView extends LitElement {
     sortDirection;
     groupBy;
     groupByIdx;
+    pageSize;
 
     // Define scoped styles right with your component, in plain CSS
     static styles = css`  //Add custom CSS. See https://help.nintex.com/en-US/formplugins/Reference/Style.htm
@@ -206,6 +207,18 @@ export class SharepointListView extends LitElement {
             }
         }
 
+        if (listViewXml.toLowerCase().indexOf("rowlimit") > -1) {
+            //<RowLimit Paged="TRUE">30</RowLimit>
+            var matches = listViewXml.match(/<RowLimit.*>.+?<\/RowLimit>/g, '');
+            if (matches != null && matches.length > 0) {
+                $this.pageSize = matches[0].replace(/<RowLimit.*>/g,"").replace("</RowLimit>","");
+            }
+        }
+
+        console.log(listViewXml);
+        listViewXml = listViewXml.replace(/<RowLimit.*>.+?<\/RowLimit>/g, '');
+        console.log(listViewXml);
+
         var listItemData = await $this.getListItems(ntxToken, webUrl, listTitle, listViewXml);
         if (listItemData != null) {
             listItemData = listItemData.d.results;
@@ -261,7 +274,7 @@ export class SharepointListView extends LitElement {
             || displayName.toLowerCase() == "title english" 
             || displayName.toLowerCase()  == "edit") {
                 var itemUrl = item.FieldValuesAsText.FileRef;
-                console.log(itemUrl);
+                //console.log(itemUrl);
                 if (itemUrl != null && itemUrl != "") {
                     var tempItemUrl = itemUrl.split("Lists/")[1];
                     tempItemUrl = tempItemUrl.split("/")[0];
