@@ -136,6 +136,7 @@ export class SharepointListView extends LitElement {
     async getListItems(ntxToken, webUrl, listTitle, listViewXml) 
     {
         listViewXml = listViewXml.replace('</ViewFields>', '<FieldRef Name="FileRef" /></ViewFields>');
+        console.log(listViewXml);
 
         var url = webUrl + "/_api/web/lists/getbytitle('" + listTitle + "')/getitems?$expand=FieldValuesAsText,FieldValuesAsHtml"; 
         var queryPayload = {  
@@ -186,7 +187,7 @@ export class SharepointListView extends LitElement {
             }
         })).json()).d.results;
 
-        console.log(listFields);
+        //console.log(listFields);
 
         var viewQueryUrl = webUrl + "/_api/web/lists/getByTitle('" + listTitle + "')/Views/getbytitle('" + viewTitle + "')";
         var data = await this.getJson(ntxToken, viewQueryUrl);
@@ -194,22 +195,22 @@ export class SharepointListView extends LitElement {
 
         var listViewXml = data.d.ListViewXml;  
         var viewQuery = data.d.ViewQuery;
-        console.log('listViewXml: ' + listViewXml);
-        console.log('viewQuery: ' + viewQuery);
+        //console.log('listViewXml: ' + listViewXml);
+        //console.log('viewQuery: ' + viewQuery);
 
         if (listViewXml.toLowerCase().indexOf("groupby") > -1) {
             var matches = listViewXml.match(/<GroupBy.*><FieldRef Name=".+?<\/GroupBy>/g, '');
             if (matches != null && matches.length > 0) {
                 $this.groupBy = matches[0].replace(/<GroupBy.*><FieldRef Name="/g,"").replace("\" /></GroupBy>","");
-                console.log($this.groupBy);
+                //console.log($this.groupBy);
             }
         }
 
         var listItemData = await $this.getListItems(ntxToken, webUrl, listTitle, listViewXml);
         if (listItemData != null) {
             listItemData = listItemData.d.results;
-            console.log(listItemData);
-            console.log('id: ' + id);
+            //console.log(listItemData);
+            //console.log('id: ' + id);
             var parser = new DOMParser();
             var doc = parser.parseFromString(listViewXml, "text/xml")                
             var fieldRefs = doc.getElementsByTagName("View")[0].getElementsByTagName("ViewFields")[0].getElementsByTagName("FieldRef");
@@ -217,9 +218,9 @@ export class SharepointListView extends LitElement {
 
             for (var i = 0; i < fieldRefs.length; i++) {
                 var fieldRef = fieldRefs[i];
-                console.log("internalName: " + fieldRef.attributes["Name"].nodeValue);
+                //console.log("internalName: " + fieldRef.attributes["Name"].nodeValue);
                 var displayName = listFields.filter(function(itt){ return itt.InternalName == fieldRef.attributes["Name"].nodeValue})[0].Title;
-                console.log("displayName: " + displayName);
+                //console.log("displayName: " + displayName);
                 htmlView += `<th data-key="${i + 1}">${displayName}</th>`;
                 if ($this.groupBy != null && $this.groupBy != "" && (fieldRef.attributes["Name"].nodeValue == $this.groupBy || (fieldRef.attributes["Name"].nodeValue.toLowerCase() == "linktitle" && $this.groupBy == "Title"))) {
                     $this.groupByIdx = i + 1;
@@ -247,8 +248,8 @@ export class SharepointListView extends LitElement {
     }
 
     getFieldValue(siteUrl, displayName, internalName, item) {
-        console.log(displayName);
-        console.log(internalName);
+        //console.log(displayName);
+        //console.log(internalName);
 
         var value = '';
 
@@ -280,7 +281,7 @@ export class SharepointListView extends LitElement {
             else {
                 if (item[internalName] != null && item[internalName].__metadata != null) {
                     var metadata = item[internalName].__metadata;
-                    console.log(metadata);
+                    //console.log(metadata);
                     if (metadata.type == "SP.FieldUrlValue") {
                         value = `<a href='${item[internalName]["Url"]}' target="_blank">${item[internalName]["Description"]}</a>`;
                     } 
@@ -294,17 +295,17 @@ export class SharepointListView extends LitElement {
             }
         }
         catch (e) {
-            console.log(e);
+            //console.log(e);
         }
 
-        console.log(value);
+        //console.log(value);
 
         return value;
     }
 
     attachSortHandlers($this, target) {
         const table = $this.$$$(`${target} .sharepoint-listview-table`);
-        console.log(table);
+        //console.log(table);
         if (table) {
             const headers = table[0].querySelectorAll('th');
             headers.forEach((header, index) => {
@@ -407,8 +408,8 @@ export class SharepointListView extends LitElement {
         
                 // Add click event listener to toggle icon and row visibility
                 groupCell.addEventListener('click', (ele) => {
-                    console.log(ele);
-                    console.log(ele.target);
+                    //console.log(ele);
+                    //console.log(ele.target);
 
                     var tar = null;
                     if (ele.target.nodeName.toLowerCase() == "td") {
@@ -419,7 +420,7 @@ export class SharepointListView extends LitElement {
                     }
                     var currentGroup = tar.getAttribute('group');
 
-                    console.log(tar);
+                    //console.log(tar);
 
                     var isExpanded = tar.closest('tr').getAttribute('data-expanded') === 'true';
                     tar.closest('tr').setAttribute('data-expanded', (!isExpanded).toString());
