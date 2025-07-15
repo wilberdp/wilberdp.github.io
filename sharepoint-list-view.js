@@ -378,7 +378,7 @@ export class SharepointListView extends LitElement {
                 groupCell.colSpan = 2; // Adjust colspan based on number of columns
                 groupCell.textContent = `Group: ${group}`;
                 groupCell.style.cursor = 'pointer';
-                groupCell.attributes.setAttribute('group', group);
+                groupCell.setAttribute('group', group);
         
                 // Create icon element
                 var icon = document.createElement('i');
