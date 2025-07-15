@@ -1,6 +1,13 @@
 import {css, html, LitElement, styleMap} from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit-all.min.js';
 
 export class SharepointListView extends LitElement {
+    static properties = {
+        siteUrl: { type: String },
+        listName: { type: String },
+        viewName: { type: String },
+        filter: { type: String }
+    };
+
     sortDirection;
     groupBy;
     groupByIdx;
