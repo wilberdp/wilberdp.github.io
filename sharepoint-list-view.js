@@ -263,6 +263,7 @@ export class SharepointListView extends LitElement {
     getFieldValue(siteUrl, displayName, internalName, item) {
         //console.log(displayName);
         //console.log(internalName);
+        console.log(item);
 
         var value = '';
 
