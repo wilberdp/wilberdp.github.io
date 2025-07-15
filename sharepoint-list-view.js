@@ -33,12 +33,14 @@ export class SharepointListView extends LitElement {
 
     .sharepoint-list-view .custom-chevron-right:before {
         content: "+";
+        display: block;
     }
 
     .sharepoint-list-view .custom-chevron-down:before {
         content: "-";
+        display: block;
     }
-˅
+
     //.sharepoint-listview-table tbody tr:nth-child(even) {
     //    background-color: #f3f3f3;
     //}
@@ -209,7 +211,7 @@ export class SharepointListView extends LitElement {
             var parser = new DOMParser();
             var doc = parser.parseFromString(listViewXml, "text/xml")                
             var fieldRefs = doc.getElementsByTagName("View")[0].getElementsByTagName("ViewFields")[0].getElementsByTagName("FieldRef");
-            var htmlView = `<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><input type="text" placeholder="Search View..." style="margin-bottom: 10px; width: 500px; padding: 8px;" /><br><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto;"><h2>${listTitle} - ${viewTitle}</h2><table class="sharepoint-listview-table"><thead><tr>`;
+            var htmlView = `<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto;"><h2>${listTitle} - ${viewTitle}</h2><table class="sharepoint-listview-table"><thead><tr>`;
 
             for (var i = 0; i < fieldRefs.length; i++) {
                 var fieldRef = fieldRefs[i];
