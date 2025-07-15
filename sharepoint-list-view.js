@@ -31,13 +31,14 @@ export class SharepointListView extends LitElement {
         background-color: transparent;
     }
 
-    .sharepoint-listview-table tbody tr:nth-child(even) {
-        background-color: #f3f3f3;
-    }
+    //.sharepoint-listview-table tbody tr:nth-child(even) {
+    //    background-color: #f3f3f3;
+    //}
 
-    .sharepoint-listview-table tbody tr:nth-child(odd) {
-        background-color: #ffffff;
-    }
+    //.sharepoint-listview-table tbody tr:nth-child(odd) {
+    //    background-color: #ffffff;
+    //}
+    
     `;
 
     static getMetaConfig() {
