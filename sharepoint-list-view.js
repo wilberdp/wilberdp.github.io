@@ -297,7 +297,7 @@ export class SharepointListView extends LitElement {
                 }
             }
             else {
-                if (listField.TypeAsString == "URL"){
+                if (listField.TypeAsString == "URL" && item[internalName] != null){
                     returner.SortValue = item[internalName]["Description"];
                     returner.DisplayValue = `<a href='${item[internalName]["Url"]}' target="_blank">${item[internalName]["Description"]}</a>`;
                 } 
