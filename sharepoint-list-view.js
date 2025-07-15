@@ -247,8 +247,9 @@ export class SharepointListView extends LitElement {
             for (var o = 0; o < listItemData.length; o++) {
                 htmlView += "<tr>";
                 for (var i = 0; i < fieldRefs.length; i++) { 
-                    var displayName = listFields.filter(function(itt){ return itt.InternalName == fieldRefs[i].attributes["Name"].nodeValue})[0].Title;
-                    htmlView += "<td>" + $this.getFieldValue($this.siteUrl, displayName, fieldRefs[i].attributes["Name"].nodeValue, listItemData[o]) + "</td>";
+                    var listField = listFields.filter(function(itt){ return itt.InternalName == fieldRefs[i].attributes["Name"].nodeValue})[0];
+                    var fieldValue = $this.getFieldValue($this.siteUrl, listField, listItemData[o]);
+                    htmlView += `<td sortValue="${fieldValue.SortValue}">${fieldValue.DisplayValue}</td>`
                 }
                 htmlView += "</tr>";
             }
@@ -262,8 +263,10 @@ export class SharepointListView extends LitElement {
         }
     }
 
-    getFieldValue(siteUrl, displayName, internalName, item) {
-        var value = '';
+    getFieldValue(siteUrl, listField, item) {
+        var internalName = listField.InternalName;
+        var displayName = listField.DisplayName;
+        var returner = { DisplayValue: "", SortValue: "" };
 
         try {
             if(internalName.toLowerCase() == "linktitle" 
@@ -287,22 +290,23 @@ export class SharepointListView extends LitElement {
                         titleLink = titleLink.substring(0, 60);
                       titleLink = titleLink + "...";
                     }
-                    value = "<a href='" + itemUrl + "' data-interception='off' rel='noopener noreferrer'>" + titleLink + "</a>";
+                    returner.DisplayValue = "<a href='" + itemUrl + "' data-interception='off' rel='noopener noreferrer'>" + titleLink + "</a>";
                 }
             }
             else {
                 if (item[internalName] != null && item[internalName].__metadata != null) {
+                    console.log(listField);
                     var metadata = item[internalName].__metadata;
                     //console.log(metadata);
                     if (metadata.type == "SP.FieldUrlValue") {
-                        value = `<a href='${item[internalName]["Url"]}' target="_blank">${item[internalName]["Description"]}</a>`;
+                        returner.DisplayValue = `<a href='${item[internalName]["Url"]}' target="_blank">${item[internalName]["Description"]}</a>`;
                     } 
                     else {
-                        value = item.FieldValuesAsText[internalName];
+                        returner.DisplayValue = item.FieldValuesAsText[internalName];
                     }
                 }
                 else {
-                    value = item.FieldValuesAsText[internalName];
+                    returner.DisplayValue = item.FieldValuesAsText[internalName];
                 }
             }
         }
@@ -312,7 +316,7 @@ export class SharepointListView extends LitElement {
 
         //console.log(value);
 
-        return value;
+        return returner;
     }
 
     attachSortHandlers($this, target) {
