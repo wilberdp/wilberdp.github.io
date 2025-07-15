@@ -264,7 +264,7 @@ export class SharepointListView extends LitElement {
     }
 
     getFieldValue(siteUrl, listField, item) {
-        console.log(listField);
+        console.log(listField.InternalName + ": " + listField.TypeAsString);
 
         var internalName = listField.InternalName;
         var displayName = listField.Title;
