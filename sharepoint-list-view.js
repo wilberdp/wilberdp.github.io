@@ -371,7 +371,7 @@ export class SharepointListView extends LitElement {
         //console.log('1');
         for (var group in groupedRows) {
           //console.log('2');
-            if (Object.prototype.hasOwnProperty.call(groupedRows, group)) {
+            //if (Object.prototype.hasOwnProperty.call(groupedRows, group)) {
               //console.log('3');
                 var groupHeader = document.createElement('tr');
                 var groupCell = document.createElement('td');
@@ -385,8 +385,10 @@ export class SharepointListView extends LitElement {
                 icon.style.marginRight = '8px';
         
                 // Add click event listener to toggle icon and row visibility
-                groupCell.addEventListener('click', () => {
-                    console.log(this);
+                groupCell.addEventListener('click', (ele, i) => {
+                    console.log(ele);
+                    console.log(i);
+                    
                     var isExpanded = groupHeader.getAttribute('data-expanded') === 'true';
                     groupHeader.setAttribute('data-expanded', (!isExpanded).toString());
                     
@@ -410,7 +412,7 @@ export class SharepointListView extends LitElement {
                     row.style.display = 'none'; // Initially hide all rows
                     tbody.appendChild(row);
                 });
-            }
+            //}
         }
     }
 
