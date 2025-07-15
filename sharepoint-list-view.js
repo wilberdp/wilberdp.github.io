@@ -405,10 +405,8 @@ export class SharepointListView extends LitElement {
         
                 // Add click event listener to toggle icon and row visibility
                 groupCell.addEventListener('click', (ele) => {
-                    var currentGroup = ele.target.getAttribute('group');
                     console.log(ele);
                     console.log(ele.target);
-                    console.log(currentGroup);
 
                     var tar = null;
                     if (ele.target.nodeName.toLowerCase() == "td") {
@@ -417,6 +415,7 @@ export class SharepointListView extends LitElement {
                     else {
                         tar = ele.target.closest('td');
                     }
+                    var currentGroup = ele.target.getAttribute('group');
 
                     console.log(tar);
 
