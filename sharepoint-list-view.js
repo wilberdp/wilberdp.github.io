@@ -249,7 +249,7 @@ export class SharepointListView extends LitElement {
                 for (var i = 0; i < fieldRefs.length; i++) { 
                     var listField = listFields.filter(function(itt){ return itt.InternalName == fieldRefs[i].attributes["Name"].nodeValue})[0];
                     var fieldValue = $this.getFieldValue($this.siteUrl, listField, listItemData[o]);
-                    htmlView += `<td sortValue="${fieldValue.SortValue}">${fieldValue.DisplayValue}</td>`
+                    htmlView += `<td sortvalue="${fieldValue.SortValue}">${fieldValue.DisplayValue}</td>`
                 }
                 htmlView += "</tr>";
             }
@@ -356,8 +356,8 @@ export class SharepointListView extends LitElement {
             var currentDirection = $this.sortDirection.get(key) || false;
         
             var sortedRows = rows.sort((a, b) => {
-                var cellA = a.querySelector(`td:nth-child(${intKey})`)?.textContent || '';
-                var cellB = b.querySelector(`td:nth-child(${intKey})`)?.textContent || '';
+                var cellA = a.querySelector(`td:nth-child(${intKey})`)?.getAttribute("sortvalue") || '';
+                var cellB = b.querySelector(`td:nth-child(${intKey})`)?.getAttribute("sortvalue") || '';
             
                 if (currentDirection) {
                     return cellB.localeCompare(cellA); // descending
