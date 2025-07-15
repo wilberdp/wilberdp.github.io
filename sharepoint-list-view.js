@@ -31,6 +31,14 @@ export class SharepointListView extends LitElement {
         background-color: transparent;
     }
 
+    .sharepoint-list-view i.custom-chevron-right::before {
+        content: "+";
+    }
+
+    .sharepoint-list-view i.custom-chevron-down::before {
+        content: "-";
+    }
+˅
     //.sharepoint-listview-table tbody tr:nth-child(even) {
     //    background-color: #f3f3f3;
     //}
@@ -404,9 +412,9 @@ export class SharepointListView extends LitElement {
                     ele.target.closest('tr').setAttribute('data-expanded', (!isExpanded).toString());
                     
                     if (isExpanded) {
-                        ele.target.querySelector('i').className = 'fas fa-chevron-right'; // Collapsed state
+                        ele.target.querySelector('i').className = 'custom-chevron-right'; // Collapsed state
                     } else {
-                        ele.target.querySelector('i').className = 'fas fa-chevron-down'; // Expanded state
+                        ele.target.querySelector('i').className = 'custom-chevron-down'; // Expanded state
                     }
         
                     groupedRows[currentGroup].forEach(row => {
