@@ -160,7 +160,7 @@ export class SharepointListView extends LitElement {
 
     async getListItems(ntxToken, webUrl, listTitle, listViewXml, filter) 
     {
-        listViewXml = listViewXml.replace('</ViewFields>', '<FieldRef Name="FileRef" /><FieldRef Name="ContentType" /></ViewFields>');
+        listViewXml = listViewXml.replace('</ViewFields>', '<FieldRef Name="FileRef" /><FieldRef Name="ContentTypeId" /></ViewFields>');
         console.log(listViewXml);
 
         //<Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">123</Value></Eq></Where></Query><ViewFields>
