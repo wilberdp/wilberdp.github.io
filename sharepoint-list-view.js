@@ -344,12 +344,18 @@ export class SharepointListView extends LitElement {
                 } 
                 else {
                     if (listField.TypeAsString == "DateTime"){
-                        returner.SortValue = item[internalName];
+                        returner.SortValue = item[internalName] ?? "";
                         returner.DisplayValue = item.FieldValuesAsText[internalName] ?? "";
                     }
                     else {
-                        returner.SortValue = item.FieldValuesAsText[internalName];
-                        returner.DisplayValue = item.FieldValuesAsText[internalName] ?? "";
+                        if (internalName == "ContentType") {
+                            returner.SortValue = item.ContentType?.Name ?? "";
+                            returner.DisplayValue = item.ContentType?.Name ?? "";
+                        }
+                        else {
+                            returner.SortValue = item.FieldValuesAsText[internalName] ?? "";
+                            returner.DisplayValue = item.FieldValuesAsText[internalName] ?? "";
+                        }
                     }
                 }
             }
