@@ -267,7 +267,7 @@ export class SharepointListView extends LitElement {
             var parser = new DOMParser();
             var doc = parser.parseFromString(listViewXml, "text/xml")                
             var fieldRefs = doc.getElementsByTagName("View")[0].getElementsByTagName("ViewFields")[0].getElementsByTagName("FieldRef");
-            var htmlView = `<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto;"><h2>${listTitle} - ${viewTitle}</h2><table class="sharepoint-listview-table"><thead><tr>`;
+            var htmlView = `<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto; max-height: 480px;"><h2>${listTitle} - ${viewTitle}</h2><table class="sharepoint-listview-table"><thead><tr>`;
 
             for (var i = 0; i < fieldRefs.length; i++) {
                 var fieldRef = fieldRefs[i];
@@ -304,8 +304,9 @@ export class SharepointListView extends LitElement {
     }
 
     getFieldValue(siteUrl, listField, item) {
-        //console.log(item);
-        //console.log(listField.InternalName + ": " + listField.TypeAsString);
+        console.log(item);
+        console.log(listField.InternalName + ": " + listField.TypeAsString);
+        console.log(item.FieldValuesAsText[internalName]);
 
         var internalName = listField.InternalName;
         var displayName = listField.Title;
@@ -333,22 +334,22 @@ export class SharepointListView extends LitElement {
                         titleLink = titleLink.substring(0, 60);
                       titleLink = titleLink + "...";
                     }
-                    returner.DisplayValue = "<a href='" + itemUrl + "' data-interception='off' rel='noopener noreferrer'>" + titleLink + "</a>";
+                    returner.DisplayValue = "<a href='" + itemUrl + "' data-interception='off' rel='noopener noreferrer'>" + titleLink ?? "" + "</a>";
                 }
             }
             else {
                 if (listField.TypeAsString == "URL" && item[internalName] != null){
                     returner.SortValue = item[internalName]["Description"];
-                    returner.DisplayValue = `<a href='${item[internalName]["Url"]}' target="_blank">${item[internalName]["Description"]}</a>`;
+                    returner.DisplayValue = `<a href='${item[internalName]["Url"]}' target="_blank">${item[internalName]["Description"] ?? ""}</a>`;
                 } 
                 else {
                     if (listField.TypeAsString == "DateTime"){
                         returner.SortValue = item[internalName];
-                        returner.DisplayValue = item.FieldValuesAsText[internalName];
+                        returner.DisplayValue = item.FieldValuesAsText[internalName] ?? "";
                     }
                     else {
                         returner.SortValue = item.FieldValuesAsText[internalName];
-                        returner.DisplayValue = item.FieldValuesAsText[internalName];
+                        returner.DisplayValue = item.FieldValuesAsText[internalName] ?? "";
                     }
                 }
             }
