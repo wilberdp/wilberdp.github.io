@@ -107,7 +107,7 @@ export class SharepointListView extends LitElement {
         $this.sortDirection = new Map();
 
         if (this.siteUrl != null && this.siteUrl != '' && this.listName != null && this.listName != '' && this.viewName != null && this.viewName != '') {
-            var id = Math.floor(Math.random() * 10000);
+            var id = Math.floor(Math.random() * 10000000000);
             this.render2(id).then(function(result) {
                 var nodes = $this.$$$(`#sharepoint-list-view-${id}`);
                 nodes[0].innerHTML = result;
@@ -308,7 +308,7 @@ export class SharepointListView extends LitElement {
         console.log(listField.InternalName + ": " + listField.TypeAsString);
         console.log(item.FieldValuesAsText[internalName]);
 
-        var internalName = listField.InternalName;
+        var internalName = listField.InternalName.replaceAll('_x0020_', '_x005f_x0020_x005f_');
         var displayName = listField.Title;
         var returner = { DisplayValue: "", SortValue: "" };
 
@@ -324,7 +324,7 @@ export class SharepointListView extends LitElement {
                 if (itemUrl != null && itemUrl != "") {
                     var tempItemUrl = itemUrl.split("Lists/")[1];
                     tempItemUrl = tempItemUrl.split("/")[0];
-                    itemUrl = siteUrl + "/Lists/" + tempItemUrl + "/DispForm.aspx?ID=" + item["ID"];
+                    itemUrl = siteUrl + "/Lists/" + tempItemUrl + "/DispForm.aspx?ID=" + item.FieldValuesAsText["ID"];
                     var titleLink = item.FieldValuesAsText["Title"];
                     if (displayName.toLowerCase() == "edit") {
                         titleLink =  "Edit";
