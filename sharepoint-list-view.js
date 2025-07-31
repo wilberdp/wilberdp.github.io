@@ -313,7 +313,7 @@ export class SharepointListView extends LitElement {
         console.log(listField.InternalName + ": " + listField.TypeAsString);
         console.log(item.FieldValuesAsText[internalName]);
 
-        var internalName = listField.InternalName.replaceAll('_x0020_', '_x005f_x0020_x005f_');
+        var internalName = listField.InternalName.replaceAll('_', '_x005f_');
         var displayName = listField.Title;
         var returner = { DisplayValue: "", SortValue: "" };
 
