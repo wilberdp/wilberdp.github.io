@@ -180,7 +180,6 @@ export class SharepointListView extends LitElement {
             if (doc != null) {
                 var fieldRefs = Array.from(doc.querySelectorAll('FieldRef')).map(function(itt){ return itt.outerHTML; });
                 listViewXml = listViewXml.replace('</ViewFields>', fieldRefs.join('') + '</ViewFields>');
-                console.log(listViewXml);
             }
         }
         console.log(listViewXml);
@@ -266,9 +265,9 @@ export class SharepointListView extends LitElement {
         //console.log(listViewXml);
 
         var listItemData = await $this.getListItems(ntxToken, webUrl, listTitle, listViewXml, filter);
+        console.log(listItemData);
         if (listItemData != null) {
             listItemData = listItemData.d.results;
-            //console.log(listItemData);
             //console.log('id: ' + id);
             var parser = new DOMParser();
             var doc = parser.parseFromString(listViewXml, "text/xml")                
