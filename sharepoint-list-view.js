@@ -178,7 +178,7 @@ export class SharepointListView extends LitElement {
             }
 
             if (doc != null) {
-                var fieldRefs = doc.querySelectorAll('FieldRef');
+                var fieldRefs = Array.from(doc.querySelectorAll('FieldRef'));
                 console.log(fieldRefs.map(function(itt){ return itt.outerHTML; }));
             }
         }
