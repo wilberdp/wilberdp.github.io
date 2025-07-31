@@ -84,7 +84,7 @@ export class SharepointListView extends LitElement {
                 filter: {
                     type: 'string',
                     title: 'Filter Expression (CAML)',
-                    description: 'CAML for additional filtering.  This will be AND the view query.  For example: <Eq><FieldRef Name="Title" /><Value Type="Text">123</Value></Eq>'
+                    description: 'CAML for additional filtering.  This will be AND the view query.'
                 },
                 events: ["ntx-value-change"]
             }
@@ -176,6 +176,11 @@ export class SharepointListView extends LitElement {
                     listViewXml = listViewXml.replace("<Query />", "").replace("<ViewFields>", `<Query><Where>${filter}</Where></Query><ViewFields>`);
                 }
             }
+
+            if (doc != null) {
+                var fieldRefs = doc.querySelectorAll('FieldRef');
+                console.log(fieldRefs);
+            }
         }
         console.log(listViewXml);
 
@@ -256,7 +261,7 @@ export class SharepointListView extends LitElement {
         }
 
         //console.log(listViewXml);
-        listViewXml = listViewXml.replace(/<RowLimit.*>.+?<\/RowLimit>/g, '');
+        //listViewXml = listViewXml.replace(/<RowLimit.*>.+?<\/RowLimit>/g, '');
         //console.log(listViewXml);
 
         var listItemData = await $this.getListItems(ntxToken, webUrl, listTitle, listViewXml, filter);
