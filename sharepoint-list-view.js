@@ -25,7 +25,7 @@ export class SharepointListView extends LitElement {
         width: 100%;
         padding: 5px;
         background-color: white;
-        table-layout: fixed;
+   
     }
     .sharepoint-listview-table tr + tr td {
         border-top: solid 1px #e7e7e7;
@@ -35,10 +35,10 @@ export class SharepointListView extends LitElement {
         text-align: left;
         padding: 5px;
         vertical-align: top;
-        white-space: nowrap;
-        word-wrap: break-word;
+        white-space: pre;
+        
         background-color: transparent;
-        max-width: 150px;
+
     }
 
     .sharepoint-listview-table .custom-chevron-right:before {
