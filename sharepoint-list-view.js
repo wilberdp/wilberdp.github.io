@@ -179,7 +179,7 @@ export class SharepointListView extends LitElement {
 
             if (doc != null) {
                 var fieldRefs = doc.querySelectorAll('FieldRef');
-                console.log(fieldRefs);
+                console.log(fieldRefs.map(function(itt){ return itt.outerHTML; }));
             }
         }
         console.log(listViewXml);
