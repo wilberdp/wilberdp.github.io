@@ -25,6 +25,7 @@ export class SharepointListView extends LitElement {
         width: 100%;
         padding: 5px;
         background-color: white;
+        table-layout: fixed;
     }
     .sharepoint-listview-table tr + tr td {
         border-top: solid 1px #e7e7e7;
