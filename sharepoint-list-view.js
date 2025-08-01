@@ -5,7 +5,8 @@ export class SharepointListView extends LitElement {
         siteUrl: { type: String },
         listName: { type: String },
         viewName: { type: String },
-        filter: { type: String }
+        filter: { type: String },
+        customViewMarkup: { type: String }
     };
 
     sortDirection;
@@ -87,6 +88,11 @@ export class SharepointListView extends LitElement {
                     type: 'string',
                     title: 'Filter Expression (CAML)',
                     description: 'CAML for additional filtering.  This will be AND the view query.'
+                },
+                customViewMarkup: {
+                    type: 'string',
+                    title: 'Custom View Markup (per item)',
+                    description: 'Custom markup template used to generate markup per item.  ${{internal name}} is used to reference a column.'
                 },
                 events: ["ntx-value-change"]
             }
@@ -274,34 +280,53 @@ export class SharepointListView extends LitElement {
             var parser = new DOMParser();
             var doc = parser.parseFromString(listViewXml, "text/xml")                
             var fieldRefs = doc.getElementsByTagName("View")[0].getElementsByTagName("ViewFields")[0].getElementsByTagName("FieldRef");
-            var htmlView = `<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto; max-height: 480px;"><h2>${listTitle} - ${viewTitle}</h2><table class="sharepoint-listview-table"><thead><tr>`;
+            var htmlView = '';
+            if (this.customViewMarkup == null || this.customViewMarkup == "") 
+            {
+                htmlView = `<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto; max-height: 480px;"><h2>${listTitle} - ${viewTitle}</h2><table class="sharepoint-listview-table"><thead><tr>`;
 
-            for (var i = 0; i < fieldRefs.length; i++) {
-                var fieldRef = fieldRefs[i];
-                //console.log("internalName: " + fieldRef.attributes["Name"].nodeValue);
-                var displayName = listFields.filter(function(itt){ return itt.InternalName == fieldRef.attributes["Name"].nodeValue})[0];
-                console.log(displayName);
-                displayName = displayName.Title;
-                //console.log("displayName: " + displayName);
-                htmlView += `<th data-key="${i + 1}">${displayName}</th>`;
-                if ($this.groupBy != null && $this.groupBy != "" && (fieldRef.attributes["Name"].nodeValue == $this.groupBy || (fieldRef.attributes["Name"].nodeValue.toLowerCase() == "linktitle" && $this.groupBy == "Title"))) {
-                    $this.groupByIdx = i + 1;
+                for (var i = 0; i < fieldRefs.length; i++) {
+                    var fieldRef = fieldRefs[i];
+                    //console.log("internalName: " + fieldRef.attributes["Name"].nodeValue);
+                    var displayName = listFields.filter(function(itt){ return itt.InternalName == fieldRef.attributes["Name"].nodeValue})[0];
+                    console.log(displayName);
+                    displayName = displayName.Title;
+                    //console.log("displayName: " + displayName);
+                    htmlView += `<th data-key="${i + 1}">${displayName}</th>`;
+                    if ($this.groupBy != null && $this.groupBy != "" && (fieldRef.attributes["Name"].nodeValue == $this.groupBy || (fieldRef.attributes["Name"].nodeValue.toLowerCase() == "linktitle" && $this.groupBy == "Title"))) {
+                        $this.groupByIdx = i + 1;
+                    }
                 }
-            }
 
-            htmlView += '</tr></thead><tbody>'
+                htmlView += '</tr></thead><tbody>'
 
-            for (var o = 0; o < listItemData.length; o++) {
-                htmlView += "<tr>";
-                for (var i = 0; i < fieldRefs.length; i++) { 
-                    var listField = listFields.filter(function(itt){ return itt.InternalName == fieldRefs[i].attributes["Name"].nodeValue})[0];
-                    var fieldValue = $this.getFieldValue($this.siteUrl, listField, listItemData[o]);
-                    htmlView += `<td sortvalue="${fieldValue.SortValue}">${fieldValue.DisplayValue}</td>`
+                for (var o = 0; o < listItemData.length; o++) {
+                    htmlView += "<tr>";
+                    for (var i = 0; i < fieldRefs.length; i++) { 
+                        var listField = listFields.filter(function(itt){ return itt.InternalName == fieldRefs[i].attributes["Name"].nodeValue})[0];
+                        var fieldValue = $this.getFieldValue($this.siteUrl, listField, listItemData[o]);
+                        htmlView += `<td sortvalue="${fieldValue.SortValue}">${fieldValue.DisplayValue}</td>`
+                    }
+                    htmlView += "</tr>";
                 }
-                htmlView += "</tr>";
-            }
 
-            htmlView += "</tbody></table>";
+                htmlView += "</tbody></table>";
+            }
+            else {
+                htmlView = "<div>"
+                
+                for (var o = 0; o < listItemData.length; o++) {
+                    var itemHtml = structuredClone(this.customViewMarkup);
+                    for (var i = 0; i < fieldRefs.length; i++) {
+                        var listField = listFields.filter(function(itt){ return itt.InternalName == fieldRefs[i].attributes["Name"].nodeValue})[0];
+                        var fieldValue = $this.getFieldValue($this.siteUrl, listField, listItemData[o]);
+                        itemHtml = itemHtml.replaceAll("${{" + listField.InternalName + "}}", fieldValue);
+                    }
+                    htmlView += itemHtml;
+                }
+
+                htmlView += "</div>";
+            }
 
             return htmlView;
         }
