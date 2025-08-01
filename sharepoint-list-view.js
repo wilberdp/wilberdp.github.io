@@ -119,10 +119,12 @@ export class SharepointListView extends LitElement {
             this.render2(id).then(function(result) {
                 var nodes = $this.$$$(`#sharepoint-list-view-${id}`);
                 nodes[0].innerHTML = result;
-                if ($this.groupByIdx != null && $this.groupByIdx != "") {
-                    $this.appendGroupedRows($this.$$$(`#sharepoint-list-view-${id} tbody`)[0], $this.$$$(`#sharepoint-list-view-${id} tbody tr`), $this.groupByIdx, true)
+                if ($this.customViewMarkup == null || $this.customViewMarkup == "") {
+                    if ($this.groupByIdx != null && $this.groupByIdx != "") {
+                        $this.appendGroupedRows($this.$$$(`#sharepoint-list-view-${id} tbody`)[0], $this.$$$(`#sharepoint-list-view-${id} tbody tr`), $this.groupByIdx, true)
+                    }
+                    $this.attachSortHandlers($this, `#sharepoint-list-view-${id}`);
                 }
-                $this.attachSortHandlers($this, `#sharepoint-list-view-${id}`);
             });
             return html`<p><div id='sharepoint-list-view-${id}'></div></p>`;
         }
