@@ -184,7 +184,7 @@ export class SharepointListView extends LitElement {
                 }
                 else {
                     if (listViewXml.indexOf("</Query>") > -1) {
-                        listViewXml = listViewXml.replace("</Query>", `<Where><And>${filter}</And></Where></Query>`);
+                        listViewXml = listViewXml.replace("</Query>", `<Where>${filter}</Where></Query>`);
                     }
                     else {
                         listViewXml = listViewXml.replace("<Query />", "").replace("<Query/>", "").replace("<ViewFields>", `<Query><Where>${filter}</Where></Query><ViewFields>`);
