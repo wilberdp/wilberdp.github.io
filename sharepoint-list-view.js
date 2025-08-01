@@ -320,7 +320,7 @@ export class SharepointListView extends LitElement {
                     for (var i = 0; i < fieldRefs.length; i++) {
                         var listField = listFields.filter(function(itt){ return itt.InternalName == fieldRefs[i].attributes["Name"].nodeValue})[0];
                         var fieldValue = $this.getFieldValue($this.siteUrl, listField, listItemData[o]);
-                        itemHtml = itemHtml.replaceAll("${{" + listField.InternalName + "}}", fieldValue);
+                        itemHtml = itemHtml.replaceAll("${{" + listField.InternalName + "}}", fieldValue.DisplayValue);
                     }
                     htmlView += itemHtml;
                 }
