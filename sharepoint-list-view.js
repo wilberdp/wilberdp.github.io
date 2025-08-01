@@ -183,7 +183,12 @@ export class SharepointListView extends LitElement {
                     listViewXml = listViewXml.replace("<Where>", `<Where><And>${filter}`).replace("</Where>", `</And></Where>`);
                 }
                 else {
-                    listViewXml = listViewXml.replace("<Query />", "").replace("<ViewFields>", `<Query><Where>${filter}</Where></Query><ViewFields>`);
+                    if (listViewXml.indexOf("</Query>") > -1) {
+                        listViewXml = listViewXml.replace("</Query>", `<Where><And>${filter}`).replace("</Where>", `</And></Where></Query>`);
+                    }
+                    else {
+                        listViewXml = listViewXml.replace("<Query />", "").replace("<Query/>", "").replace("<ViewFields>", `<Query><Where>${filter}</Where></Query><ViewFields>`);
+                    }
                 }
             }
 
