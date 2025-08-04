@@ -133,6 +133,7 @@ export class SharepointListView extends LitElement {
                         $this.appendGroupedRows($this.$$$(`#sharepoint-list-view-${$this.listViewNumber} tbody`)[0], $this.$$$(`#sharepoint-list-view-${$this.listViewNumber} tbody tr`), $this.groupByIdx, true)
                     }
                     $this.attachSortHandlers($this, `#sharepoint-list-view-${$this.listViewNumber}`);
+                    $this.attachSearchHandler();
                 }
             });
             if (this.customJavascript != null && this.customJavascript != '') {
@@ -305,7 +306,7 @@ export class SharepointListView extends LitElement {
             var htmlView = '';
             if (this.customViewMarkup == null || this.customViewMarkup == "") 
             {
-                htmlView = `<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><input type="text" id="SearchBoxV${$this.listViewNumber}" placeholder="Search View..." style="margin-bottom: 10px; width: 500px; padding: 8px;" /><br><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto; max-height: 480px;"><h2>${listTitle} - ${viewTitle}</h2><table class="sharepoint-listview-table" id="tableV${this.listViewNumber}"><thead><tr>`;
+                htmlView = `<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto; max-height: 480px;"><h2>${listTitle} - ${viewTitle}</h2><br/><input type="text" id="SearchBoxV${$this.listViewNumber}" placeholder="Search View..." style="margin-bottom: 10px; width: 500px; padding: 8px;" /><br/><table class="sharepoint-listview-table" id="tableV${this.listViewNumber}"><thead><tr>`;
 
                 for (var i = 0; i < fieldRefs.length; i++) {
                     var fieldRef = fieldRefs[i];
