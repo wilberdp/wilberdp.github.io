@@ -100,7 +100,7 @@ export class SharepointListView extends LitElement {
                 },
                 customJavascript: {
                     type: 'string',
-                    title: 'Optional - Custom javacript to add to shadow DOM',
+                    title: 'Optional - Custom javascript to add to shadow DOM',
                     maxLength: 10000
                 },
                 events: ["ntx-value-change"]
