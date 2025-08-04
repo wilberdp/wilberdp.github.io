@@ -88,7 +88,8 @@ export class SharepointListView extends LitElement {
                 filter: {
                     type: 'string',
                     title: 'Optional - Filter Expression (CAML)',
-                    description: 'CAML for additional filtering.  This will be AND the view query.'
+                    description: 'CAML for additional filtering.  This will be AND the view query.',
+                    maxLength: 10000
                 },
                 customViewMarkup: {
                     type: 'string',
