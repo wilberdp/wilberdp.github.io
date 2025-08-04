@@ -6,7 +6,8 @@ export class SharepointListView extends LitElement {
         listName: { type: String },
         viewName: { type: String },
         filter: { type: String },
-        customViewMarkup: { type: String }
+        customViewMarkup: { type: String },
+        customJavascript: { type: String }
     };
 
     sortDirection;
@@ -86,13 +87,19 @@ export class SharepointListView extends LitElement {
                 },
                 filter: {
                     type: 'string',
-                    title: 'Filter Expression (CAML)',
+                    title: 'Optional - Filter Expression (CAML)',
                     description: 'CAML for additional filtering.  This will be AND the view query.'
                 },
                 customViewMarkup: {
                     type: 'string',
-                    title: 'Custom View Markup (per item)',
-                    description: 'Custom markup template used to generate markup per item.  ${{internal name}} is used to reference a column.'
+                    title: 'Optional - Custom View Markup (per item)',
+                    description: 'Custom markup template used to generate markup per item.  ${{internal name}} is used to reference a column.',
+                    maxLength: 10000
+                },
+                customJavascript: {
+                    type: 'string',
+                    title: 'Optional - Custom javacript to add to shadow DOM',
+                    maxLength: 10000
                 },
                 events: ["ntx-value-change"]
             }
@@ -126,6 +133,12 @@ export class SharepointListView extends LitElement {
                     $this.attachSortHandlers($this, `#sharepoint-list-view-${id}`);
                 }
             });
+            if (this.customJavascript != null && this.customJavascript != '') {
+                var customJavascript = document.createElement('script');
+                customJavascript.type = 'text/javascript';
+                customJavascript.text = this.customJavascript;
+                this.appendChild(customJavascript);
+            }
             return html`<p><div id='sharepoint-list-view-${id}'></div></p>`;
         }
         else {
