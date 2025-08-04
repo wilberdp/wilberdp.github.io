@@ -14,6 +14,7 @@ export class SharepointListView extends LitElement {
     groupBy;
     groupByIdx;
     pageSize;
+    listViewNumber;
 
     // Define scoped styles right with your component, in plain CSS
     static styles = css`  //Add custom CSS. See https://help.nintex.com/en-US/formplugins/Reference/Style.htm
@@ -123,15 +124,15 @@ export class SharepointListView extends LitElement {
         $this.sortDirection = new Map();
 
         if (this.siteUrl != null && this.siteUrl != '' && this.listName != null && this.listName != '' && this.viewName != null && this.viewName != '') {
-            var id = Math.floor(Math.random() * 10000000000);
-            this.render2(id).then(function(result) {
-                var nodes = $this.$$$(`#sharepoint-list-view-${id}`);
+            this.listViewNumber = Math.floor(Math.random() * 10000000000);
+            this.render2(this.listViewNumber).then(function(result) {
+                var nodes = $this.$$$(`#sharepoint-list-view-${$this.listViewNumber}`);
                 nodes[0].innerHTML = result;
                 if ($this.customViewMarkup == null || $this.customViewMarkup == "") {
                     if ($this.groupByIdx != null && $this.groupByIdx != "") {
-                        $this.appendGroupedRows($this.$$$(`#sharepoint-list-view-${id} tbody`)[0], $this.$$$(`#sharepoint-list-view-${id} tbody tr`), $this.groupByIdx, true)
+                        $this.appendGroupedRows($this.$$$(`#sharepoint-list-view-${$this.listViewNumber} tbody`)[0], $this.$$$(`#sharepoint-list-view-${$this.listViewNumber} tbody tr`), $this.groupByIdx, true)
                     }
-                    $this.attachSortHandlers($this, `#sharepoint-list-view-${id}`);
+                    $this.attachSortHandlers($this, `#sharepoint-list-view-${$this.listViewNumber}`);
                 }
             });
             if (this.customJavascript != null && this.customJavascript != '') {
@@ -140,7 +141,7 @@ export class SharepointListView extends LitElement {
                 customJavascript.text = this.customJavascript;
                 this.appendChild(customJavascript);
             }
-            return html`<p><div id='sharepoint-list-view-${id}'></div></p>`;
+            return html`<p><div id='sharepoint-list-view-${$this.listViewNumber}'></div></p>`;
         }
         else {
             return html`<p>Sharepoint List View: parameters empty</p>`
@@ -304,7 +305,7 @@ export class SharepointListView extends LitElement {
             var htmlView = '';
             if (this.customViewMarkup == null || this.customViewMarkup == "") 
             {
-                htmlView = `<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto; max-height: 480px;"><h2>${listTitle} - ${viewTitle}</h2><table class="sharepoint-listview-table"><thead><tr>`;
+                htmlView = `<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><input type="text" id="${searchboxname}" placeholder="Search View..." style="margin-bottom: 10px; width: 500px; padding: 8px;" /><br><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto; max-height: 480px;"><h2>${listTitle} - ${viewTitle}</h2><table class="sharepoint-listview-table" id="tableV${this.listViewNumber}"><thead><tr>`;
 
                 for (var i = 0; i < fieldRefs.length; i++) {
                     var fieldRef = fieldRefs[i];
@@ -568,6 +569,41 @@ export class SharepointListView extends LitElement {
             //}
         }
     }
+
+    attachSearchHandler() { 
+        var $this = this;
+        let searchboxname = "#SearchBoxV" + this.listViewNumber;
+        const searchBox = this.$$$(searchboxname); 
+        if (searchBox != null && searchBox.length > 0) { 
+            searchBox[0].addEventListener('input', () => { 
+                $this.filterTable(searchBox[0].value); 
+            }); 
+        } 
+        else {
+            console.warn('Search box not found.'); 
+        } 
+      }
+      
+      filterTable(query) { 
+        let tbNameID = '#tableV' + this.listViewNumber;
+        const table = this.$$$(tbNameID); 
+        if (table != null && table.length > 0) { 
+            const tbody = table[0].querySelector('tbody'); 
+            if (!tbody) { 
+                console.warn('No tbody found for table:', table[0]); 
+                return; 
+            } 
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            rows.forEach(row => { 
+                const cells = Array.from(row.querySelectorAll('td')).map(cell => cell.textContent || ''); 
+                const matches = cells.some(cell => cell.toLowerCase().includes(query.toLowerCase())); 
+                row.style.display = matches ? '' : 'none'; 
+            }); 
+        } 
+        else { 
+            console.warn('Table not found'); 
+        }
+      }
 
     $$$(selector, rootNode = document.body) {
         const arr = []
