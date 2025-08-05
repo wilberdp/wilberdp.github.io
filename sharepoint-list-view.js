@@ -133,7 +133,7 @@ export class SharepointListView extends LitElement {
             this.listViewNumber = Math.floor(Math.random() * 10000000000);
             var cont = document.createElement('div');
             cont.id = `sharepoint-list-view-${$this.listViewNumber}`;
-            this.appendChild(cont);
+            this.shadowRoot.appendChild(cont);
 
             this.render2(this.listViewNumber).then(function(result) {
                 var nodes = $this.$$$(`#sharepoint-list-view-${$this.listViewNumber}`);
