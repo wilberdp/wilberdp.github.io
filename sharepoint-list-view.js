@@ -131,6 +131,10 @@ export class SharepointListView extends LitElement {
 
         if (this.siteUrl != null && this.siteUrl != '' && this.listName != null && this.listName != '' && this.viewName != null && this.viewName != '') {
             this.listViewNumber = Math.floor(Math.random() * 10000000000);
+            var cont = document.createElement('div');
+            cont.id = `sharepoint-list-view-${$this.listViewNumber}`;
+            this.appendChild(cont);
+
             this.render2(this.listViewNumber).then(function(result) {
                 var nodes = $this.$$$(`#sharepoint-list-view-${$this.listViewNumber}`);
                 nodes[0].innerHTML = result;
@@ -154,7 +158,7 @@ export class SharepointListView extends LitElement {
                 customCSS.appendChild(document.createTextNode(this.customCSS));
                 this.closest('head').appendChild(customCSS);
             }
-            return html`<p><div id='sharepoint-list-view-${$this.listViewNumber}'></div></p>`;
+            return html`<p style="display:none">done</p>`;
         }
         else {
             return html`<p>Sharepoint List View: parameters empty</p>`
