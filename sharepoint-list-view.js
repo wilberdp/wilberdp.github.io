@@ -145,23 +145,23 @@ export class SharepointListView extends LitElement {
                     $this.attachSortHandlers($this, `#sharepoint-list-view-${$this.listViewNumber}`);
                     $this.attachSearchHandler();
                 }
+
+                if (this.customJavascript != null && this.customJavascript != '') {
+                    var customJavascript = document.createElement('script');
+                    customJavascript.type = 'text/javascript';
+                    customJavascript.text = `var thisId = '#sharepoint-list-view-${$this.listViewNumber}';`;
+                    window.$$$ = this.$$$;
+                    customJavascript.text += `var thisShadowDom = $$$(thisId);`;
+                    customJavascript.text += this.customJavascript;
+                    this.shadowRoot.appendChild(customJavascript);
+                }
+                console.log(this.customCSS);
+                if (this.customCSS != null && this.customCSS != '') {
+                    var customCSS = document.createElement('style');
+                    customCSS.appendChild(document.createTextNode(this.customCSS));
+                    this.shadowRoot.appendChild(customCSS);
+                }
             });
-            if (this.customJavascript != null && this.customJavascript != '') {
-                var customJavascript = document.createElement('script');
-                customJavascript.type = 'text/javascript';
-                customJavascript.text = `var thisId = '#sharepoint-list-view-${$this.listViewNumber}';`;
-                window.$$$ = this.$$$;
-                customJavascript.text += `console.log($$$);`;
-                customJavascript.text += `var thisShadowDom = $$$(thisId); console.log(thisShadowDom);`;
-                customJavascript.text += this.customJavascript;
-                this.shadowRoot.appendChild(customJavascript);
-            }
-            console.log(this.customCSS);
-            if (this.customCSS != null && this.customCSS != '') {
-                var customCSS = document.createElement('style');
-                customCSS.appendChild(document.createTextNode(this.customCSS));
-                this.shadowRoot.appendChild(customCSS);
-            }
             return html`<p style="display:none">done</p>`;
         }
         else {
