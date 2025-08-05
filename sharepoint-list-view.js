@@ -150,13 +150,13 @@ export class SharepointListView extends LitElement {
                 var customJavascript = document.createElement('script');
                 customJavascript.type = 'text/javascript';
                 customJavascript.text = this.customJavascript;
-                this.appendChild(customJavascript);
+                this.shadowRoot.appendChild(customJavascript);
             }
             console.log(this.customCSS);
             if (this.customCSS != null && this.customCSS != '') {
                 var customCSS = document.createElement('style');
                 customCSS.appendChild(document.createTextNode(this.customCSS));
-                //this.closest('head').appendChild(customCSS);
+                this.shadowRoot.appendChild(customCSS);
             }
             return html`<p style="display:none">done</p>`;
         }
