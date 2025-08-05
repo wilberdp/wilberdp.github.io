@@ -149,7 +149,9 @@ export class SharepointListView extends LitElement {
             if (this.customJavascript != null && this.customJavascript != '') {
                 var customJavascript = document.createElement('script');
                 customJavascript.type = 'text/javascript';
-                customJavascript.text = this.customJavascript;
+                customJavascript.text = `var thisId = 'sharepoint-list-view-${$this.listViewNumber}';`;
+                customJavascript.text += `var thisShadowDom = ${this.shadowRoot}; console.log(thisShadowDom);`;
+                customJavascript.text += this.customJavascript;
                 this.shadowRoot.appendChild(customJavascript);
             }
             console.log(this.customCSS);
