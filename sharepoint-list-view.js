@@ -7,6 +7,7 @@ export class SharepointListView extends LitElement {
         viewName: { type: String },
         filter: { type: String },
         customViewMarkup: { type: String },
+        customCSS: { type: String },
         customJavascript: { type: String }
     };
 
@@ -98,6 +99,11 @@ export class SharepointListView extends LitElement {
                     description: 'Custom markup template used to generate markup per item.  ${{internal name}} is used to reference a column.',
                     maxLength: 10000
                 },
+                customCSS: {
+                    type: 'string',
+                    title: 'Optional - Custom CSS to add to shadow DOM',
+                    maxLength: 10000
+                },
                 customJavascript: {
                     type: 'string',
                     title: 'Optional - Custom javascript to add to shadow DOM',
@@ -141,6 +147,11 @@ export class SharepointListView extends LitElement {
                 customJavascript.type = 'text/javascript';
                 customJavascript.text = this.customJavascript;
                 this.appendChild(customJavascript);
+            }
+            if (this.customCSS != null && this.customCSS != '') {
+                var customCSS = document.createElement('style');
+                customCSS.text = this.customCSS;
+                this.appendChild(customCSS);
             }
             return html`<p><div id='sharepoint-list-view-${$this.listViewNumber}'></div></p>`;
         }
