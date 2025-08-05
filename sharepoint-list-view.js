@@ -151,7 +151,7 @@ export class SharepointListView extends LitElement {
             console.log(this.customCSS);
             if (this.customCSS != null && this.customCSS != '') {
                 var customCSS = document.createElement('style');
-                customCSS.text = this.customCSS;
+                customCSS.appendChild(document.createTextNode(this.customCSS));
                 this.appendChild(customCSS);
             }
             return html`<p><div id='sharepoint-list-view-${$this.listViewNumber}'></div></p>`;
