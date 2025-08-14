@@ -339,7 +339,7 @@ export class SharepointListView extends LitElement {
             var htmlView = '';
             if (this.customViewMarkup == null || this.customViewMarkup == "") 
             {
-                if ($this.properties.showFilterBox) {
+                if ($this.showFilterBox) {
                     htmlView = `<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto; max-height: 480px;"><h2 title="${listTitle} - ${viewTitle}">${listTitle} - ${viewTitle}</h2><br/><input type="text" id="SearchBoxV${$this.listViewNumber}" placeholder="Search View..." style="margin-bottom: 10px; width: 500px; padding: 8px;" /><br/><table class="sharepoint-listview-table" id="tableV${this.listViewNumber}"><thead><tr>`;
                 }
                 else {
@@ -623,7 +623,7 @@ export class SharepointListView extends LitElement {
 
     attachSearchHandler() { 
         var $this = this;
-        if ($this.properties.showFilterBox) {
+        if ($this.showFilterBox) {
             let searchboxname = "#SearchBoxV" + this.listViewNumber;
             const searchBox = this.$$$(searchboxname); 
             if (searchBox != null && searchBox.length > 0) { 
