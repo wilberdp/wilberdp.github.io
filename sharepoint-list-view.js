@@ -469,6 +469,9 @@ export class SharepointListView extends LitElement {
             const headers = table[0].querySelectorAll('th');
             headers.forEach((header, index) => {
                 header.addEventListener('click', () => {
+                    headers.forEach((header2, index) => {
+                        header2.innerHTML = header2.innerHTML.replaceAll(' ↓', '').replaceAll(' ↑', '');
+                    });
                     const key = header.getAttribute('data-key');
                     if (key) {
                         var sortDir = $this.sortTableByColumn($this, key, index + 1, `${target} .sharepoint-listview-table`); // Adjust index as nth-child expects 1-based index
