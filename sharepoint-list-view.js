@@ -5,6 +5,7 @@ export class SharepointListView extends LitElement {
         siteUrl: { type: String },
         listName: { type: String },
         viewName: { type: String },
+        showFilterBox: { type: Boolean },
         filter: { type: String },
         customViewMarkup: { type: String },
         customCSS: { type: String },
@@ -86,6 +87,10 @@ export class SharepointListView extends LitElement {
                 viewName: {
                     type: 'string',
                     title: 'List View Name'
+                },
+                showFilterBox: {
+                    type: 'boolean',
+                    title: 'Show Filter Box'
                 },
                 filter: {
                     type: 'string',
@@ -334,7 +339,12 @@ export class SharepointListView extends LitElement {
             var htmlView = '';
             if (this.customViewMarkup == null || this.customViewMarkup == "") 
             {
-                htmlView = `<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto; max-height: 480px;"><h2 title="${listTitle} - ${viewTitle}">${listTitle} - ${viewTitle}</h2><br/><input type="text" id="SearchBoxV${$this.listViewNumber}" placeholder="Search View..." style="margin-bottom: 10px; width: 500px; padding: 8px;" /><br/><table class="sharepoint-listview-table" id="tableV${this.listViewNumber}"><thead><tr>`;
+                if ($this.properties.showFilterBox) {
+                    htmlView = `<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto; max-height: 480px;"><h2 title="${listTitle} - ${viewTitle}">${listTitle} - ${viewTitle}</h2><br/><input type="text" id="SearchBoxV${$this.listViewNumber}" placeholder="Search View..." style="margin-bottom: 10px; width: 500px; padding: 8px;" /><br/><table class="sharepoint-listview-table" id="tableV${this.listViewNumber}"><thead><tr>`;
+                }
+                else {
+                    htmlView = `<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto; max-height: 480px;"><h2 title="${listTitle} - ${viewTitle}">${listTitle} - ${viewTitle}</h2><br/><table class="sharepoint-listview-table" id="tableV${this.listViewNumber}"><thead><tr>`;
+                }
 
                 for (var i = 0; i < fieldRefs.length; i++) {
                     var fieldRef = fieldRefs[i];
