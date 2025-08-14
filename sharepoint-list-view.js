@@ -210,10 +210,12 @@ export class SharepointListView extends LitElement {
         console.log(listViewXml);
 
         //<Query><Where><Eq><FieldRef Name="Title" /><Value Type="Text">123</Value></Eq></Where></Query><ViewFields>
+        var fieldRefs = []; 
 
         if (filter != null && filter != "") {
             var parser = new DOMParser();
-            var doc = parser.parseFromString(filter, "text/xml") 
+            var doc = parser.parseFromString(filter, "text/xml");
+
             if (doc != null && doc.querySelector('Value') != null && doc.querySelector('Value').textContent != null && doc.querySelector('Value').textContent != "") {
                 if (listViewXml.indexOf("<Where>") > -1) {
                     listViewXml = listViewXml.replace("<Where>", `<Where><And>${filter}`).replace("</Where>", `</And></Where>`);
@@ -229,11 +231,12 @@ export class SharepointListView extends LitElement {
             }
 
             if (doc != null) {
-                var fieldRefs = Array.from(doc.querySelectorAll('FieldRef')).map(function(itt){ return itt.outerHTML; });
+                fieldRefs = Array.from(doc.querySelectorAll('FieldRef')).map(function(itt){ return itt.outerHTML; });
                 listViewXml = listViewXml.replace('</ViewFields>', fieldRefs.join('') + '</ViewFields>');
             }
         }
         console.log(listViewXml);
+        console.log(fieldRefs);
 
         var url = `${webUrl}/_api/web/lists/getbytitle('${listTitle}')/getitems?$select=ContentType/Name&$expand=FieldValuesAsText,FieldValuesAsHtml,ContentType`; 
         var queryPayload = {  
@@ -326,7 +329,7 @@ export class SharepointListView extends LitElement {
             var htmlView = '';
             if (this.customViewMarkup == null || this.customViewMarkup == "") 
             {
-                htmlView = `<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto; max-height: 480px;"><h2>${listTitle} - ${viewTitle}</h2><br/><input type="text" id="SearchBoxV${$this.listViewNumber}" placeholder="Search View..." style="margin-bottom: 10px; width: 500px; padding: 8px;" /><br/><table class="sharepoint-listview-table" id="tableV${this.listViewNumber}"><thead><tr>`;
+                htmlView = `<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"><div style="white-space: nowrap; display:block; margin-bottom: 5px; overflow-x:auto; max-height: 480px;"><h2 title="${listTitle} - ${viewTitle}">${listTitle} - ${viewTitle}</h2><br/><input type="text" id="SearchBoxV${$this.listViewNumber}" placeholder="Search View..." style="margin-bottom: 10px; width: 500px; padding: 8px;" /><br/><table class="sharepoint-listview-table" id="tableV${this.listViewNumber}"><thead><tr>`;
 
                 for (var i = 0; i < fieldRefs.length; i++) {
                     var fieldRef = fieldRefs[i];
@@ -335,7 +338,7 @@ export class SharepointListView extends LitElement {
                     console.log(displayName);
                     displayName = displayName.Title;
                     //console.log("displayName: " + displayName);
-                    htmlView += `<th data-key="${i + 1}">${displayName}</th>`;
+                    htmlView += `<th data-key="${i + 1}" title="Sort by '${displayName}'">${displayName}</th>`;
                     if ($this.groupBy != null && $this.groupBy != "" && (fieldRef.attributes["Name"].nodeValue == $this.groupBy || (fieldRef.attributes["Name"].nodeValue.toLowerCase() == "linktitle" && $this.groupBy == "Title"))) {
                         $this.groupByIdx = i + 1;
                     }
@@ -348,7 +351,7 @@ export class SharepointListView extends LitElement {
                     for (var i = 0; i < fieldRefs.length; i++) { 
                         var listField = listFields.filter(function(itt){ return itt.InternalName == fieldRefs[i].attributes["Name"].nodeValue})[0];
                         var fieldValue = $this.getFieldValue($this.siteUrl, listField, listItemData[o]);
-                        htmlView += `<td sortvalue="${fieldValue.SortValue}">${fieldValue.DisplayValue}</td>`
+                        htmlView += `<td sortvalue="${fieldValue.SortValue}" title="${fieldValue.DisplayValue}">${fieldValue.DisplayValue}</td>`
                     }
                     htmlView += "</tr>";
                 }
