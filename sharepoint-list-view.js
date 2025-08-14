@@ -239,10 +239,11 @@ export class SharepointListView extends LitElement {
         var parser2 = new DOMParser();
         var doc = parser2.parseFromString(listViewXml, "text/xml");
         fieldRefs = Array.from(doc.querySelectorAll('FieldRef')).map(function(itt){ return itt.getAttribute('Name') });
+        fieldRefs.push('FieldValuesAsText', 'FieldValuesAsHtml', 'ContentType');
         console.log(listViewXml);
         console.log(fieldRefs);
 
-        var url = `${webUrl}/_api/web/lists/getbytitle('${listTitle}')/getitems?$select=ContentType/Name&$expand=FieldValuesAsText,FieldValuesAsHtml,ContentType`; 
+        var url = `${webUrl}/_api/web/lists/getbytitle('${listTitle}')/getitems?$select=ContentType/Name&$expand=${fieldRefs.join(',')}`; 
         var queryPayload = {  
                 'query' : {
                     '__metadata': { 'type': 'SP.CamlQuery' }, 
