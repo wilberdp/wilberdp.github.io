@@ -238,7 +238,7 @@ export class SharepointListView extends LitElement {
 
         var parser2 = new DOMParser();
         var doc = parser2.parseFromString(listViewXml, "text/xml");
-        fieldRefs = Array.from(doc.querySelectorAll('FieldRef')).map(function(itt){ return itt.outerHTML; });
+        fieldRefs = Array.from(doc.querySelectorAll('FieldRef')).map(function(itt){ return itt.getAttribute('Name') });
         console.log(listViewXml);
         console.log(fieldRefs);
 
