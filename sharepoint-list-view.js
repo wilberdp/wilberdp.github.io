@@ -194,7 +194,7 @@ export class SharepointListView extends LitElement {
             console.log(e);
         }
 
-        return '<div>temporary result</div>';
+        return '<div>An error has occurred</div>';
     }
 
     async getJson(ntxToken, url) 
