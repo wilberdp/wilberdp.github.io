@@ -623,16 +623,18 @@ export class SharepointListView extends LitElement {
 
     attachSearchHandler() { 
         var $this = this;
-        let searchboxname = "#SearchBoxV" + this.listViewNumber;
-        const searchBox = this.$$$(searchboxname); 
-        if (searchBox != null && searchBox.length > 0) { 
-            searchBox[0].addEventListener('input', () => { 
-                $this.filterTable(searchBox[0].value); 
-            }); 
-        } 
-        else {
-            console.warn('Search box not found.'); 
-        } 
+        if ($this.properties.showFilterBox) {
+            let searchboxname = "#SearchBoxV" + this.listViewNumber;
+            const searchBox = this.$$$(searchboxname); 
+            if (searchBox != null && searchBox.length > 0) { 
+                searchBox[0].addEventListener('input', () => { 
+                    $this.filterTable(searchBox[0].value); 
+                }); 
+            } 
+            else {
+                console.warn('Search box not found.'); 
+            } 
+        }
       }
       
       filterTable(query) { 
