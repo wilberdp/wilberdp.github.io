@@ -471,7 +471,16 @@ export class SharepointListView extends LitElement {
                 header.addEventListener('click', () => {
                     const key = header.getAttribute('data-key');
                     if (key) {
-                        $this.sortTableByColumn($this, key, index + 1, `${target} .sharepoint-listview-table`); // Adjust index as nth-child expects 1-based index
+                        var sortDir = $this.sortTableByColumn($this, key, index + 1, `${target} .sharepoint-listview-table`); // Adjust index as nth-child expects 1-based index
+                        if (sortDir == null) {
+
+                        }
+                        else if (sortDir) {
+                            header.innerHTML = header.innerHTML.replaceAll('↑', '↓');
+                        }
+                        else {
+                            header.innerHTML = header.innerHTML.replaceAll('↓', '↑');
+                        }
                     } else {
                         console.warn('No data-key attribute found on header:', header);
                     }
@@ -511,8 +520,11 @@ export class SharepointListView extends LitElement {
         
             tbody.innerHTML = '';
             sortedRows.forEach(row => tbody.appendChild(row));
+
+            return currentDirection;
         } else {
             console.warn('Table not found');
+            return null;
         }
     }
 
