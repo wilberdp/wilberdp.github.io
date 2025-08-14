@@ -476,10 +476,10 @@ export class SharepointListView extends LitElement {
 
                         }
                         else if (sortDir) {
-                            header.innerHTML = header.innerHTML.replaceAll('↑', '↓');
+                            header.innerHTML = header.innerHTML.replaceAll(' ↓', '').replaceAll(' ↑', '') + ' ↑';
                         }
                         else {
-                            header.innerHTML = header.innerHTML.replaceAll('↓', '↑');
+                            header.innerHTML = header.innerHTML.replaceAll(' ↓', '').replaceAll(' ↑', '') + ' ↓';
                         }
                     } else {
                         console.warn('No data-key attribute found on header:', header);
