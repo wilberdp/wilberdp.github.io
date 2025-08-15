@@ -248,7 +248,7 @@ export class SharepointListView extends LitElement {
         console.log(listViewXml);
         console.log(fieldRefs);
 
-        var url = `${webUrl}/_api/web/lists/getbytitle('${listTitle}')/getitems?$select=ContentType/Name&$expand=${fieldRefs.join(',')}`; 
+        var url = `${webUrl}/_api/web/lists/getbytitle('${listTitle}')/getitems?$select=ContentType/Name,${fieldRefs.join(',')}&$expand=FieldValuesAsText,FieldValuesAsHtml,ContentType`; 
         var queryPayload = {  
                 'query' : {
                     '__metadata': { 'type': 'SP.CamlQuery' }, 
