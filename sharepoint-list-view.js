@@ -431,13 +431,13 @@ export class SharepointListView extends LitElement {
                 }
             }
             else {
-                if (listField.TypeAsString == "URL" && item[internalName] != null){
-                    returner.SortValue = item[internalName]["Description"];
-                    returner.DisplayValue = `<a href='${item[internalName]["Url"]}' target="_blank">${item[internalName]["Description"] ?? ""}</a>`;
+                if (listField.TypeAsString == "URL" && item[listField.InternalName] != null){
+                    returner.SortValue = item[listField.InternalName]["Description"];
+                    returner.DisplayValue = `<a href='${item[listField.InternalName]["Url"]}' target="_blank">${item[listField.InternalName]["Description"] ?? ""}</a>`;
                 } 
                 else {
                     if (listField.TypeAsString == "DateTime"){
-                        returner.SortValue = item[internalName] ?? "";
+                        returner.SortValue = item[listField.InternalName] ?? "";
                         returner.DisplayValue = item.FieldValuesAsText[internalName] ?? "";
                     }
                     else {
