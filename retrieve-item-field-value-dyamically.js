@@ -93,9 +93,10 @@ export class RetrieveItemFieldValueDynamically extends LitElement {
                         }
                     });
                     const body = await response.text();
-
-                    this.onChange(body);
-                    console.log(body);
+                    var results = JSON.parse(body);
+                    var output = results.d[this.outputColumn];
+                    this.onChange(output);
+                    console.log(output);
                 }
                 else {
                     console.log('token is null or empty');
