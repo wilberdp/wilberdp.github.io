@@ -84,19 +84,23 @@ export class RetrieveItemFieldValueDynamically extends LitElement {
             else {
                 var token = await window.ntxContext.accessTokenProvider.getAccessToken();
                 if (token != null && token != '') {
-                    var url = `${this.spUrl}/_api/web/lists/getbytitle('${this.listName}')/items?$filter=${this.filterExpression}`;
-                    const response = await fetch(url, {
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Accept": "application/json;odata=verbose",
-                            "Authorization": "Bearer " + token
-                        }
-                    });
-                    const body = await response.text();
-                    var results = JSON.parse(body);
-                    var output = results.d.results[0][this.outputColumn];
-                    this.onChange(output);
-                    console.log(output);
+                    var $this = this;
+
+                    setInterval(async function(){
+                        var url = `${$this.spUrl}/_api/web/lists/getbytitle('${$this.listName}')/items?$filter=${$this.filterExpression}`;
+                        const response = await fetch(url, {
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Accept": "application/json;odata=verbose",
+                                "Authorization": "Bearer " + token
+                            }
+                        });
+                        const body = await response.text();
+                        var results = JSON.parse(body);
+                        var output = results.d.results[0][$this.outputColumn];
+                        $this.onChange(output);
+                        console.log(output);
+                    }, 2000);
                 }
                 else {
                     console.log('token is null or empty');
