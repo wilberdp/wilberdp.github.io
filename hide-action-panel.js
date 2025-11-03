@@ -64,7 +64,7 @@ export class HideActionPanel extends LitElement {
         });
 
         var $this = this;
-        setInterval(function(){
+
             if ($this.hide != null) {
                 document.querySelectorAll('ntx-action-panel').forEach((panel) => {
                     if ($this.hide) {
@@ -75,7 +75,7 @@ export class HideActionPanel extends LitElement {
                     }
                 });
             }
-        }, 500);
+
 
         return html`<p>Hide Action Panel<p/>`;
     }
