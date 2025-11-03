@@ -15,10 +15,8 @@ export class RetrieveItemFieldValueDynamically extends LitElement {
         return {
             controlName: 'RetrieveItemFieldValueDynamically',
             fallbackDisableSubmit: false,
+            description: 'Retrieve Item Field Value Dynamically',
             version: '1.0',
-            standardProperties: {
-                visibility: true
-            },
             properties: {
                 spUrl: {
                     title: 'Sharepoint Site URL',
@@ -44,10 +42,6 @@ export class RetrieveItemFieldValueDynamically extends LitElement {
             },
             events: ['ntx-value-change']
         };
-    }
-  
-    constructor() {
-        super();
     }
 
     render() {
@@ -129,7 +123,7 @@ export class RetrieveItemFieldValueDynamically extends LitElement {
             bubbles: true,
             cancelable: false,
             composed: true,
-            detail: value
+            detail: e.target.values
         };
         const event = new CustomEvent('ntx-value-change', args);
         this.dispatchEvent(event);
