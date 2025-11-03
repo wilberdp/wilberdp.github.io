@@ -44,6 +44,10 @@ export class RetrieveItemFieldValueDynamically extends LitElement {
         };
     }
 
+    constructor() {
+        super();
+    }
+
     render() {
         var msg = '';
         if (this.isNullOrEmpty(this.spUrl)) {
@@ -100,7 +104,7 @@ export class RetrieveItemFieldValueDynamically extends LitElement {
                         var results = JSON.parse(body);
                         var output = results.d.results[0][$this.outputColumn];
                         $this.outputValue = output;
-                        $this.onChange(output);
+                        $this.onChange($this);
                         running = false;
                     }, 3000);
                 }
@@ -118,7 +122,7 @@ export class RetrieveItemFieldValueDynamically extends LitElement {
         return val == null || val == '';
     }
 
-    onChange(value) {
+    onChange(e) {
         const args = {
             bubbles: true,
             cancelable: false,
@@ -126,7 +130,7 @@ export class RetrieveItemFieldValueDynamically extends LitElement {
             detail: value
         };
         const event = new CustomEvent('ntx-value-change', args);
-        this.dispatchEvent(event);
+        this.dispatchEvent(e.target.values);
     }
 }
 
