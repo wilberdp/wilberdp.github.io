@@ -85,8 +85,15 @@ export class RetrieveItemFieldValueDynamically extends LitElement {
                 var token = await window.ntxContext.accessTokenProvider.getAccessToken();
                 if (token != null && token != '') {
                     var $this = this;
+                    var running = false;
 
                     setInterval(async function(){
+                        if (running) {
+                            return;
+                        }
+                        else {
+                            running = true;
+                        }
                         var url = `${$this.spUrl}/_api/web/lists/getbytitle('${$this.listName}')/items?$filter=${$this.filterExpression}`;
                         const response = await fetch(url, {
                             headers: {
@@ -100,6 +107,7 @@ export class RetrieveItemFieldValueDynamically extends LitElement {
                         var output = results.d.results[0][$this.outputColumn];
                         $this.onChange(output);
                         console.log(output);
+                        running = false;
                     }, 2000);
                 }
                 else {
