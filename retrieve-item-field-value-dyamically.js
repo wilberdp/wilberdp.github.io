@@ -104,7 +104,7 @@ export class RetrieveItemFieldValueDynamically extends LitElement {
                         var results = JSON.parse(body);
                         var output = results.d.results[0][$this.outputColumn];
                         $this.outputValue = output;
-                        $this.onChange($this);
+                        $this.onChange($this.outputValue);
                         running = false;
                     }, 3000);
                 }
@@ -127,7 +127,7 @@ export class RetrieveItemFieldValueDynamically extends LitElement {
             bubbles: true,
             cancelable: false,
             composed: true,
-            detail: e.target.values
+            detail: e
         };
         const event = new CustomEvent('ntx-value-change', args);
         this.dispatchEvent(event);
