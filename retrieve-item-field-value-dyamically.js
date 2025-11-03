@@ -108,7 +108,7 @@ export class RetrieveItemFieldValueDynamically extends LitElement {
                         $this.onChange(output);
                         console.log(output);
                         running = false;
-                    }, 2000);
+                    }, 5000);
                 }
                 else {
                     console.log('token is null or empty');
