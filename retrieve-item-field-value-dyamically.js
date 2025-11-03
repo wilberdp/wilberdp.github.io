@@ -94,7 +94,7 @@ export class RetrieveItemFieldValueDynamically extends LitElement {
                     });
                     const body = await response.text();
                     var results = JSON.parse(body);
-                    var output = results.d[this.outputColumn];
+                    var output = results.d.results[this.outputColumn];
                     this.onChange(output);
                     console.log(output);
                 }
