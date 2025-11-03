@@ -118,7 +118,7 @@ export class RetrieveItemFieldValueDynamically extends LitElement {
         return val == null || val == '';
     }
 
-    onChange(value) {
+    onChange(e) {
         const args = {
             bubbles: true,
             cancelable: false,
