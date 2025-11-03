@@ -118,12 +118,12 @@ export class RetrieveItemFieldValueDynamically extends LitElement {
         return val == null || val == '';
     }
 
-    onChange(e) {
+    onChange(value) {
         const args = {
             bubbles: true,
             cancelable: false,
             composed: true,
-            detail: e.target.values
+            detail: value
         };
         const event = new CustomEvent('ntx-value-change', args);
         this.dispatchEvent(event);
