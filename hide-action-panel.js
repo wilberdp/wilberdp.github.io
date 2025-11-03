@@ -63,16 +63,19 @@ export class HideActionPanel extends LitElement {
             }
         });
 
-        if (this.hide != null) {
-            document.querySelectorAll('ntx-action-panel').forEach((panel) => {
-                if (this.hide) {
-                    panel.classList.add('hide-button');
-                }
-                else {
-                    panel.classList.remove('hide-button');
-                }
-            });
-        }
+        var $this = this;
+        setInterval(function(){
+            if ($this.hide != null) {
+                document.querySelectorAll('ntx-action-panel').forEach((panel) => {
+                    if ($this.hide) {
+                        panel.classList.add('hide-button');
+                    }
+                    else {
+                        panel.classList.remove('hide-button');
+                    }
+                });
+            }
+        }, 500);
 
         return html`<p>Hide Action Panel<p/>`;
     }
