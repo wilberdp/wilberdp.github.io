@@ -221,12 +221,24 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                         if (opt == null) {
                             opt = sel.querySelector('ng-dropdown-panel .ng-option .nx-ng-option[value="' + valToSet + '"]');
                         }
-                        if (opt != null) {
-                            opt.dispatchEvent(new Event('click', { bubbles: true }));
+                        if (opt == null) {
+                            pause(100).then((e) => { 
+                                opt = sel.querySelector('ng-dropdown-panel .ng-option .nx-ng-option[value="' + valToSet + '"]');
+                                if (opt != null) {
+                                    opt.dispatchEvent(new Event('click', { bubbles: true }));
+                                    var sel2 = sel.querySelector('.ng-dropdown-panel');
+                                    if (sel2 != null) {
+                                        sel2.style.display = 'none';
+                                    }
+                                }
+                            });
                         }
-                        var sel2 = sel.querySelector('.ng-dropdown-panel');
-                        if (sel2 != null) {
-                            sel2.style.display = 'none';
+                        else {
+                            opt.dispatchEvent(new Event('click', { bubbles: true }));
+                            var sel2 = sel.querySelector('.ng-dropdown-panel');
+                            if (sel2 != null) {
+                                sel2.style.display = 'none';
+                            }
                         }
                     });
                 }
