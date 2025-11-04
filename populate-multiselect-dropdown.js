@@ -22,7 +22,7 @@ export class PopulateMultiselectDropdown extends LitElement {
             properties: {
                 multiClass: {
                     type: 'string',
-                    title: 'Repeating Section Class'
+                    title: 'Multiselect Class'
                 },
                 values: {
                     type: 'string',
@@ -134,4 +134,5 @@ function uuidv4() {
 
 // registering the web component
 const elementName = 'populate-multiselect-dropdown';
+
 customElements.define(elementName, PopulateMultiselectDropdown);
