@@ -13,7 +13,7 @@ export class PopulateRepeatingSection extends LitElement {
     // return a promise for contract changes.
     static getMetaConfig() {
         return {
-            controlName: 'Populate Repeating Section',
+            controlName: 'Populate Repeating Section TEST',
             fallbackDisableSubmit: false,
             version: '1.0',
             standardProperties: {
@@ -475,5 +475,5 @@ function uuidv4() {
 }
 
 // registering the web component
-const elementName = 'populate-repeating-section-v2';
+const elementName = 'populate-repeating-section-TEST';
 customElements.define(elementName, PopulateRepeatingSection);
