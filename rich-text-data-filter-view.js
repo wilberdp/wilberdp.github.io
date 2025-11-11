@@ -85,7 +85,7 @@ export class RichTextDataFilterView extends LitElement {
             var data = JSON.parse($this.data);
             if (data != null && data.items != null) {
                 var output = data.items.filter(function(itt) { 
-                    return fitlerValues.indexOf(itt[$this.filterColumn]) > -1;
+                    return fitlerValues.indexOf(itt[$this.filterColumn] > -1);
                 });    
                 $this.output = output;
             }         
