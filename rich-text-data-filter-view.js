@@ -79,7 +79,7 @@ export class RichTextDataFilterView extends LitElement {
 
     render() {
         var $this = this;
-        var filterValues = this.filterValues.split(',').map(function(itt){ return itt != null && itt != '' });
+        var filterValues = this.filterValues.split(',').filter(function(itt){ return itt != null && itt != '' });
         console.log(filterValues);
         if (this.data != null && this.data.items != null) {
             var output = this.data.items.filter(function(itt) { 
