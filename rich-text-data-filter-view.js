@@ -107,11 +107,12 @@ export class RichTextDataFilterView extends LitElement {
                 formattedOutput += itemMarkup;
             });
             formattedOutput += '</div>';
-            this.output = formattedOutput;
+            $this.output = formattedOutput;
         }
         else {
-            this.output = '';
+            $this.output = '';
         }
+        $this.onChange($this.output);
 
         return html`<p>Rich Text Data Filter View</p>`;
     }
