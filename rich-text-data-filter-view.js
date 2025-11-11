@@ -99,9 +99,9 @@ export class RichTextDataFilterView extends LitElement {
             var formattedOutput = '<div>';
             $this.output.forEach(function(itt) {
                 var itemMarkup = $this.customViewMarkup;
-                itt.forEach(function(itt2) {
-                    console.log(itt2);
-                });
+                for (var prop in itt) {
+                    console.log(prop + ": " + itt[prop]);
+                };
             });
             formattedOutput += '</div>';
         }
