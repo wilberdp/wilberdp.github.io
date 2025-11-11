@@ -48,18 +48,18 @@ export class RichTextDataFilterView extends LitElement {
                 },
                 customViewMarkup: {
                     type: 'string',
-                    title: 'Optional - Custom View Markup (per item)',
+                    title: 'Custom View Markup',
                     description: 'Custom markup template used to generate markup per item.  ${{internal name}} is used to reference a column.',
                     maxLength: 10000
                 },
                 customCSS: {
                     type: 'string',
-                    title: 'Optional - Custom CSS to add to shadow DOM',
+                    title: 'Optional Custom CSS',
                     maxLength: 10000
                 },
                 customJavascript: {
                     type: 'string',
-                    title: 'Optional - Custom javascript to add to shadow DOM',
+                    title: 'Optional Custom javascript',
                     maxLength: 10000
                 },
                 events: ["ntx-value-change"]
