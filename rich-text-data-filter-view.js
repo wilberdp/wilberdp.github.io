@@ -78,7 +78,7 @@ export class RichTextDataFilterView extends LitElement {
     }
 
     render() {
-        console.log(this);
+        console.log(this.data);
     }
 
     async render2(id) {
