@@ -81,6 +81,7 @@ export class RichTextDataFilterView extends LitElement {
     render() {
         var $this = this;
         var filterValues = $this.filterValues.split(',').filter(function(itt){ return itt != null && itt != '' });
+        var tempOutput;
         if (filterValues != null && filterValues.length > 0) {
             if ($this.data != null) {
                 var data = JSON.parse($this.data);
@@ -91,14 +92,14 @@ export class RichTextDataFilterView extends LitElement {
                             output.push(data.items[i]);
                         }
                     }   
-                    $this.output = output;
+                    tempOutput = output;
                 }         
             }
         }
 
-        if ($this.output != null && $this.output != '' && $this.customViewMarkup != null && $this.customViewMarkup != '') {
+        if (tempOutput != null && tempOutput != '' && $this.customViewMarkup != null && $this.customViewMarkup != '') {
             var formattedOutput = '<div>';
-            $this.output.forEach(function(itt) {
+            tempOutput.forEach(function(itt) {
                 var itemMarkup = $this.customViewMarkup;
                 for (var prop in itt) {
                     itemMarkup = itemMarkup.replaceAll('${{' + prop + '}}', itt[prop]);
@@ -106,7 +107,10 @@ export class RichTextDataFilterView extends LitElement {
                 formattedOutput += itemMarkup;
             });
             formattedOutput += '</div>';
-            $this.output = formattedOutput;
+            this.output = formattedOutput;
+        }
+        else {
+            this.output = '';
         }
 
         return html`<p>Rich Text Data Filter View</p>`;
