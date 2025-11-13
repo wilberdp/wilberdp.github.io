@@ -61,8 +61,7 @@ export class RichTextDataFilterView extends LitElement {
                     type: 'string',
                     title: 'Optional Custom javascript',
                     maxLength: 10000
-                },
-                events: ["ntx-value-change"]
+                }
             }
         };
     }
