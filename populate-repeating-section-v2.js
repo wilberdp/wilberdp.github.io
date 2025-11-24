@@ -50,20 +50,20 @@ export class PopulateRepeatingSection extends LitElement {
         var $this = this;
         if (this.mode) {
             if (this.values != null && this.values != "") {
-                window.populateRepeatingSection = true;
-                var thisIntCount = 0;
-                var thisInt = setInterval(function(){
-                    if (window.populateRepeatingSection == null || window.populateRepeatingSection == false || thisIntCount > 20) {
-                        clearInterval(thisInt);
-                        $this.render2().then((e) =>{
-                            window.populateRepeatingSection = false;
-                        });
-                    }
-                    else {
-                        thisIntCount++;
-                    }
-                }, 500);
-
+                //window.populateRepeatingSection = true;
+                //var thisIntCount = 0;
+                //var thisInt = setInterval(function(){
+                //    if (window.populateRepeatingSection == null || window.populateRepeatingSection == false || thisIntCount > 20) {
+                //        clearInterval(thisInt);
+                //        $this.render2().then((e) =>{
+                //            window.populateRepeatingSection = false;
+                //        });
+                //    }
+                //    else {
+                //        thisIntCount++;
+                //    }
+                //}, 500);
+                $this.render2();
             }
         }
         return html`<p>'Populate Repeating Section' for '${this.repeatingSectionClass}'<p/>`;
