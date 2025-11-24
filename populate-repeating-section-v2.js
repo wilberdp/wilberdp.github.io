@@ -227,6 +227,7 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                                         
                     destinationField.value = valToSet;
                     destinationField.dispatchEvent(new CustomEvent('input', { bubbles: true }));
+                    destinationField.dispatchEvent(new Event('click', { bubbles: true }));
                     var opt = sel.querySelector('ng-dropdown-panel .ng-option .nx-ng-option[value="' + valToSet + '"]');
 
                     pause(200).then((e) => { 
