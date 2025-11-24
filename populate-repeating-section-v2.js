@@ -248,8 +248,6 @@ document.querySelector('#trProvider-input').closest('ng-select').querySelector('
                                 sel2.style.display = 'none';
                             }
                         }
-                    }).then(async (e) => {
-                        await pause(500);
                     });
                 }
                 // Radio buttons
