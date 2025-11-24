@@ -477,5 +477,5 @@ function uuidv4() {
 }
 
 // registering the web component
-const elementName = 'populate-repeating-section-v2';
+const elementName = 'populate-repeating-section';
 customElements.define(elementName, PopulateRepeatingSection);
