@@ -51,9 +51,7 @@ export class PopulateRepeatingSection extends LitElement {
         if (this.mode) {
             if (this.values != null && this.values != "") {
                 var $this = this;
-                pause(1000).then(async function(){
-                    $this.render2();
-                });
+                this.render2();
             }
         }
         return html`<p>'Populate Repeating Section' for '${this.repeatingSectionClass}'<p/>`;
@@ -216,22 +214,16 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                     var sel = dField.querySelector('ng-select');
                                         
                     destinationField.value = valToSet;
-                    destinationField.dispatchEvent(new Event('input', { bubbles: true }));
-                    destinationField.dispatchEvent(new Event('blur', { bubbles: true }));
-                    var opt = destinationField.closest('ng-select').querySelector('.nx-ng-option[value="' + valToSet + '"]');
-/*
-document.querySelector('#trProvider-input').value = 'Royal Ambulance';
-document.querySelector('#trProvider-input').dispatchEvent(new Event('input', { bubbles: true }));
-document.querySelector('#trProvider-input').dispatchEvent(new Event('blur', { bubbles: true }));
-document.querySelector('#trProvider-input').closest('ng-select').querySelector('.nx-ng-option[value="Royal Ambulance"]').dispatchEvent(new Event('click', { bubbles: true }));
-*/
+                    destinationField.dispatchEvent(new CustomEvent('input', { bubbles: true }));
+                    var opt = sel.querySelector('ng-dropdown-panel .ng-option .nx-ng-option[value="' + valToSet + '"]');
+
                     pause(100).then((e) => { 
                         if (opt == null) {
-                            opt = destinationField.closest('ng-select').querySelector('.nx-ng-option[value="' + valToSet + '"]');
+                            opt = sel.querySelector('ng-dropdown-panel .ng-option .nx-ng-option[value="' + valToSet + '"]');
                         }
                         if (opt == null) {
                             pause(100).then((e) => { 
-                                opt = destinationField.closest('ng-select').querySelector('.nx-ng-option[value="' + valToSet + '"]');
+                                opt = sel.querySelector('ng-dropdown-panel .ng-option .nx-ng-option[value="' + valToSet + '"]');
                                 if (opt != null) {
                                     opt.dispatchEvent(new Event('click', { bubbles: true }));
                                     var sel2 = sel.querySelector('.ng-dropdown-panel');
