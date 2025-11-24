@@ -230,30 +230,29 @@ async function writeValueToRepeaterField(parentElement, valueToWrite, destinatio
                     destinationField.dispatchEvent(new Event('click', { bubbles: true }));
                     var opt = sel.querySelector('ng-dropdown-panel .ng-option .nx-ng-option[value="' + valToSet + '"]');
 
-                    pause(200).then((e) => { 
-                        if (opt == null) {
-                            opt = sel.querySelector('ng-dropdown-panel .ng-option .nx-ng-option[value="' + valToSet + '"]');
-                        }
-                        if (opt == null) {
-                            pause(200).then((e) => { 
-                                opt = sel.querySelector('ng-dropdown-panel .ng-option .nx-ng-option[value="' + valToSet + '"]');
-                                if (opt != null) {
-                                    opt.dispatchEvent(new Event('click', { bubbles: true }));
-                                    var sel2 = sel.querySelector('.ng-dropdown-panel');
-                                    if (sel2 != null) {
-                                        sel2.style.display = 'none';
-                                    }
-                                }
-                            });
-                        }
-                        else {
+                    await pause(200);
+
+                    if (opt == null) {
+                        opt = sel.querySelector('ng-dropdown-panel .ng-option .nx-ng-option[value="' + valToSet + '"]');
+                    }
+                    if (opt == null) {
+                        await pause(200);
+                        opt = sel.querySelector('ng-dropdown-panel .ng-option .nx-ng-option[value="' + valToSet + '"]');
+                        if (opt != null) {
                             opt.dispatchEvent(new Event('click', { bubbles: true }));
                             var sel2 = sel.querySelector('.ng-dropdown-panel');
                             if (sel2 != null) {
                                 sel2.style.display = 'none';
                             }
                         }
-                    });
+                    }
+                    else {
+                        opt.dispatchEvent(new Event('click', { bubbles: true }));
+                        var sel2 = sel.querySelector('.ng-dropdown-panel');
+                        if (sel2 != null) {
+                            sel2.style.display = 'none';
+                        }
+                    }
                 }
                 // Radio buttons
                 else if (destinationField.classList.contains('nx-radio-group')) {
