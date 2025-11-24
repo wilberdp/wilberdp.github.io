@@ -47,11 +47,23 @@ export class PopulateRepeatingSection extends LitElement {
 
     render() {
         console.log('Populate Repeating Section: render()');
-
+        var $this = this;
         if (this.mode) {
             if (this.values != null && this.values != "") {
-                var $this = this;
-                this.render2();
+                window.populateRepeatingSection = true;
+                var thisIntCount = 0;
+                var thisInt = setInterval(function(){
+                    if (window.populateRepeatingSection == null || window.populateRepeatingSection == false || thisIntCount > 20) {
+                        clearInterval(thisInt);
+                        $this.render2().then((e) =>{
+                            window.populateRepeatingSection = false;
+                        });
+                    }
+                    else {
+                        thisIntCount++;
+                    }
+                }, 500);
+
             }
         }
         return html`<p>'Populate Repeating Section' for '${this.repeatingSectionClass}'<p/>`;
