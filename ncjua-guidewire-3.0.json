@@ -1,0 +1,51 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "NCJUA",
+    "version": "1.0.0",
+    "description": ""
+  },
+  "servers": [
+    {
+      "url": "https://ncjua-gwcpdev-uat.mu-1-andromeda.guidewire.net"
+    }
+  ],
+  "paths": {
+    "/msg/GetClaimContainerRq/json": {
+      "post": {
+        "summary": "Get Claim Details",
+        "responses": {},
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ClaimNumber": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "ClaimNumber": "CLF-00001431"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BasicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    }
+  },
+  "security": [
+    {
+      "BasicAuth": []
+    }
+  ]
+}
