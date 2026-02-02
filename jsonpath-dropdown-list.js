@@ -110,7 +110,7 @@ export class JSONPathDropdownList extends LitElement {
                 <ntx-label class="nx-zinc-control-label">
                     <label class="nx-form-label nx-break-word nx-theme-label-1 ng-star-inserted">
                         <span class="nx-title ng-star-inserted">
-                            LABEL
+                            ${this.name}
                         </span>
                         <span class="nx-label-symbols ng-star-inserted"></span>
                     </label>
@@ -129,7 +129,7 @@ export class JSONPathDropdownList extends LitElement {
                 <ntx-label class="nx-zinc-control-label">
                     <label class="nx-form-label nx-break-word nx-theme-label-1 ng-star-inserted">
                         <span class="nx-title ng-star-inserted">
-                            LABEL
+                            ${this.name}
                         </span>
                         <span class="nx-label-symbols ng-star-inserted"></span>
                     </label>
