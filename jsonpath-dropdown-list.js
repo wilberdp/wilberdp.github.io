@@ -1,5 +1,4 @@
 import { html, css, LitElement } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/all/lit-all.min.js';
-import {} from 'https://cdn.jsdelivr.net/npm/jsonpath@1.1.1/jsonpath.min.js';
 import 'https://cdn.jsdelivr.net/npm/flatpickr';
 
 // define the component
@@ -80,6 +79,11 @@ export class JSONPathDropdownList extends LitElement {
 
     render() {
         if (this.jsonInput != null && this.jsonInput != '' & this.jsonPath != null && this.jsonPath != '') {
+            requirejs.config({
+                paths: {
+                    'jsonpath': 'https://cdn.jsdelivr.net/npm/jsonpath@1.1.1/jsonpath.min'
+                }
+            });
             var jp = require('jsonpath');
             var results = jp.query(this.jsonInput, this.jsonPath);
             return html`
