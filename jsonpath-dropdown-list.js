@@ -80,7 +80,6 @@ export class JSONPathDropdownList extends LitElement {
 
     render() {
         if (this.jsonInput != null && this.jsonInput != '' & this.jsonPath != null && this.jsonPath != '') {
-            const {JSONPath} = require('jsonpath-plus');
             const results = JSONPath({path: this.jsonPath, json: JSON.parse(this.jsonInput) });
             return html`
                 <select
