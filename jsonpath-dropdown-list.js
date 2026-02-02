@@ -47,6 +47,11 @@ export class JSONPathDropdownList extends LitElement {
                     type: 'string',
                     title: 'JSONPath Query'
                 },
+                retrieveUnique: {
+                    type: 'boolean',
+                    title: 'Unique Values only',
+                    defaultValue: true
+                },
                 value: {
                     type: 'string',
                     title: 'Selected Value',
@@ -81,6 +86,14 @@ export class JSONPathDropdownList extends LitElement {
     render() {
         if (this.jsonInput != null && this.jsonInput != '' & this.jsonPath != null && this.jsonPath != '') {
             const results = JSONPath({path: this.jsonPath, json: JSON.parse(this.jsonInput) });
+            console.log('results');
+            console.log(results);
+            if (this.retrieveUnique != null && this.retrieveUnique) {
+                results = [...new Set(results)];
+                console.log('unique results');
+                console.log(results);
+            }
+
             return html`
                 <select
                     class="form-control"
