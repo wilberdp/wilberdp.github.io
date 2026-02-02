@@ -12,9 +12,14 @@ export class JSONPathDropdownList extends LitElement {
             font-family: var(--ntx-form-theme-font-family);
             border: 1px solid var(--ntx-form-theme-color-border);
             border-radius: var(--ntx-form-theme-border-radius);
-            width: 97%;
-            height: var(--ntx-form-control-line-height);
-            padding: 0.4375rem 0.75rem;
+            width: 100%;
+            margin-top: 4px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 8px;
+            -moz-appearance:none; /* Firefox */
+            -webkit-appearance:none; /* Safari and Chrome */
+            appearance:none;
         }
 
         .form-control:focus {
@@ -111,7 +116,20 @@ export class JSONPathDropdownList extends LitElement {
                     @blur=${this.handleBlur}
                     @input=${this.handleInput}
                 >${results.map(function(itt){ return html`<option value="${itt}">${itt}</option>`; })}</select>
-                </div>
+                <span class="ng-arrow-wrapper" role="button" aria-label="Toggle dropdown" tabindex="-1">
+                    <span class="ng-arrow">
+                        <ntx-icon _nghost-ng-c3460742043="" class="nx-icon ng-star-inserted" role="img" aria-label="dropdown arrow">
+                            <div _ngcontent-ng-c3460742043="" class="nx-hide-icon-text"></div><!---->
+                            <mat-icon _ngcontent-ng-c3460742043="" role="img" class="mat-icon notranslate nx-icon--allow-events mat-icon-no-color ng-star-inserted" aria-hidden="true" id="dropdown-arrow" data-e2e="dropdown-arrow" data-mat-icon-type="svg" data-mat-icon-name="dropdown-arrow" style="fill: unset; height: 100%; width: 100%;">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
+                                    <path d="M18.43 21.82a.6.6 0 0 1-.86 0l-2.5-2.62-1.89-2a.7.7 0 0 1 .43-1.2h8.78a.7.7 0 0 1 .43 1.16l-1.89 2z"></path>
+                                </svg>
+                            </mat-icon>
+                        </ntx-icon>
+                    </span>
+                </span>
+
+            </div>
             `;
         }
         else {
