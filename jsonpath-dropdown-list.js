@@ -100,7 +100,7 @@ export class JSONPathDropdownList extends LitElement {
                     .value=${this.value}
                     @blur=${this.handleBlur}
                     @input=${this.handleInput}
-                >${results.map(function(itt){ return `<option value="${itt}">${itt}</option>`; })}</select>
+                >${results.map(function(itt){ return html`<option value="${itt}">${itt}</option>`; })}</select>
             `;
         }
         else {
