@@ -125,13 +125,22 @@ export class JSONPathDropdownList extends LitElement {
             `;
         }
         else {
-            return html`
+            return html`<div>
+                <ntx-label class="nx-zinc-control-label">
+                    <label class="nx-form-label nx-break-word nx-theme-label-1 ng-star-inserted">
+                        <span class="nx-title ng-star-inserted">
+                            LABEL
+                        </span>
+                        <span class="nx-label-symbols ng-star-inserted"></span>
+                    </label>
+                </ntx-label>
                 <select
-                    class="form-control"
+                    class="custom-form-control"
                     .value=${this.value}
                     @blur=${this.handleBlur}
                     @input=${this.handleInput}
                 ></select>
+            </div>
             `;
         }
     }
