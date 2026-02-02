@@ -5,8 +5,8 @@ import 'https://cdn.jsdelivr.net/npm/flatpickr';
 // define the component
 export class JSONPathDropdownList extends LitElement {  
     static styles = css`
-        .form-control {
-            color: var(--ntx-form-theme-color-secondary);
+        .custom-form-control {
+            color: var(--ntx-form-theme-color-input-text);
             background-color: var(--ntx-form-theme-color-input-background, transparent);
             font-size: var(--ntx-form-theme-text-input-size);
             font-family: var(--ntx-form-theme-font-family);
@@ -20,9 +20,22 @@ export class JSONPathDropdownList extends LitElement {
             -moz-appearance:none; /* Firefox */
             -webkit-appearance:none; /* Safari and Chrome */
             appearance:none;
+            padding-right: 30px; 
+            background-image: url('path/to/your/icon.svg'); /* Set custom icon */
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 15px;
         }
 
-        .form-control:focus {
+        .custom-form-control::-webkit-picker-icon {
+            content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M18.43 21.82a.6.6 0 0 1-.86 0l-2.5-2.62-1.89-2a.7.7 0 0 1 .43-1.2h8.78a.7.7 0 0 1 .43 1.16l-1.89 2z"></path></svg>');
+        }
+
+        .custom-form-control::picker-icon {
+            content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M18.43 21.82a.6.6 0 0 1-.86 0l-2.5-2.62-1.89-2a.7.7 0 0 1 .43-1.2h8.78a.7.7 0 0 1 .43 1.16l-1.89 2z"></path></svg>');
+        }
+
+        .custom-form-control:focus {
             outline: none;
             border-color: var(--ntx-form-theme-color-primary);
         }
@@ -111,24 +124,11 @@ export class JSONPathDropdownList extends LitElement {
                     </label>
                 </ntx-label>
                 <select
-                    class="form-control"
+                    class="custom-form-control"
                     .value=${this.value}
                     @blur=${this.handleBlur}
                     @input=${this.handleInput}
                 >${results.map(function(itt){ return html`<option value="${itt}">${itt}</option>`; })}</select>
-                <span class="ng-arrow-wrapper" role="button" aria-label="Toggle dropdown" tabindex="-1">
-                    <span class="ng-arrow">
-                        <ntx-icon _nghost-ng-c3460742043="" class="nx-icon ng-star-inserted" role="img" aria-label="dropdown arrow">
-                            <div _ngcontent-ng-c3460742043="" class="nx-hide-icon-text"></div><!---->
-                            <mat-icon _ngcontent-ng-c3460742043="" role="img" class="mat-icon notranslate nx-icon--allow-events mat-icon-no-color ng-star-inserted" aria-hidden="true" id="dropdown-arrow" data-e2e="dropdown-arrow" data-mat-icon-type="svg" data-mat-icon-name="dropdown-arrow" style="fill: unset; height: 100%; width: 100%;">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
-                                    <path d="M18.43 21.82a.6.6 0 0 1-.86 0l-2.5-2.62-1.89-2a.7.7 0 0 1 .43-1.2h8.78a.7.7 0 0 1 .43 1.16l-1.89 2z"></path>
-                                </svg>
-                            </mat-icon>
-                        </ntx-icon>
-                    </span>
-                </span>
-
             </div>
             `;
         }
