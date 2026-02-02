@@ -93,6 +93,7 @@ export class JSONPathDropdownList extends LitElement {
                 console.log('unique results');
                 console.log(results);
             }
+            results.splice(0, 0, '');
 
             return html`
                 <select
