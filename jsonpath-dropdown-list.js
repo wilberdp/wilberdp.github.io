@@ -4,7 +4,7 @@ import 'https://cdn.jsdelivr.net/npm/flatpickr';
 
 export class JSONPathDropdownList extends LitElement {  
     static styles = css`
-        .custom-form-control {
+        .jsonpath-form-control {
             color: var(--ntx-form-theme-color-input-text);
             background-color: var(--ntx-form-theme-color-input-background, transparent);
             font-size: var(--ntx-form-theme-text-input-size);
@@ -16,6 +16,9 @@ export class JSONPathDropdownList extends LitElement {
             padding-top: 5px;
             padding-bottom: 5px;
             padding-left: 8px;
+        }
+
+        select.jsonpath-form-control {
             -moz-appearance:none; /* Firefox */
             -webkit-appearance:none; /* Safari and Chrome */
             appearance:none;
@@ -26,7 +29,7 @@ export class JSONPathDropdownList extends LitElement {
             background-size: 35px;
         }
 
-        .custom-form-control:focus {
+        .jsonpath-form-control:focus {
             outline: none;
             border-color: var(--ntx-form-theme-color-primary);
         }
@@ -133,7 +136,7 @@ export class JSONPathDropdownList extends LitElement {
                 case 'Dropdown List':
                     return html`<div>
                         <select
-                            class="custom-form-control"
+                            class="jsonpath-form-control"
                             .value=${this.value}
                             @blur=${this.handleBlur}
                             @input=${this.handleInput}
@@ -143,7 +146,7 @@ export class JSONPathDropdownList extends LitElement {
                     return html`<div>
                         <input
                             type="textbox"
-                            class="custom-form-control"
+                            class="jsonpath-form-control"
                             .value=${this.value}
                             @blur=${this.handleBlur}
                             @input=${this.handleInput}
@@ -152,7 +155,7 @@ export class JSONPathDropdownList extends LitElement {
                 case 'Multiline Textbox':
                     return html`<div>
                         <textarea
-                            class="custom-form-control"
+                            class="jsonpath-form-control"
                             .value=${this.value}
                             @blur=${this.handleBlur}
                             @input=${this.handleInput}
