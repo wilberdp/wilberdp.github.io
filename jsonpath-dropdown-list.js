@@ -94,6 +94,8 @@ export class JSONPathDropdownList extends LitElement {
     }
 
     render() {
+        this.title = this.name;
+        
         if (this.jsonInput != null && this.jsonInput != '' & this.jsonPath != null && this.jsonPath != '') {
             var results = JSONPath({path: this.jsonPath, json: JSON.parse(this.jsonInput) });
             console.log('results');
