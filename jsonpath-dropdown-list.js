@@ -2,7 +2,6 @@ import { html, css, LitElement } from 'https://cdn.jsdelivr.net/gh/lit/dist@2/al
 import { JSONPath } from 'https://cdn.jsdelivr.net/npm/jsonpath-plus@10.3.0/dist/index-browser-esm.min.js';
 import 'https://cdn.jsdelivr.net/npm/flatpickr';
 
-// define the component
 export class JSONPathDropdownList extends LitElement {  
     static styles = css`
         .custom-form-control {
@@ -39,7 +38,6 @@ export class JSONPathDropdownList extends LitElement {
         value: { type: String }
     };
   
-    // return a promise for contract changes.
     static getMetaConfig() {
         return {
             controlName: 'JSONPath Dropdown List',
@@ -73,6 +71,9 @@ export class JSONPathDropdownList extends LitElement {
   
     constructor() {
         super();
+        if (this.name != null && this.name != '') {
+            this.title = this.name;
+        }
     }
 
     handleBlur() {
@@ -95,7 +96,7 @@ export class JSONPathDropdownList extends LitElement {
 
     render() {
         this.title = this.name;
-        
+
         if (this.jsonInput != null && this.jsonInput != '' & this.jsonPath != null && this.jsonPath != '') {
             var results = JSONPath({path: this.jsonPath, json: JSON.parse(this.jsonInput) });
             console.log('results');
@@ -141,14 +142,12 @@ export class JSONPathDropdownList extends LitElement {
                     .value=${this.value}
                     @blur=${this.handleBlur}
                     @input=${this.handleInput}
-                ></select>
+                ><option value=""></option></select>
             </div>
             `;
         }
     }
 }
 
-
-// registering the web component
 const elementName = 'jsonpath-dropdown-list';
 customElements.define(elementName, JSONPathDropdownList);
