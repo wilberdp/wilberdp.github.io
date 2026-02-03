@@ -69,6 +69,8 @@ export class JSONPathDropdownList extends LitElement {
                 },
                 controlType: {
                     type: 'string',
+                    title: 'Control Type',
+                    required: true,
                     enum: ['Dropdown List', 'Textbox', 'Multiline Textbox']
                 },
                 value: {
