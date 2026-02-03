@@ -44,7 +44,8 @@ export class JSONPathDropdownList extends LitElement {
             fallbackDisableSubmit: false,
             version: '1.0',
             standardProperties: {
-                visibility: true
+                visibility: true,
+                fieldLabel: true
             },
             properties: {
                 jsonInput: {
