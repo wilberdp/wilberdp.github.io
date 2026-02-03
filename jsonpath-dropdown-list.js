@@ -49,9 +49,7 @@ export class JSONPathDropdownList extends LitElement {
                 description: true,
                 readOnly: true,
                 required: true,
-                toolTip: true,
-                placeholder: true,
-                defaultValue:true
+                defaultValue: true
             },
             properties: {
                 jsonInput: {
@@ -64,7 +62,7 @@ export class JSONPathDropdownList extends LitElement {
                 },
                 retrieveUnique: {
                     type: 'boolean',
-                    title: 'Unique Values only',
+                    title: 'Unique values only',
                     defaultValue: true
                 },
                 value: {
