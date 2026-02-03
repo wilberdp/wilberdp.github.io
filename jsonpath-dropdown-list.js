@@ -11,9 +11,9 @@ export class JSONPathDropdownList extends LitElement {
             font-family: var(--ntx-form-theme-font-family);
             border: 1px solid var(--ntx-form-theme-color-border);
             border-radius: var(--ntx-form-theme-border-radius);
-            width: 100%;
-            margin-top: 4px;
-            padding-top: 5px;
+            width: 97%;
+            height: 28px;
+            padding-top: 0px;
             padding-bottom: 5px;
             padding-left: 8px;
         }
