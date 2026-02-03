@@ -115,14 +115,6 @@ export class JSONPathDropdownList extends LitElement {
             console.log(this);
 
             return html`<div>
-                <ntx-label class="nx-zinc-control-label">
-                    <label class="nx-form-label nx-break-word nx-theme-label-1 ng-star-inserted">
-                        <span class="nx-title ng-star-inserted">
-                            ${this.name}
-                        </span>
-                        <span class="nx-label-symbols ng-star-inserted"></span>
-                    </label>
-                </ntx-label>
                 <select
                     class="custom-form-control"
                     .value=${this.value}
@@ -134,14 +126,6 @@ export class JSONPathDropdownList extends LitElement {
         }
         else {
             return html`<div>
-                <ntx-label class="nx-zinc-control-label">
-                    <label class="nx-form-label nx-break-word nx-theme-label-1 ng-star-inserted">
-                        <span class="nx-title ng-star-inserted">
-                            ${this.name}
-                        </span>
-                        <span class="nx-label-symbols ng-star-inserted"></span>
-                    </label>
-                </ntx-label>
                 <select
                     class="custom-form-control"
                     .value=${this.value}
