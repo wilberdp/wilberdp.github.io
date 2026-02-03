@@ -35,12 +35,14 @@ export class JSONPathDropdownList extends LitElement {
     static properties = {
         jsonInput: { type: String },
         jsonPath: { type: String },
+        retrieveUnique: { type: Boolean },
+        controlType: { type: String },
         value: { type: String }
     };
   
     static getMetaConfig() {
         return {
-            controlName: 'JSONPath Dropdown List',
+            controlName: 'JSONPath Filtered Control',
             fallbackDisableSubmit: false,
             version: '1.0',
             standardProperties: {
@@ -64,6 +66,10 @@ export class JSONPathDropdownList extends LitElement {
                     type: 'boolean',
                     title: 'Unique values only',
                     defaultValue: true
+                },
+                controlType: {
+                    type: 'string',
+                    enum: ['Dropdown List', 'Textbox', 'Multiline Textbox']
                 },
                 value: {
                     type: 'string',
@@ -101,39 +107,62 @@ export class JSONPathDropdownList extends LitElement {
 
     render() {
         this.title = this.name;
+        var results = [];
 
-        if (this.jsonInput != null && this.jsonInput != '' & this.jsonPath != null && this.jsonPath != '') {
-            var results = JSONPath({path: this.jsonPath, json: JSON.parse(this.jsonInput) });
-            console.log('results');
-            console.log(results);
-            if (this.retrieveUnique != null && this.retrieveUnique) {
-                results = [...new Set(results)];
-                console.log('unique results');
+        if (this.controlType != null && this.controlType != '') {
+            if (this.jsonInput != null && this.jsonInput != '' & this.jsonPath != null && this.jsonPath != '') {
+                var results = JSONPath({path: this.jsonPath, json: JSON.parse(this.jsonInput) });
+                console.log('results');
                 console.log(results);
-            }
-            results.splice(0, 0, '');
-            console.log(this);
+                if (this.retrieveUnique != null && this.retrieveUnique) {
+                    results = [...new Set(results)];
+                    console.log('unique results');
+                    console.log(results);
+                }
 
-            return html`<div>
-                <select
-                    class="custom-form-control"
-                    .value=${this.value}
-                    @blur=${this.handleBlur}
-                    @input=${this.handleInput}
-                >${results.map(function(itt){ return html`<option value="${itt}">${itt}</option>`; })}</select>
-            </div>
-            `;
+                console.log(this);
+
+                if ((this.value == null || this.value == '') && (results != null && results.length > 0)) {
+                    this.value = results[0];
+                }
+            }
+
+            switch (this.controlType) {
+                case 'Dropdown List':
+                    return html`<div>
+                        <select
+                            class="custom-form-control"
+                            .value=${this.value}
+                            @blur=${this.handleBlur}
+                            @input=${this.handleInput}
+                        >${results.map(function(itt){ return html`<option value="${itt}">${itt}</option>`; })}</select>
+                    </div>`;
+                case 'Textbox':
+                    return html`<div>
+                        <input
+                            type="textbox"
+                            class="custom-form-control"
+                            .value=${this.value}
+                            @blur=${this.handleBlur}
+                            @input=${this.handleInput}
+                        >
+                    </div>`;
+                case 'Multiline Textbox':
+                    return html`<div>
+                        <textarea
+                            class="custom-form-control"
+                            .value=${this.value}
+                            @blur=${this.handleBlur}
+                            @input=${this.handleInput}
+                        ></textarea>
+                    </div>`;
+                default:
+                    return html`Please configure this control`;
+            }
+
         }
         else {
-            return html`<div>
-                <select
-                    class="custom-form-control"
-                    .value=${this.value}
-                    @blur=${this.handleBlur}
-                    @input=${this.handleInput}
-                ><option value=""></option></select>
-            </div>
-            `;
+            return html`Please configure this control`;
         }
     }
 }
