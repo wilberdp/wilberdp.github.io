@@ -45,7 +45,13 @@ export class JSONPathDropdownList extends LitElement {
             version: '1.0',
             standardProperties: {
                 visibility: true,
-                fieldLabel: true
+                fieldLabel: true,
+                description: true,
+                readOnly: true,
+                required: true,
+                toolTip: true,
+                placeholder: true,
+                defaultValue:true
             },
             properties: {
                 jsonInput: {
