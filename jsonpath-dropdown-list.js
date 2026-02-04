@@ -53,8 +53,7 @@ export class JSONPathDropdownList extends LitElement {
                 fieldLabel: true,
                 description: true,
                 readOnly: true,
-                required: true,
-                defaultValue: true
+                required: true
             },
             properties: {
                 jsonInput: {
