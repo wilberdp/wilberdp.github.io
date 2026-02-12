@@ -107,7 +107,6 @@ export class JSONPathFilteredControl extends LitElement {
     handleInput(event) {
         const input = event.target;
         this.value = input.value;
-        this.handleBlur();
     }
 
     render() {
@@ -168,6 +167,12 @@ export class JSONPathFilteredControl extends LitElement {
         }
         else {
             return html`Please configure this control`;
+        }
+    }
+
+    updated() {
+        if (this.value != null) {
+            this.handleBlur();
         }
     }
 }
