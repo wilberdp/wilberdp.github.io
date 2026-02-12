@@ -11,11 +11,11 @@ export class JSONPathFilteredControl extends LitElement {
             font-family: var(--ntx-form-theme-font-family);
             border: 1px solid var(--ntx-form-theme-color-border);
             border-radius: var(--ntx-form-theme-border-radius);
-            width: 97%;
-            height: 28px;
-            padding-top: 0px;
-            padding-bottom: 5px;
-            padding-left: 8px;
+            width: 96%;
+            height: 16px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            padding-left: 12px;
         }
 
         select.jsonpath-form-control {
@@ -73,7 +73,7 @@ export class JSONPathFilteredControl extends LitElement {
                     type: 'string',
                     title: 'Control Type',
                     required: true,
-                    enum: ['Dropdown List', 'Textbox', 'Multiline Textbox']
+                    enum: ['Dropdown List', 'Textbox']
                 },
                 value: {
                     type: 'string',
@@ -107,6 +107,7 @@ export class JSONPathFilteredControl extends LitElement {
     handleInput(event) {
         const input = event.target;
         this.value = input.value;
+        this.handleBlur();
     }
 
     render() {
