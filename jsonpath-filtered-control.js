@@ -138,7 +138,6 @@ export class JSONPathFilteredControl extends LitElement {
                             class="jsonpath-form-control"
                             .value=${this.value}
                             @blur=${this.handleBlur}
-                            @input=${this.handleInput}
                         >${results.map(function(itt){ return html`<option value="${itt}">${itt}</option>`; })}</select>
                     </div>`;
                 case 'Textbox':
@@ -148,7 +147,6 @@ export class JSONPathFilteredControl extends LitElement {
                             class="jsonpath-form-control"
                             .value=${this.value}
                             @blur=${this.handleBlur}
-                            @input=${this.handleInput}
                         >
                     </div>`;
                 case 'Multiline Textbox':
@@ -157,7 +155,6 @@ export class JSONPathFilteredControl extends LitElement {
                             class="jsonpath-form-control"
                             .value=${this.value}
                             @blur=${this.handleBlur}
-                            @input=${this.handleInput}
                         ></textarea>
                     </div>`;
                 default:
