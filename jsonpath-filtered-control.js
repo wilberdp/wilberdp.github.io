@@ -91,10 +91,10 @@ export class JSONPathFilteredControl extends LitElement {
         }
     }
 
-    handleBlur() {
+    handleBlur(event) {
         const input = event.target;
         this.value = input.value;
-        
+
         this.requestUpdate();
 
         const args = {
