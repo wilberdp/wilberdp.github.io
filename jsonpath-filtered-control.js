@@ -172,7 +172,14 @@ export class JSONPathFilteredControl extends LitElement {
 
     updated() {
         if (this.value != null) {
-            this.handleBlur();
+            const args = {
+                bubbles: true,
+                cancelable: false,
+                composed: true,
+                detail: this.value,
+            };
+            const event = new CustomEvent('ntx-value-change', args);
+            this.dispatchEvent(event);
         }
     }
 }
