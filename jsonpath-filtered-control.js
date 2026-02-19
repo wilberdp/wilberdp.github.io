@@ -92,6 +92,7 @@ export class JSONPathFilteredControl extends LitElement {
     }
 
     handleBlur(event1) {
+        console.log('handleBlur');
         const input = event1.target;
         this.value = input.value;
 
@@ -108,6 +109,7 @@ export class JSONPathFilteredControl extends LitElement {
     }
 
     handleInput(event) {
+        console.log('handleInput');
         const input = event.target;
         this.value = input.value;
     }
@@ -130,6 +132,7 @@ export class JSONPathFilteredControl extends LitElement {
                 console.log(this);
 
                 if ((this.value == null || this.value == '') && (results != null && results.length > 0)) {
+                    console.log('setting value: ' + results[0]);
                     this.value = results[0];
                 }
             }
